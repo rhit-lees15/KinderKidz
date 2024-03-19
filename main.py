@@ -1,2 +1,2 @@
 # Welcome to KiNderKidz
-#IDK
+# i am raspberry pi
