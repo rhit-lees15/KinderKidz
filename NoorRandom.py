@@ -14,7 +14,7 @@ import random
 # Import random module -- no need for repetition
 ## import random
  
-#wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 #wordList = ['BATH', 'CARE', 'LOVE']
 randomWord = random.choice(wordList)
 print(randomWord)
