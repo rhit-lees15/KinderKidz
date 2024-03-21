@@ -20,7 +20,7 @@ randomWord = random.choice(wordList)
 print(randomWord)
 
 remainingLetters = 8 - len(randomWord)
-print(remainingLetters)
+#print(remainingLetters)
  
 # If we want to randomly generate a ascii value from 'A' to 'Z':
 while remainingLetters > 0:
