@@ -14,9 +14,16 @@ import random
 # Import random module -- no need for repetition
 ## import random
  
-wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
-print(random.choice(wordList))
+#wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+#wordList = ['BATH', 'CARE', 'LOVE']
+randomWord = random.choice(wordList)
+print(randomWord)
+
+remainingLetters = 8 - len(randomWord)
+print(remainingLetters)
  
 # If we want to randomly generate a ascii value from 'A' to 'Z':
-randomUpperLetter = chr(random.randint(ord('A'), ord('Z')))
-print(randomUpperLetter)
+while remainingLetters > 0:
+    randomUpperLetter = chr(random.randint(ord('A'), ord('Z')))
+    print(randomUpperLetter)
+    remainingLetters -= 1
