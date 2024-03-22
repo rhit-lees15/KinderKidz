@@ -1,22 +1,22 @@
 # Hello World
 
-# Test Code
+# Test Code Method 1
 ## Noor
 
 # Import string and random module
 import string
 import random
  
-# Randomly choose a letter from all the ascii_letters
+# Should we wish to randomly choose a lower case letter
 # randomLetter = random.choice(string.ascii_letters)
 # print(randomLetter)
 
-# Import random module -- no need for repetition
-## import random
- 
+def generateRandomWord(words):
+    return random.choice(words)
+
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 #wordList = ['BATH', 'CARE', 'LOVE']
-randomWord = random.choice(wordList)
+randomWord = generateRandomWord(wordList)
 print(randomWord)
 
 remainingLetters = 8 - len(randomWord)
