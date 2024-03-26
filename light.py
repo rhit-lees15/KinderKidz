@@ -78,6 +78,28 @@ def theaterChaseRainbow(strip, wait_ms=50):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, 0)
 
+def display_A(color):
+        A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 82, 88]
+        for i in range(len(A)):
+            strip.setPixelColor(i, color)
+            strip.show()        
+            time.sleep(50/1000.0)
+
+def display_C(color):
+        C = [13, 14, 15, 16, 22, 27, 31, 38, 41, 51, 61, 68, 72, 77, 83, 84, 85, 86]
+        for i in range(len(C)):
+            strip.setPixelColor(i, color)
+            strip.show()        
+            time.sleep(50/1000.0)
+
+def display_T(color):
+        C = [11, 12, 13, 14, 15, 16, 17, 18, 24, 25, 34, 35, 44, 45, 54, 55, 64, 65, 74, 75, 84, 85]
+        for i in range(len(C)):
+            strip.setPixelColor(i, color)
+            strip.show()        
+            time.sleep(50/1000.0)
+
+
 # Main program logic follows:
 if __name__ == '__main__':
     # Process arguments
@@ -97,10 +119,15 @@ if __name__ == '__main__':
     try:
 
         while True:
-            print ('Color wipe animations.')
-            colorWipe(strip, Color(255, 0, 0))  # Red wipe
-            colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-            colorWipe(strip, Color(0, 0, 255))  # Green wipe
+            display_C(Color(255,0,0))
+            # display_A(Color(255,0,0))
+            # display_T(Color(255,0,0))
+
+            
+            # print ('Color wipe animations.')
+            # colorWipe(strip, Color(255, 0, 0))  # Red wipe
+            # colorWipe(strip, Color(0, 255, 0))  # Blue wipe
+            # colorWipe(strip, Color(0, 0, 255))  # Green wipe
 #             print ('Theater chase animations.')
 #             theaterChase(strip, Color(127, 127, 127))  # White theater chase
 #             theaterChase(strip, Color(127,   0,   0))  # Red theater chase
