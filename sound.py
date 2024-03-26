@@ -1,6 +1,8 @@
 import pygame
 import os 
 
+import wave
+import math
 
 def playSound(filepath: str):
     # pygame.mixer.init()
@@ -8,7 +10,10 @@ def playSound(filepath: str):
     # my_sound.play()
     # pygame.time.wait(int(my_sound.get_length() * 1000))
 
-    pygame.mixer.init()
+    frequence = math.ceil(wave.open(filepath).getframerate())
+    print(frequence)
+    pygame.mixer.init(frequency=frequence)
+   
     
     pygame.mixer.music.load(filepath)
 
@@ -24,14 +29,13 @@ def playSound(filepath: str):
         
         if query == 'p': 
     
-            # Pausing the music 
+            # Pausing the music
             pygame.mixer.music.pause()      
         elif query == 'r': 
     
             # Resuming the music 
-            pygame.mixer.music.unpause() 
+            pygame.mixer.music.unpause()
         elif query == 'e': 
-    
             # Stop the mixer 
             pygame.mixer.music.stop() 
             break
