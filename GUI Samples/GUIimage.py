@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.ttk import *
 
-image = PhotoImage(file='myimage.gif')
+image = PhotoImage(file = 'Carmine.png')
 label['image'] = image
+
