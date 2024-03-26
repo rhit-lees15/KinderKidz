@@ -12,12 +12,13 @@ def countdown(t):
         t -= 1
       
     print('Dance Time!') 
-  
-import vlc
 
-song = vlc.MediaPlayer('song.mp3')
-song.play()
-song.set_time(10000)    # play at 10,000 ms (10 seconds)
+## add audio??? once timer runs out 
+#import vlc
+
+#song = vlc.MediaPlayer('song.mp3')
+#song.play()
+#song.set_time(10000)    # play at 10,000 ms (10 seconds)
 
 # input time in seconds 
 t = input("Enter the time in seconds: ") 

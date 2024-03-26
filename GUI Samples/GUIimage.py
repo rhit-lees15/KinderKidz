@@ -5,7 +5,7 @@
 # label['image'] = image
 
 import tkinter as tk
-from PIL import Image, ImageTk
+# from PIL(??????) import Image, ImageTk
 
 class ImageDisplayApp:
     def __init__(self, master, image_path):
