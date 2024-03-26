@@ -38,12 +38,12 @@ def playSound(filepath: str):
 
 
 def playOSSound(filepath:str):
-    os.system(f"cvlc {filepath}")
+    os.system(f"sudo cvlc {filepath}")
 
 
 if __name__ == "__main__":
-    playOSSound('sample.wav')
-
+    #playOSSound('sample.wav')
+    playSound('sample.wav')
 
 
 
