@@ -21,7 +21,7 @@ y = (screen_height - window_height) // 2
 root.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
 # Create a button
-button = tk.Button(root, text = "START", font = myFont, command = button_click, bg = 'sea green', height = 5, width = 26)
+button = tk.Button(root, text = "START", font = myFont, command = button_click, bg = 'sea green', fg = '#FFFFFF', height = 5, width = 26)
 button.place(relx = 0.5, rely = 0.5, anchor = "center")  # Placing button in the center
 
 def close():
