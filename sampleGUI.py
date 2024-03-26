@@ -1,6 +1,7 @@
 # sudo apt-get install python3-tk --> run on Raspberry Pi first
 
 import tkinter as tk
+from tkinter import PhotoImage
 
 def open_popup():
     # Pop-up window
@@ -10,6 +11,11 @@ def open_popup():
     # Label widget
     label = tk.Label(popup, text = "Hello, popup stuff")
     label.pack()
+
+    image = PhotoImage(file = "Carmine.png")
+    image_label = tk.Label(popup, image = image)
+    image_label.image = image
+    image_label.pack()
 
 def create_gui():
     # Main window
