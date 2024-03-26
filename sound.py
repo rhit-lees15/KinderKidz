@@ -1,4 +1,6 @@
 import pygame
+import os 
+
 import wave
 import math
 
@@ -39,11 +41,13 @@ def playSound(filepath: str):
             break
 
 
+def playOSSound(filepath:str):
+    os.system(f"sudo cvlc {filepath}")
 
 
 if __name__ == "__main__":
+    #playOSSound('sample.wav')
     playSound('sample.wav')
-
 
 
 
