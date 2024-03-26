@@ -79,25 +79,30 @@ def theaterChaseRainbow(strip, wait_ms=50):
                 strip.setPixelColor(i+q, 0)
 
 def display_A(color):
-        A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 82, 88]
+        A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 81, 88]
         for i in range(len(A)):
-            strip.setPixelColor(i, color)
+            current_pixel = A[i]
+            strip.setPixelColor(current_pixel, color)
             strip.show()        
-            time.sleep(50/1000.0)
 
 def display_C(color):
-        C = [13, 14, 15, 16, 22, 27, 31, 38, 41, 51, 61, 68, 72, 77, 83, 84, 85, 86]
+        C = [13, 14, 15, 16, 22, 27, 38, 41, 58, 61, 72, 77, 83, 84, 85, 86]
         for i in range(len(C)):
-            strip.setPixelColor(i, color)
+            current_pixel = C[i]
+            strip.setPixelColor(current_pixel, color)
             strip.show()        
-            time.sleep(50/1000.0)
 
 def display_T(color):
-        C = [11, 12, 13, 14, 15, 16, 17, 18, 24, 25, 34, 35, 44, 45, 54, 55, 64, 65, 74, 75, 84, 85]
-        for i in range(len(C)):
-            strip.setPixelColor(i, color)
+        T = [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 24, 25, 34, 35, 44, 45, 54, 55, 64, 65, 74, 75, 84, 85, 94, 95]
+        for i in range(len(T)):
+            current_pixel = T[i]
+            strip.setPixelColor(current_pixel, color)
             strip.show()        
-            time.sleep(50/1000.0)
+        
+def turn_off():
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
 
 
 # Main program logic follows:
@@ -117,19 +122,20 @@ if __name__ == '__main__':
         print('Use "-c" argument to clear LEDs on exit')
 
     try:
-
         while True:
-<<<<<<< HEAD
-            strip.setPixelColor(5, Color(255, 0, 0))
-            strip.show()
-            time.sleep(50/1000.0)
-=======
             display_C(Color(255,0,0))
-            # display_A(Color(255,0,0))
-            # display_T(Color(255,0,0))
+            time.sleep(800/1000.0)
+            turn_off()
 
-            
->>>>>>> ecb47e234f4b7608be8763d416a8cdcbc4a90663
+            display_A(Color(255,0,0))
+            time.sleep(800/1000.0)
+            turn_off()
+
+            display_T(Color(255,0,0))
+            time.sleep(800/1000.0)
+            turn_off()
+
+
             # print ('Color wipe animations.')
             # colorWipe(strip, Color(255, 0, 0))  # Red wipe
             # colorWipe(strip, Color(0, 255, 0))  # Blue wipe
