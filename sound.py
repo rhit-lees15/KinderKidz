@@ -1,4 +1,6 @@
 import pygame
+import os 
+
 
 def playSound(filepath: str):
     # pygame.mixer.init()
@@ -35,10 +37,12 @@ def playSound(filepath: str):
             break
 
 
+def playOSSound(filepath:str):
+    os.system(f"cvlc {filepath}")
 
 
 if __name__ == "__main__":
-    playSound('sample.wav')
+    playOSSound('sample.wav')
 
 
 
