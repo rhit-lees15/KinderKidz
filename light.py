@@ -123,15 +123,15 @@ if __name__ == '__main__':
 
     try:
         while True:
-            display_C(Color(255,0,0))
+            display_C(Color(155,200,0))
             time.sleep(800/1000.0)
             turn_off()
 
-            display_A(Color(255,0,0))
+            display_A(Color(100,0,200))
             time.sleep(800/1000.0)
             turn_off()
 
-            display_T(Color(255,0,0))
+            display_T(Color(0,50,0))
             time.sleep(800/1000.0)
             turn_off()
 
