@@ -78,6 +78,33 @@ def theaterChaseRainbow(strip, wait_ms=50):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, 0)
 
+def display_A(color):
+        A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 81, 88]
+        for i in range(len(A)):
+            current_pixel = A[i]
+            strip.setPixelColor(current_pixel, color)
+            strip.show()        
+
+def display_C(color):
+        C = [13, 14, 15, 16, 22, 27, 38, 41, 58, 61, 72, 77, 83, 84, 85, 86]
+        for i in range(len(C)):
+            current_pixel = C[i]
+            strip.setPixelColor(current_pixel, color)
+            strip.show()        
+
+def display_T(color):
+        T = [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 24, 25, 34, 35, 44, 45, 54, 55, 64, 65, 74, 75, 84, 85, 94, 95]
+        for i in range(len(T)):
+            current_pixel = T[i]
+            strip.setPixelColor(current_pixel, color)
+            strip.show()        
+        
+def turn_off():
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
+
+
 # Main program logic follows:
 if __name__ == '__main__':
     # Process arguments
@@ -95,12 +122,24 @@ if __name__ == '__main__':
         print('Use "-c" argument to clear LEDs on exit')
 
     try:
-
         while True:
-            print ('Color wipe animations.')
-            colorWipe(strip, Color(255, 0, 0))  # Red wipe
-            colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-            colorWipe(strip, Color(0, 0, 255))  # Green wipe
+            display_C(Color(155,200,0))
+            time.sleep(800/1000.0)
+            turn_off()
+
+            display_A(Color(100,0,200))
+            time.sleep(800/1000.0)
+            turn_off()
+
+            display_T(Color(0,50,0))
+            time.sleep(800/1000.0)
+            turn_off()
+
+
+            # print ('Color wipe animations.')
+            # colorWipe(strip, Color(255, 0, 0))  # Red wipe
+            # colorWipe(strip, Color(0, 255, 0))  # Blue wipe
+            # colorWipe(strip, Color(0, 0, 255))  # Green wipe
 #             print ('Theater chase animations.')
 #             theaterChase(strip, Color(127, 127, 127))  # White theater chase
 #             theaterChase(strip, Color(127,   0,   0))  # Red theater chase

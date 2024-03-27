@@ -1,4 +1,6 @@
 import time
+
+from pygame import Color
 from rpi_ws281x import *
 import argparse
 
@@ -41,7 +43,6 @@ if __name__ == '__main__':
         print('Use "-c" argument to clear LEDs on exit')
 
     try:
-
         while True:
             # strip.setPixelColor(50, Color(255, 0, 0))
             print ('Color wipe animations.')

@@ -76,7 +76,7 @@ if __name__ == '__main__':
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     # Intialize the library (must be called once before other functions).
     strip.begin()
-    playOSSound('sample.wav')
+    playSound('sample.wav')
 
     print ('Press Ctrl-C to quit.')
     if not args.clear:
