@@ -293,7 +293,9 @@ if __name__ == '__main__':
 
             for i in range(len(alphabet)):
                 func_name = str1 + alphabet[i]
-                getattr(func_name, 'Color(150, 150, 150)')
+                func = globals().get(func_name)
+                if func:
+                    func(Color(150, 150, 150))
                 # func_name(Color(150, 150, 150))
                 time.sleep(800/1000.0)
                 turn_off()
