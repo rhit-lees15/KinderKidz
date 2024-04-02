@@ -80,6 +80,7 @@ def theaterChaseRainbow(strip, wait_ms=50):
 
 def display_A(color):
         A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 81, 88]
+        A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 81, 88]
         for i in range(len(A)):
             strip.setPixelColor(i, color)
             strip.show() 
@@ -92,9 +93,10 @@ def display_B(color):
             strip.show()        
 
 def display_C(color):
-        C = [13, 14, 15, 16, 22, 27, 31, 38, 41, 51, 61, 68, 72, 77, 83, 84, 85, 86]
+        C = [13, 14, 15, 16, 22, 27, 38, 41, 58, 61, 72, 77, 83, 84, 85, 86]
         for i in range(len(C)):
-            strip.setPixelColor(i, color)
+            current_pixel = C[i]
+            strip.setPixelColor(current_pixel, color)
             strip.show()        
 
 def display_D(color):
@@ -254,13 +256,20 @@ if __name__ == '__main__':
         print('Use "-c" argument to clear LEDs on exit')
 
     try:
-
         while True:
-            display_C(Color(255,0,0))
-            # display_A(Color(255,0,0))
-            # display_T(Color(255,0,0))
+            display_C(Color(155,200,0))
+            time.sleep(800/1000.0)
+            turn_off()
 
-            
+            display_A(Color(100,0,200))
+            time.sleep(800/1000.0)
+            turn_off()
+
+            display_T(Color(0,50,0))
+            time.sleep(800/1000.0)
+            turn_off()
+
+
             # print ('Color wipe animations.')
             # colorWipe(strip, Color(255, 0, 0))  # Red wipe
             # colorWipe(strip, Color(0, 255, 0))  # Blue wipe
