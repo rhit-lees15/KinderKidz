@@ -6,6 +6,8 @@
 # various animations on a strip of NeoPixels.
 
 import time
+
+from pygame import Color
 from rpi_ws281x import *
 import argparse
 
@@ -78,8 +80,12 @@ def theaterChaseRainbow(strip, wait_ms=50):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, 0)
 
+def turn_off():
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
+
 def display_A(color):
-        A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 81, 88]
         A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 81, 88]
         for i in range(len(A)):
             strip.setPixelColor(i, color)
@@ -257,6 +263,15 @@ if __name__ == '__main__':
 
     try:
         while True:
+            # alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+            # str1 = 'display_'
+
+            # for i in range(len(alphabet)):
+            #     func_name = str1 + alphabet(i)
+            #     func_name(Color(150, 150, 150))
+            #     time.sleep(800/1000.0)
+            #     turn_off()
+                
             display_C(Color(155,200,0))
             time.sleep(800/1000.0)
             turn_off()
@@ -269,19 +284,6 @@ if __name__ == '__main__':
             time.sleep(800/1000.0)
             turn_off()
 
-
-            # print ('Color wipe animations.')
-            # colorWipe(strip, Color(255, 0, 0))  # Red wipe
-            # colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-            # colorWipe(strip, Color(0, 0, 255))  # Green wipe
-#             print ('Theater chase animations.')
-#             theaterChase(strip, Color(127, 127, 127))  # White theater chase
-#             theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-#             theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
-#             print ('Rainbow animations.')
-#             rainbow(strip)
-#             rainbowCycle(strip)
-#             theaterChaseRainbow(strip)
 
     except KeyboardInterrupt:
         if args.clear:
