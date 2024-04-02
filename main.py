@@ -1,6 +1,7 @@
 # Welcome to KiNderKidz
 # i am raspberry pi
 import pygame
+from pygame.locals import *
 
  
 # initialize pygame
