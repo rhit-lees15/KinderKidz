@@ -154,6 +154,9 @@ while True:
     input_state = GPIO.input(24)
     if input_state == False:
         init_vlc('./sample2.mp3')
+        input_state = GPIO.input(24)
+    if input_state == False:
+        init_vlc('./sample2.mp3')
     time.sleep(1)
 
 
