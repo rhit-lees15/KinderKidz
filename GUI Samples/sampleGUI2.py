@@ -1,128 +1,139 @@
 import tkinter as tk
 from tkinter import messagebox
-from PIL import ImageTk, Image
+from tkinter import PhotoImage
+import tkinter.font
 import time
-import threading
+from PIL import Image, ImageTk
 
-class GUI(tk.Tk):
-    def __init__(self):
-        super().__init__()
+def start_game():
+    global game_window
+    game_window = tk.Tk()
+    game_window.attributes('-fullscreen', True)
 
-        self.title("Interactive GUI")
-        self.geometry("600x400")
+    # exit cleanly
+    def close(event = None):
+        game_window.destroy()
 
-        self.current_page = None
-        self.timer_thread = None
+    # Bind escape key to cose?
+    game_window.bind('<Escape>', close)
 
-        self.start_page()
+    # Display the timer
+    timer_label = tk.Label(game_window, text = "", font = myFont)
+    timer_label.pack(anchor = "ne", padx = 10, pady = 10)
+    start_time = time.time()
+    update_timer(timer_label, start_time)
 
-    def start_page(self):
-        # Clear previous page
-        if self.current_page:
-            self.current_page.destroy()
+    # exit cleanly
+    game_window.protocol("WM_DELETE_WINDOW", close)
 
-        # Create start page
-        self.current_page = tk.Frame(self, bg="white", width=600, height=400)
-        self.current_page.pack_propagate(0)
-        self.current_page.pack()
+    # Start the GUI event loop for the game window
+    game_window.mainloop()
 
-        # Load images
-        image_paths = ["Chase.jpg", "Marshall.jpg", "Rubble.jpg", "Zuma.jpg"]
-        ## doesn't like this line
-        images = [Image.open(path).resize((100, 100), Image.ANTIALIAS) for path in image_paths]
-        self.image_labels = [tk.Label(self.current_page, image=ImageTk.PhotoImage(image=img)) for img in images]
+def create_time_selection_page(self):
+        self.current_page = "time_selection"
+        # self.destroy_previous_widgets()  # Clear the previous page
+        time_selection_page = tk.Frame(self)
+        time_selection_page.pack(fill=tk.BOTH, expand=True)
 
-        # Place images in the four corners
-        self.image_labels[0].place(x=0, y=0)
-        self.image_labels[1].place(x=500, y=0)
-        self.image_labels[2].place(x=0, y=300)
-        self.image_labels[3].place(x=500, y=300)
+        # Time selection buttons
+        five_sec_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 16),
+                                    command=lambda: self.create_word_display_page(5))
+        five_sec_button.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
-        # Start button
-        start_button = tk.Button(self.current_page, text="Start", command=self.time_page, bg="green", font=("Arial", 16))
-        start_button.place(relx=0.5, rely=0.5, anchor="center")
+        thirty_sec_button = tk.Button(time_selection_page, text="30 Seconds", font=("Helvetica", 16),
+                                      command=lambda: self.create_word_display_page(30))
+        thirty_sec_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
 
-        # Exit button
-        exit_button = tk.Button(self.current_page, text="Exit", command=self.exit_app, bg="red", font=("Arial", 16))
-        exit_button.place(relx=0.5, rely=0.95, anchor="center")
-
-    def time_page(self):
-        # Clear previous page
-        if self.current_page:
-            self.current_page.destroy()
-
-        # Create time selection page
-        self.current_page = tk.Frame(self, bg="white", width=600, height=400)
-        self.current_page.pack_propagate(0)
-        self.current_page.pack()
-
-        # Time buttons
-        time_options = [("5 seconds", 5), ("30 seconds", 30), ("1 minute", 60)]
-        for text, seconds in time_options:
-            button = tk.Button(self.current_page, text=text, command=lambda s=seconds: self.word_page(s), font=("Arial", 16))
-            button.pack(pady=10)
+        one_min_button = tk.Button(time_selection_page, text="1 Minute", font=("Helvetica", 16),
+                                   command=lambda: self.create_word_display_page(60))
+        one_min_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
         # Exit button
-        exit_button = tk.Button(self.current_page, text="Exit", command=self.exit_app, bg="red", font=("Arial", 16))
-        exit_button.pack(side="bottom", pady=20)
+        exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
+                                command=self.exit_program)
+        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
-    def word_page(self, seconds):
-        # Clear previous page
-        if self.current_page:
-            self.current_page.destroy()
+def create_word_display_page(self, duration):
+        self.current_page = "word_display"
+        word_display_page = tk.Frame(self)
+        word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        # Create word display page
-        self.current_page = tk.Frame(self, bg="white", width=600, height=400)
-        self.current_page.pack_propagate(0)
-        self.current_page.pack()
+        # Display word
+        word_label = tk.Label(word_display_page, text="WORD", font=("Helvetica", 48))
+        word_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        # Countdown clock
-        self.remaining_time = seconds
-        self.clock_label = tk.Label(self.current_page, text=f"Time Remaining: {self.remaining_time}s", font=("Arial", 12))
-        self.clock_label.place(x=500, y=10)
-
-        # Start countdown thread
-        self.timer_thread = threading.Thread(target=self.countdown)
-        self.timer_thread.start()
-
-        # Word display
-        word_label = tk.Label(self.current_page, text="Hello", font=("Arial", 36))
-        word_label.place(relx=0.5, rely=0.5, anchor="center")
+        # Create countdown
+        self.create_countdown(word_display_page, duration)
 
         # Exit button
-        exit_button = tk.Button(self.current_page, text="Exit", command=self.exit_app, bg="red", font=("Arial", 16))
-        exit_button.pack(side="bottom", pady=20)
+        exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
+                                command=self.exit_program)
+        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
-    def countdown(self):
-        while self.remaining_time > 0:
-            time.sleep(1)
-            self.remaining_time -= 1
-            self.clock_label.config(text=f"Time Remaining: {self.remaining_time}s")
-        self.show_gif()
+# Actual Countdown Timer
+def create_countdown(self, frame, duration):
+    countdown_label = tk.Label(frame, font=("Helvetica", 16))
+    countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
 
-    def show_gif(self):
-        # Clear previous page
-        if self.current_page:
-            self.current_page.destroy()
+    def update_countdown(seconds_left):
+        countdown_label.config(text=f"Time Left: {seconds_left} seconds")
+        if seconds_left > 0:
+            frame.after(1000, update_countdown, seconds_left - 1)
+        else:
+            self.exit_program()
 
-        # Create GIF display page
-        self.current_page = tk.Frame(self, bg="white", width=600, height=400)
-        self.current_page.pack_propagate(0)
-        self.current_page.pack()
+    # could try update_countdown(int(duration)) ??
+    update_countdown(duration)
 
-        # Load and display GIF
-        gif_label = tk.Label(self.current_page, text="GIF Display", font=("Arial", 24))
-        gif_label.place(relx=0.5, rely=0.1, anchor="center")
+def update_timer(label, start_time):
+    # Set the duration of the timer here (in seconds)
+    timer_duration = 10  # 5 minutes by default - 300
+    elapsed_time = int(time.time() - start_time)
+    remaining_time = max(0, timer_duration - elapsed_time)
+    minutes = remaining_time // 60
+    seconds = remaining_time % 60
+    label.config(text=f"Time left: {minutes:02d}:{seconds:02d}")
+    if remaining_time > 0:
+        label.after(1000, update_timer, label, start_time)
+    else:
+        label.config(text="Time's up!")
+        game_window.after(2000, exit_program)
 
-        # Exit button
-        exit_button = tk.Button(self.current_page, text="Exit", command=self.exit_app, bg="red", font=("Arial", 16))
-        exit_button.pack(side="bottom", pady=20)
+# Create the main window
+root = tk.Tk()
+root.attributes('-fullscreen', True)
 
-    def exit_app(self):
-        # Confirm exit
-        if messagebox.askokcancel("Exit", "Are you sure you want to exit?"):
-            self.destroy()
+# Create a font
+myFont = tkinter.font.Font(family='Helvetica', size=12, weight="bold")
 
-if __name__ == "__main__":
-    app = GUI()
-    app.mainloop()
+# Create a frame for the start page
+start_frame = tk.Frame(root)
+start_frame.pack(fill=tk.BOTH, expand=True)
+
+# Display the image on the start page
+# Replace 'image_path' with the actual path to your image file
+# image_path = 'Carmine.png'
+# start_img = tk.PhotoImage(file=image_path)
+# start_img = start_img.subsample(2)  # Half the size
+# start_img_label = tk.Label(start_frame, image=start_img)
+# start_img_label.pack(side="left", padx=10, pady=10)
+
+# Create a button to start the game
+start_button = tk.Button(start_frame, text="START", font=myFont, command=start_game, bg='sea green', fg='#FFFFFF',
+                         height=5, width=26)
+start_button.pack(side="left", padx=10, pady=10)
+
+    # # Exit button
+    # exit_button = tk.Button(start_page, text="Exit", bg="red", font=("Helvetica", 16),
+    #                         command=self.exit_program)
+    # exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+
+# exit button
+exitButton = tk.Button(root, text="Exit", font=myFont, command=root.destroy, bg='brown4', height=1, width=52)
+exitButton.pack(side="bottom")
+
+# Bind escape key to exit the game
+root.bind('<Escape>', root.destroy)
+
+# Start the GUI event loop for the main window
+root.mainloop()

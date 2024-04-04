@@ -8,26 +8,42 @@ class GUI(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("1600x800")
+        self.geometry("800x800")
         self.title("Interactive GUI")
 
         self.current_page = None
         self.create_start_page()
 
+        # Start page w/ exit button
     def create_start_page(self):
         self.current_page = "start"
         start_page = tk.Frame(self)
         start_page.pack(fill=tk.BOTH, expand=True)
 
+        # Start button
         start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 16),
                                  command=self.create_time_selection_page)
         start_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
+        # Exit button
         exit_button = tk.Button(start_page, text="Exit", bg="red", font=("Helvetica", 16),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
-        # # Displaying images in the four corners
+        # Displaying images in the four corners
+        # Could make this into a loop instead of individual??
+        #         def display_corner_images(self, parent_frame):
+        # """Display images in the four corners of the parent frame."""
+        # images = ["Chase.jpg", "Marshall.jpg", "Rubble.jpg", "Zuma.jpg"]
+        # positions = [(0, 0), (750, 0), (0, 550), (750, 550)]
+
+        # for image_path, position in zip(images, positions):
+        #     image = Image.open(image_path)
+        #     photo = ImageTk.PhotoImage(image)
+        #     label = tk.Label(parent_frame, image=photo)
+        #     label.image = photo
+        #     label.place(x=position[0], y=position[1])
+
         # top_left_image = Image.open("Chase.jpg")
         # top_left_photo = ImageTk.PhotoImage(top_left_image)
         # top_left_label = tk.Label(start_page, image=top_left_photo)
@@ -54,9 +70,11 @@ class GUI(tk.Tk):
 
     def create_time_selection_page(self):
         self.current_page = "time_selection"
+        # self.destroy_previous_widgets()  # Clear the previous page
         time_selection_page = tk.Frame(self)
         time_selection_page.pack(fill=tk.BOTH, expand=True)
 
+        # Time selection buttons
         five_sec_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 16),
                                     command=lambda: self.create_word_display_page(5))
         five_sec_button.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
@@ -69,6 +87,7 @@ class GUI(tk.Tk):
                                    command=lambda: self.create_word_display_page(60))
         one_min_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
+        # Exit button
         exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
@@ -78,15 +97,19 @@ class GUI(tk.Tk):
         word_display_page = tk.Frame(self)
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
+        # Display word
         word_label = tk.Label(word_display_page, text="WORD", font=("Helvetica", 48))
         word_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
+        # Create countdown
         self.create_countdown(word_display_page, duration)
 
+        # Exit button
         exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
+    # Actual Countdown Timer
     def create_countdown(self, frame, duration):
         countdown_label = tk.Label(frame, font=("Helvetica", 16))
         countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
@@ -98,8 +121,10 @@ class GUI(tk.Tk):
             else:
                 self.create_gif_display_page()
 
+        # could try update_countdown(int(duration)) ??
         update_countdown(duration)
 
+    # GIF??
     def create_gif_display_page(self):
         self.current_page = "gif_display"
         gif_display_page = tk.Frame(self)
@@ -117,6 +142,7 @@ class GUI(tk.Tk):
         gif_label.config(image=gif_image)
         gif_label.image = gif_image
 
+        # Exit button
         exit_button = tk.Button(gif_display_page, text="Exit", bg="red", font=("Helvetica", 16),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
