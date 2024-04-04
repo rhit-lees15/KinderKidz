@@ -11,17 +11,17 @@ import vlc
 # import threading
 # started = True
 
-def play_sound(pin):
-    print(pin)
-    sound_file = "sample2.mp3"
-    print("playing song" + sound_file)
-    sound = AudioPlayer("sample2.mp3").play()
+# def play_sound(pin):
+#     print(pin)
+#     sound_file = "sample2.mp3"
+#     print("playing song" + sound_file)
+#     sound = AudioPlayer("sample2.mp3").play()
 
-def play_sound2(pin):
-    print(pin)
-    sound_file = "sample.wav"
-    print("playing song" + sound_file)
-    sound = AudioPlayer("sample.wav").play()
+# def play_sound2(pin):
+#     print(pin)
+#     sound_file = "sample.wav"
+#     print("playing song" + sound_file)
+#     sound = AudioPlayer("sample.wav").play()
 
 # # Path to the sound file
 
@@ -36,74 +36,75 @@ def play_sound2(pin):
 #     print("main thread")
 
 
-from subprocess import *
-import threading
+# from subprocess import *
+# import threading
 
 # def play_sound(sound_file):
 #     print("Playing sound:", sound_file)
 #     subprocess.Popen(["afplay", sound_file])  # Use appropriate command based on your OS
 
-# # Path to the sound file
+# Path to the sound file
 # sound_file = "sample2.mp3"
 
 # # Create a thread to play the sound
 # sound_thread = threading.Thread(target=play_sound, args=(sound_file,))
 # sound_thread.start()
 
-# Continue with other tasks while the sound is playing
+# Continue with other tasks while the sound is playng
 
-from subprocess import Popen, PIPE
+# from subprocess import Popen, PIPE
+
 import time
 
 
-def handle_results(arg):
-    print(arg)
+# def handle_results(arg):
+#     print(arg)
 
     
-def play_my_sound(pinnumber):
-    print(pinnumber)
+# def play_my_sound(pinnumber):
+#     print(pinnumber)
     
-    running_procs = [
-        Popen('cvlc sample2.mp3',shell=True, stdout=PIPE, stderr=PIPE)
-        ]
-    while running_procs:
-        for proc in running_procs:
+#     running_procs = [
+#         Popen('cvlc sample2.mp3',shell=True, stdout=PIPE, stderr=PIPE)
+#         ]
+#     while running_procs:
+#         for proc in running_procs:
             
-            stdout, stderr = proc.communicate()
-            print(stdout+stderr)
-            retcode = proc.poll()
-            if retcode is not None: # Process finished.
-                running_procs.remove(proc)
+#             stdout, stderr = proc.communicate()
+#             print(stdout+stderr)
+#             retcode = proc.poll()
+#             if retcode is not None: # Process finished.
+#                 running_procs.remove(proc)
 
-#     inpu
+# #     inpu
 
    
-def play_my_sound2(pinnumber):
-    print(pinnumber)
-    running_procs = [
+# def play_my_sound2(pinnumber):
+#     print(pinnumber)
+#     running_procs = [
         
-        Popen('cvlc sample.wav',shell=True, stdout=PIPE, stderr=PIPE)
-        ]
-    while running_procs:
-        for proc in running_procs:
+#         Popen('cvlc sample.wav',shell=True, stdout=PIPE, stderr=PIPE)
+#         ]
+#     while running_procs:
+#         for proc in running_procs:
             
-            stdout, stderr = proc.communicate()
-            print(stdout+stderr)
-            retcode = proc.poll()
-            if retcode is not None: # Process finished.
-                running_procs.remove(proc)
-                break
-            else: # No process is done, wait a bit and check again.
-                time.sleep(.1)
-                continue
+#             stdout, stderr = proc.communicate()
+#             print(stdout+stderr)
+#             retcode = proc.poll()
+#             if retcode is not None: # Process finished.
+#                 running_procs.remove(proc)
+#                 break
+#             else: # No process is done, wait a bit and check again.
+#                 time.sleep(.1)
+#                 continue
 
-        # Here, `proc` has finished with return code `retcode`
-        if retcode != 0:
-            """Error handling."""
-            print("bad")
-        handle_results(proc.stdout)
+#         # Here, `proc` has finished with return code `retcode`
+#         if retcode != 0:
+#             """Error handling."""
+#             print("bad")
+#         handle_results(proc.stdout)
 
-
+                                                                                                                                                                         
 
 
 def button_callback():
@@ -112,11 +113,11 @@ def button_callback():
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BCM) 
-GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
-#GPIO.add_event_detect(10,GPIO.FALLING,callback=play_sound) # Setup event on pin 10 rising edge
+GPIO.setup(7, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
+# GPIO.add_event_detect(7,GPIO.FALLING,callback=play_sound) # Setup event on pin 10 rising edge
 GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
-#GPIO.add_event_detect(24,GPIO.FALLING,callback=play_sound2) # Setup event on pin 10 rising edge
-#message = input("Press enter to quit\n\n") # Run until someone presses enter
+# GPIO.add_event_detect(24,GPIO.FALLING,callback=play_sound2) # Setup event on pin 10 rising edge
+# message = input("Press enter to quit\n\n") # Run until someone presses enter
 
 
 def init_vlc(song:str):
@@ -148,15 +149,149 @@ def init_vlc(song:str):
 
 while True:
     print("Reading Buttons!!")
-    input_state = GPIO.input(10)
+    input_state = GPIO.input(7)
     if input_state == False:
-        init_vlc('./sample.wav')
+        init_vlc('./sample2.mp3')
+
     input_state = GPIO.input(24)
     if input_state == False:
-        init_vlc('./sample2.mp3')
-        input_state = GPIO.input(24)
-    if input_state == False:
-        init_vlc('./sample2.mp3')
+        init_vlc('./sample.wav')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #input_state = GPIO.input(24)
+    #if input_state == False:
+        #init_vlc('./sample2.mp3')
+        #input_state = GPIO.input(24)
+    #if input_state == False:
+        #init_vlc('./sample2.mp3')
     time.sleep(1)
 
 

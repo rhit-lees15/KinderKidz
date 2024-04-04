@@ -94,7 +94,7 @@ def display_A(color):
             # time.sleep(50/1000.0)
        
 def display_B(color):
-        B = [13, 14, 15, 16, 17, 22, 27, 32, 37, 42, 43, 44, 45, 56, 52, 57, 62,  67, 72, 77, 82, 83, 84, 85, 86]
+        B = [13, 14, 15, 16, 17, 22, 27, 32, 37, 42, 43, 44, 45, 46, 56, 52, 62,  67, 72, 77, 82, 83, 84, 85, 86]
         for i in range(len(B)):
             current_pixel = B[i]
             strip.setPixelColor(current_pixel, color)
@@ -288,7 +288,7 @@ if __name__ == '__main__':
 
     try:
         while True:
-            alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+            alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
             str1 = 'display_'
 
             for i in range(len(alphabet)):

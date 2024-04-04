@@ -3,7 +3,7 @@
 import RPi.GPIO as GPIO
 import time
 
-BUTTON_PIN = 10
+BUTTON_PIN = 24
 # Use the GPIO number instead of the Raspberry Pi number
 GPIO.setmode(GPIO.BCM)
 
