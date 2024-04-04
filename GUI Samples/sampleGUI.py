@@ -1,3 +1,5 @@
+#### NEED TO MAKE THE PAGES NOT STACK ON ONE ANOTHER
+
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import PhotoImage
@@ -8,7 +10,7 @@ class GUI(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("800x800")
+        # self.geometry("800x800")
         self.title("Interactive GUI")
 
         self.current_page = None
@@ -44,6 +46,24 @@ class GUI(tk.Tk):
         #     label.image = photo
         #     label.place(x=position[0], y=position[1])
 
+
+##############
+        
+## 04/04/24 Addition to change size of image
+        ### AttributeError: module 'PIL.Image' has no attribute 'ANTIALIAS'
+        # top_left_image = Image.open("Chase.jpg")
+        # desired_width = 200
+        # desired_height = 200
+        # resize_top_left_image = top_left_image.resize((desired_width, desired_height), Image.ANTIALIAS)
+
+        # top_left_photo = ImageTk.PhotoImage(resize_top_left_image)
+        # top_left_label = tk.Label(start_page, image=top_left_photo)
+        # top_left_label.image = top_left_photo
+        # top_left_label.place(x=0, y=0)
+
+
+######
+        
         # top_left_image = Image.open("Chase.jpg")
         # top_left_photo = ImageTk.PhotoImage(top_left_image)
         # top_left_label = tk.Label(start_page, image=top_left_photo)
@@ -93,12 +113,73 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
     def create_word_display_page(self, duration):
+        # OG Random letter generator
+
+        import string
+        import random
+
+        # function to choose a random word from an imported list of words
+        def generateRandomWord(words):
+            return random.choice(words)
+
+        wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+        #wordList = ['BATH', 'CARE', 'LOVE']
+        randomWord = generateRandomWord(wordList)
+
+        # print("Selected Word:", randomWord)
+
+        # function to generate additional random letters as necessary by the 
+        # length of the word chosen
+
+        # 8 because we only have 8 tiles for letters
+        remainingLetters = 8 - len(randomWord)
+
+        # print("Letters To Fill:", remainingLetters)
+
+        def removeLetters(letters2Remove):
+            alphabet = list(string.ascii_uppercase)
+            
+            for letter in letters2Remove:
+                if letter in alphabet:
+                    alphabet.remove(letter)
+            alphabetString = ''.join(alphabet)
+            return alphabetString
+
+        letters2Remove = randomWord
+        availableLetters = removeLetters(letters2Remove)
+
+        # print("Left Over Letters:", availableLetters)
+
+        ## remove possibility of repeating letter by removing the randomly chosen letters from the list
+
+        def generateRandomLetters(remainingLetters):
+            # ensure no repeated letters:
+            chosenLetters = random.sample(availableLetters, remainingLetters)
+            return ''.join(chosenLetters)
+            return ''.join(random.choices(string.ascii_uppercase, k=remainingLetters))
+            
+        randomLetters = generateRandomLetters(remainingLetters)
+
+        # print("Random Letters:", randomLetters)
+
+        # function to add all of the letters to one singular string
+
+        def randomizeLetters(word, letters):
+            allLetters = list(word + letters)
+            random.shuffle(allLetters)
+            return ''.join(allLetters)
+
+        randomizedLetters = randomizeLetters(randomWord, randomLetters)
+
+        # print("Final Letter Sequence:", randomizedLetters)
+        ########################################## END RANDOM LETTERS
+        
         self.current_page = "word_display"
         word_display_page = tk.Frame(self)
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
         # Display word
-        word_label = tk.Label(word_display_page, text="WORD", font=("Helvetica", 48))
+        word_label = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48))
         word_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Create countdown
