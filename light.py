@@ -269,7 +269,6 @@ def display_Z(color):
             strip.show()  
 
 
-
 # Main program logic follows:
 if __name__ == '__main__':
     # Process arguments
