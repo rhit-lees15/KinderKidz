@@ -14,7 +14,7 @@ def start_game():
     def close(event = None):
         game_window.destroy()
 
-    # Bind escape key to cose?
+    # Bind escape key to close?
     game_window.bind('<Escape>', close)
 
     # Display the timer
