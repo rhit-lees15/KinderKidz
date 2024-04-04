@@ -6,7 +6,7 @@
 # various animations on a strip of NeoPixels.
 
 import time
-
+import randomLetters
 from pygame import Color
 from rpi_ws281x import *
 import argparse
@@ -20,6 +20,7 @@ LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 65     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 
 
 
@@ -286,30 +287,24 @@ if __name__ == '__main__':
         print('Use "-c" argument to clear LEDs on exit')
 
     try:
+        word = randomLetters.generateRandomWord(wordList)
+        print(word)
+        letters = list(word)
+
         while True:
-            alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+            # alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
             str1 = 'display_'
 
-            for i in range(len(alphabet)):
-                func_name = str1 + alphabet[i]
+
+            for i in range(len(letters)):
+                func_name = str1 + letters[i]
                 func = globals().get(func_name)
                 if func:
                     func(Color(150, 150, 150))
                 # func_name(Color(150, 150, 150))
                 time.sleep(800/1000.0)
                 turn_off()
-                
-            # display_C(Color(155,200,0))
-            # time.sleep(800/1000.0)
-            # turn_off()
 
-            # display_A(Color(100,0,200))
-            # time.sleep(800/1000.0)
-            # turn_off()
-
-            # display_T(Color(0,50,0))
-            # time.sleep(800/1000.0)
-            # turn_off()
 
 
     except KeyboardInterrupt:

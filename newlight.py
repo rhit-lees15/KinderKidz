@@ -1,8 +1,7 @@
 import time
 from pygame import Color
 import randomLetters
-import 
-# from rpi_ws281x import *
+from rpi_ws281x import *
 
 # Set Up
 LED_COUNT      = 100      # Number of LED pixels.
@@ -48,16 +47,15 @@ wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 
 
 def turn_off():
-    pass
-    # for i in range(strip.numPixels()):
-    #     strip.setPixelColor(i, Color(0, 0, 0))
-    # strip.show()
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
 
 def display_letter(letter, color):
     for i in range(len(letter)):
         current_pixel = letter[i]
-        # strip.setPixelColor(current_pixel, color)
-        # strip.show()  
+        strip.setPixelColor(current_pixel, color)
+        strip.show()  
 
 def main():
         #wordList = ['BATH', 'CARE', 'LOVE']
@@ -70,8 +68,10 @@ def main():
         # alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
             print(letter)
             display_letter(current_letter, Color(10, 10,10))
+            time.sleep(800/1000.0)
+            turn_off()
 
 
 if __name__ == '__main__':
-    # strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     main()
