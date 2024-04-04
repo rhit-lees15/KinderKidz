@@ -35,6 +35,8 @@ availableLetters = removeLetters(letters2Remove)
 
 print("Left Over Letters:", availableLetters)
 
+## remove possibility of repeating letter by removing the randomly chosen letters from the list
+
 def generateRandomLetters(remainingLetters):
     # ensure no repeated letters:
     chosenLetters = random.sample(availableLetters, remainingLetters)

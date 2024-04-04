@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font
 
-## FUTURE NOTE: This will probs change to the next section where the game starts & audio plays
+## FUTURE NOTICE: This will probs change to the next section where the game starts & audio plays
 def button_click():
     print("Button clicked!")
 
