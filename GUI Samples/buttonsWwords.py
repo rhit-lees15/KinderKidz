@@ -1,20 +1,40 @@
 ## 
 
-# import string
+import string
 import random
 from gpiozero import Button
 
 # GPIO pin numbers for buttons
-button_pins = [17, 18, 27]
+button_pins = [7, 24, 6]
 
 # List of three-letter words
-words = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+words = ['CAT', 'DOG']
 
 # Initialize buttons
 buttons = [Button(pin) for pin in button_pins]
 
-def get_random_letter():
-    return chr(random.randint(97, 122))  # Random lowercase letter
+def removeLetters(letters2Remove):
+    alphabet = list(string.ascii_uppercase)
+    
+    for letter in letters2Remove:
+        if letter in alphabet:
+            alphabet.remove(letter)
+    alphabetString = ''.join(alphabet)
+    return alphabetString
+
+letters2Remove = randomWord
+availableLetters = removeLetters(letters2Remove)
+
+def get_random_letter(remainingLetters):
+    # ensure no repeated letters:
+    chosenLetters = random.sample(availableLetters, remainingLetters)
+    return ''.join(chosenLetters)
+    return ''.join(random.choices(string.ascii_uppercase, k=remainingLetters))
+    
+randomLetters = get_random_letter(remainingLetters)
+
+# def get_random_letter():
+#     return chr(random.randint(97, 122))  # Random lowercase letter
 
 def generate_options(correct_letter):
     options = [correct_letter]
@@ -41,8 +61,9 @@ def game():
             if button.pin.number == options.index(correct_letter):
                 print("Correct!")
                 word_index += 1
+                print({' '.join(correct_letter)})
             else:
-                print("Incorrect!")
+                print("Incorrect! Try again!")
         print("")  # Empty line for readability
 
 game()
