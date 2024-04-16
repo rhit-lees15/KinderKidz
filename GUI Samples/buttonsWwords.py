@@ -35,7 +35,7 @@ def get_random_letter(remainingLetters):
     return ''.join(chosenLetters)
     return ''.join(random.choices(string.ascii_uppercase, k=remainingLetters))
     
-randomLetters = get_random_letter(remainingLetters)
+randomLetters = get_random_letter(availableLetters)
 
 # def get_random_letter():
 #     return chr(random.randint(97, 122))  # Random lowercase letter
