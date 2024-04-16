@@ -152,7 +152,7 @@ while True:
         init_vlc('./sample.wav')
     input_state = GPIO.input(24)
     if input_state == False:
-        init_vlc('./AudioStuff/sample2.mp3')
+        init_vlc('.AudioStuff/sample2.mp3')
     time.sleep(1)
 
 

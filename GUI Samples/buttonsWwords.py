@@ -79,4 +79,4 @@ def game():
 
 game()
 
-print('Spell out this word plz: ', randomWord)
+# print('Spell out this word plz: ', randomWord)
