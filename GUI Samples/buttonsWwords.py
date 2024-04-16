@@ -5,7 +5,7 @@ import random
 from gpiozero import Button
 
 # GPIO pin numbers for buttons
-button_pins = [17, 18, 27]
+button_pins = [7, 24, 6]
 
 # List of three-letter words
 words = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
