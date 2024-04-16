@@ -7,8 +7,12 @@ from gpiozero import Button
 # GPIO pin numbers for buttons
 button_pins = [7, 24, 6]
 
+def generateRandomWord(words):
+    return random.choice(words)
+
 # List of three-letter words
 words = ['CAT', 'DOG']
+randomWord = generateRandomWord(words)
 
 # Initialize buttons
 buttons = [Button(pin) for pin in button_pins]
