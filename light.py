@@ -10,10 +10,11 @@ import randomLetters
 from pygame import Color
 from rpi_ws281x import *
 import argparse
+import RPi.GPIO as GPIO
 
 # LED strip configuration:
 LED_COUNT      = 100      # Number of LED pixels.
-LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
+LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).
 #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
@@ -22,7 +23,10 @@ LED_INVERT     = False   # True to invert the signal (when using NPN transistor 
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 
-
+BUTTON_PIN = 7
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.input(BUTTON_PIN)
 
 # Define functions which animate LEDs in various ways.
 def colorWipe(strip, color, wait_ms=50):
@@ -294,16 +298,18 @@ if __name__ == '__main__':
         while True:
             # alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
             str1 = 'display_'
-
-
             for i in range(len(letters)):
                 func_name = str1 + letters[i]
                 func = globals().get(func_name)
                 if func:
                     func(Color(150, 150, 150))
-                # func_name(Color(150, 150, 150))
-                time.sleep(800/1000.0)
+                while True:
+                    if GPIO.input(BUTTON_PIN) == GPIO.LOW:
+                        print("here")
+                        break
+                    # time.sleep(0.1)
                 turn_off()
+                time.sleep(800/1000)
 
 
 

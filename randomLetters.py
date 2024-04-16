@@ -11,7 +11,7 @@ wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 #wordList = ['BATH', 'CARE', 'LOVE']
 randomWord = generateRandomWord(wordList)
 
-print("Selected Word:", randomWord)
+# print("Selected Word:", randomWord)
 
 # function to generate additional random letters as necessary by the 
 # length of the word chosen
@@ -19,7 +19,7 @@ print("Selected Word:", randomWord)
 # 8 because we only have 8 tiles for letters
 remainingLetters = 8 - len(randomWord)
 
-print("Letters To Fill:", remainingLetters)
+# print("Letters To Fill:", remainingLetters)
 
 def removeLetters(letters2Remove):
     alphabet = list(string.ascii_uppercase)
@@ -33,7 +33,7 @@ def removeLetters(letters2Remove):
 letters2Remove = randomWord
 availableLetters = removeLetters(letters2Remove)
 
-print("Left Over Letters:", availableLetters)
+# print("Left Over Letters:", availableLetters)
 
 ## remove possibility of repeating letter by removing the randomly chosen letters from the list
 
@@ -45,7 +45,7 @@ def generateRandomLetters(remainingLetters):
     
 randomLetters = generateRandomLetters(remainingLetters)
 
-print("Random Letters:", randomLetters)
+# print("Random Letters:", randomLetters)
 
 # function to add all of the letters to one singular string
 
@@ -56,4 +56,4 @@ def randomizeLetters(word, letters):
 
 randomizedLetters = randomizeLetters(randomWord, randomLetters)
 
-print("Final Letter Sequence:", randomizedLetters)
+# print("Final Letter Sequence:", randomizedLetters)
