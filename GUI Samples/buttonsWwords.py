@@ -1,5 +1,3 @@
-## 
-
 import string
 import random
 from gpiozero import Button
@@ -7,15 +5,39 @@ from gpiozero import Button
 # GPIO pin numbers for buttons
 button_pins = [7, 24, 6]
 
+# function to choose a random word from an imported list of words
 def generateRandomWord(words):
     return random.choice(words)
 
-# List of three-letter words
-words = ['CAT', 'DOG']
-randomWord = generateRandomWord(words)
+wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+#wordList = ['BATH', 'CARE', 'LOVE']
+randomWord = generateRandomWord(wordList)
 
 # Initialize buttons
 buttons = [Button(pin) for pin in button_pins]
+
+# Available uppercase random letters
+def removeLetters(letters2Remove):
+    alphabet = list(string.ascii_uppercase)
+    
+    for letter in letters2Remove:
+        if letter in alphabet:
+            alphabet.remove(letter)
+    alphabetString = ''.join(alphabet)
+    return alphabetString
+
+letters2Remove = randomWord
+availableLetters = removeLetters(letters2Remove)
+
+# Random letters chosen
+def generateRandomLetters(remainingLetters):
+    # ensure no repeated letters:
+    chosenLetters = random.sample(availableLetters, remainingLetters)
+    return ''.join(chosenLetters)
+    return ''.join(random.choices(string.ascii_uppercase, k=remainingLetters))
+    
+remainingLetters = 3 - len(randomWord)
+randomLetters = generateRandomLetters(remainingLetters)
 
 def removeLetters(letters2Remove):
     alphabet = list(string.ascii_uppercase)
@@ -29,16 +51,20 @@ def removeLetters(letters2Remove):
 letters2Remove = randomWord
 availableLetters = removeLetters(letters2Remove)
 
-def get_random_letter(remainingLetters):
+def generateRandomLetters(remainingLetters):
     # ensure no repeated letters:
     chosenLetters = random.sample(availableLetters, remainingLetters)
     return ''.join(chosenLetters)
     return ''.join(random.choices(string.ascii_uppercase, k=remainingLetters))
     
-randomLetters = get_random_letter(availableLetters)
+randomLetters = generateRandomLetters(remainingLetters)
 
-# def get_random_letter():
-#     return chr(random.randint(97, 122))  # Random lowercase letter
+def randomizeLetters(word, letters):
+    allLetters = list(word + letters)
+    random.shuffle(allLetters)
+    return ''.join(allLetters)
+
+randomizedLetters = randomizeLetters(randomWord, randomLetters)
 
 def generate_options(correct_letter):
     options = [correct_letter]
@@ -65,9 +91,8 @@ def game():
             if button.pin.number == options.index(correct_letter):
                 print("Correct!")
                 word_index += 1
-                print({' '.join(correct_letter)})
             else:
-                print("Incorrect! Try again!")
+                print("Incorrect!")
         print("")  # Empty line for readability
 
 game()
