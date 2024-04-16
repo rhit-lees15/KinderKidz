@@ -76,7 +76,7 @@ def generate_options(correct_letter):
     return options
 
 def game():
-    word = random.choice(words)
+    word = random.choice(word)
     word_index = 0
     
     while word_index < len(word):
