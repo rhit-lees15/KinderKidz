@@ -1,5 +1,6 @@
 ## 
 
+# import string
 import random
 from gpiozero import Button
 
@@ -7,7 +8,7 @@ from gpiozero import Button
 button_pins = [17, 18, 27]
 
 # List of three-letter words
-words = ["cat", "dog", "bat"]
+words = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 
 # Initialize buttons
 buttons = [Button(pin) for pin in button_pins]
