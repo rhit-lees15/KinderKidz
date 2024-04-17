@@ -1,5 +1,7 @@
 import string
 import random
+import RPi.GPIO as GPIO
+import time
 from gpiozero import Button
 
 # GPIO pin numbers for buttons
@@ -10,11 +12,15 @@ def generateRandomWord(words):
     return random.choice(words)
 
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
-#wordList = ['BATH', 'CARE', 'LOVE']
 randomWord = generateRandomWord(wordList)
 
 # Initialize buttons
-buttons = [Button(pin) for pin in button_pins]
+# buttons = [Button(pin) for pin in button_pins]
+
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(button_pins, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.input(button_pins)
 
 # Available uppercase random letters
 def removeLetters(letters2Remove):
