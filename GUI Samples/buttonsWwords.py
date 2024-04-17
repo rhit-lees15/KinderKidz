@@ -11,8 +11,8 @@ button_pins = [7, 24, 6]
 def generateRandomWord(words):
     return random.choice(words)
 
-wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
-randomWord = generateRandomWord(wordList)
+word = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+randomWord = generateRandomWord(word)
 
 # Initialize buttons
 # buttons = [Button(pin) for pin in button_pins]
@@ -32,8 +32,7 @@ def removeLetters(letters2Remove):
     alphabetString = ''.join(alphabet)
     return alphabetString
 
-letters2Remove = randomWord
-availableLetters = removeLetters(letters2Remove)
+availableLetters = removeLetters(randomWord)
 
 # Random letters chosen
 def generateRandomLetters(remainingLetters):
@@ -45,26 +44,6 @@ def generateRandomLetters(remainingLetters):
 remainingLetters = 3 - len(randomWord)
 randomLetters = generateRandomLetters(remainingLetters)
 
-def removeLetters(letters2Remove):
-    alphabet = list(string.ascii_uppercase)
-    
-    for letter in letters2Remove:
-        if letter in alphabet:
-            alphabet.remove(letter)
-    alphabetString = ''.join(alphabet)
-    return alphabetString
-
-letters2Remove = randomWord
-availableLetters = removeLetters(letters2Remove)
-
-def generateRandomLetters(remainingLetters):
-    # ensure no repeated letters:
-    chosenLetters = random.sample(availableLetters, remainingLetters)
-    return ''.join(chosenLetters)
-    return ''.join(random.choices(string.ascii_uppercase, k=remainingLetters))
-    
-randomLetters = generateRandomLetters(remainingLetters)
-
 def randomizeLetters(word, letters):
     allLetters = list(word + letters)
     random.shuffle(allLetters)
@@ -72,20 +51,24 @@ def randomizeLetters(word, letters):
 
 randomizedLetters = randomizeLetters(randomWord, randomLetters)
 
+def get_random_letter(string_length):
+    randLetters = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(randLetters) for i in range(string_length))
+
 def generate_options(correct_letter):
     options = [correct_letter]
     while len(options) < 3:
-        letter = get_random_letter()
+        letter = get_random_letter(1)
         if letter not in options:
             options.append(letter)
     random.shuffle(options)
     return options
 
 def game():
-    word = random.choice(word)
+    spellWord = randomWord
     word_index = 0
     
-    while word_index < len(word):
+    while word_index < len(spellWord):
         correct_letter = word[word_index]
         options = generate_options(correct_letter)
         
@@ -102,3 +85,5 @@ def game():
         print("")  # Empty line for readability
 
 game()
+
+# print('Spell out this word plz: ', randomWord)
