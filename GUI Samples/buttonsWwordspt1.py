@@ -4,7 +4,7 @@ import string
 import random
 
 # GPIO Pins for buttons
-BUTTON_PINS = [6, 13, 19, 26, 20, 21, 16, 12]
+BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 
 # Function to generate a random word
 def generateRandomWord(words):
@@ -13,6 +13,8 @@ def generateRandomWord(words):
 # Generate a random word
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 randomWord = generateRandomWord(wordList)
+
+print('Spell the word: ', randomWord)
 
 # Function to remove letters from the alphabet
 def removeLetters(letters2Remove):
@@ -68,6 +70,11 @@ try:
                     print(f"Button {pin} is pressed but not assigned a letter.")
             else:
                 pass
-        time.sleep(0.1)
+            print(f"Button {pin} (Letter {button_letters[pin]})")
+        time.sleep(0.5)
+        
 except KeyboardInterrupt:
     GPIO.cleanup()
+
+# for pin in BUTTON_PINS:
+#     print(f"Button {pin} (Letter {button_letters[pin]})")
