@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import time
 import string
 import random
@@ -47,6 +47,8 @@ def randomizeLetters(word, letters):
 
 # Final randomized letter sequence
 randomizedLetters = randomizeLetters(randomWord, randomLetters)
+
+print('Buttons will have the following letters:', randomizedLetters)
 
 # Map button pins to random letters
 button_letters = {}
