@@ -10,6 +10,19 @@ BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 def generateRandomWord(words):
     return random.choice(words)
 
+# Function to remove letters from the alphabet
+def removeLetters(word):
+    alphabet = list(string.ascii_uppercase)
+    
+    for letter in word:
+        if letter in alphabet:
+            alphabet.remove(letter)
+    return alphabet
+
+# Function to generate additional random letters
+def generateRandomLetters(remainingLetters):
+    return random.sample(remainingLetters, 8 - len(randomWord))
+
 # Function to add all letters to one string
 def randomizeLetters(word, letters):
     allLetters = list(word + ''.join(letters))
@@ -33,9 +46,9 @@ def buttonPress(pin):
 def newWord():
     global randomizedLetters, currentWordIndex
     randomWord = generateRandomWord(wordList)
-    remainingLetters = list(set(string.ascii_uppercase) - set(randomWord))
-    randomLetters = random.sample(remainingLetters, 8 - len(randomWord))
-    randomizedLetters = randomizeLetters(randomWord, randomLetters)
+    availableLetters = removeLetters(randomWord)
+    remainingLetters = generateRandomLetters(availableLetters)
+    randomizedLetters = randomizeLetters(randomWord, remainingLetters)
     currentWordIndex = 0
     print(f"Spell the word: {randomWord}")
 
@@ -49,13 +62,23 @@ for pin in BUTTON_PINS:
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 randomWord = generateRandomWord(wordList)
 
+print('The randomword is: ', randomWord)
+
+# Get remaining letters
+availableLetters = removeLetters(randomWord)
+
+# Generate additional random letters
+remainingLetters = generateRandomLetters(availableLetters)
+
 # Final randomized letter sequence
-randomizedLetters = randomizeLetters(randomWord, [])
+randomizedLetters = randomizeLetters(randomWord, remainingLetters)
+
+print('Randomized Letters: ', randomizedLetters)
 
 # Map button pins to random letters
 button_letters = {}
-for idx, pin in enumerate(BUTTON_PINS[:len(randomWord)]):
-    button_letters[pin] = randomWord[idx]
+for idx, pin in enumerate(BUTTON_PINS):
+    button_letters[pin] = randomizedLetters[idx]
 
 # Start the game
 currentWordIndex = 0
