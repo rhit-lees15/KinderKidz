@@ -1,7 +1,7 @@
-# import RPi.GPIO as GPIO
-import time
+import RPi.GPIO as GPIO
 import string
 import random
+import time
 
 # GPIO Pins for buttons
 BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
@@ -10,73 +10,81 @@ BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 def generateRandomWord(words):
     return random.choice(words)
 
+# Function to remove letters from the alphabet
+def removeLetters(word):
+    alphabet = list(string.ascii_uppercase)
+    
+    for letter in word:
+        if letter in alphabet:
+            alphabet.remove(letter)
+    return alphabet
+
+# Function to generate additional random letters
+def generateRandomLetters(remainingLetters, numLetters):
+    return random.sample(remainingLetters, numLetters)
+
+# Function to add all letters to one string
+def randomizeLetters(word, letters):
+    allLetters = list(word + ''.join(letters))
+    random.shuffle(allLetters)
+    return ''.join(allLetters)
+
+# Function to handle button press event
+def buttonPress(pin):
+    global randomizedLetters, currentWordIndex
+    
+    letter = button_letters[pin]
+    if letter == randomizedLetters[currentWordIndex]:
+        print(f"Button {pin} (Letter {letter}) is pressed - Correct!")
+        currentWordIndex += 1
+        if currentWordIndex == len(randomizedLetters):
+            newWord()
+    else:
+        print(f"Button {pin} (Letter {letter}) is pressed - Incorrect!")
+
+# Function to generate and display a new word
+def newWord():
+    global randomizedLetters, currentWordIndex
+    randomWord = generateRandomWord(wordList)
+    print('The random word is:', randomWord)
+    availableLetters = removeLetters(randomWord)
+    remainingLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+    randomizedLetters = randomizeLetters(randomWord, remainingLetters)
+    currentWordIndex = 0
+    print(f"Spell the word: {randomWord}")
+
+# Initialize GPIO
+GPIO.setmode(GPIO.BCM)
+for pin in BUTTON_PINS:
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=200)
+
 # Generate a random word
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 randomWord = generateRandomWord(wordList)
 
-print('Spell the word: ', randomWord)
-
-# Function to remove letters from the alphabet
-def removeLetters(letters2Remove):
-    alphabet = list(string.ascii_uppercase)
-    
-    for letter in letters2Remove:
-        if letter in alphabet:
-            alphabet.remove(letter)
-    alphabetString = ''.join(alphabet)
-    return alphabetString
-
 # Get remaining letters
-letters2Remove = randomWord
-availableLetters = removeLetters(letters2Remove)
+availableLetters = removeLetters(randomWord)
 
-# Function to generate additional random letters
-def generateRandomLetters(remainingLetters):
-    chosenLetters = random.sample(availableLetters, remainingLetters)
-    return ''.join(chosenLetters)
-    
 # Generate additional random letters
-remainingLetters = 8 - len(randomWord)
-randomLetters = generateRandomLetters(remainingLetters)
-
-# Function to add all letters to one string
-def randomizeLetters(word, letters):
-    allLetters = list(word + letters)
-    random.shuffle(allLetters)
-    return ''.join(allLetters)
+remainingLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
 
 # Final randomized letter sequence
-randomizedLetters = randomizeLetters(randomWord, randomLetters)
+randomizedLetters = randomizeLetters(randomWord, remainingLetters)
 
-print('Buttons will have the following letters:', randomizedLetters)
+print('Randomized Letters: ', randomizedLetters)
 
 # Map button pins to random letters
 button_letters = {}
 for idx, pin in enumerate(BUTTON_PINS):
     button_letters[pin] = randomizedLetters[idx]
 
-# Set up GPIO
-GPIO.setmode(GPIO.BCM)
-for pin in BUTTON_PINS:
-    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# Start the game
+currentWordIndex = 0
+newWord()
 
 try:
     while True:
-        for pin in BUTTON_PINS:
-            if GPIO.input(pin) == GPIO.LOW:
-                if pin in button_letters:
-                    print(f"Button {pin} (Letter {button_letters[pin]}) is pressed - {'correct' if button_letters[pin] == randomizedLetters[0] else 'incorrect'}")
-                    # Remove the pressed letter from the randomizedLetters sequence
-                    randomizedLetters = randomizedLetters[1:]
-                else:
-                    print(f"Button {pin} is pressed but not assigned a letter.")
-            else:
-                pass
-            print(f"Button {pin} (Letter {button_letters[pin]})")
-        time.sleep(0.5)
-        
+        time.sleep(1)
 except KeyboardInterrupt:
     GPIO.cleanup()
-
-# for pin in BUTTON_PINS:
-#     print(f"Button {pin} (Letter {button_letters[pin]})")
