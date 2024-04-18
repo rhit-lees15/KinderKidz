@@ -6,30 +6,10 @@ import time
 # GPIO Pins for buttons
 BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 
-# # Function to generate a random word
-# def generateRandomWord(words):
-#     return random.choice(words)
+# Function to generate a random word
+def generateRandomWord(words):
+    return random.choice(words)
 
-<<<<<<< HEAD
-# # Function to remove letters from the alphabet
-# def removeLetters(word):
-#     alphabet = list(string.ascii_uppercase)
-    
-#     for letter in word:
-#         if letter in alphabet:
-#             alphabet.remove(letter)
-#     return alphabet
-
-# # Function to generate additional random letters
-# def generateRandomLetters(remainingLetters):
-#     return random.sample(remainingLetters, 8 - len(randomWord))
-
-# # Function to add all letters to one string
-# def randomizeLetters(word, letters):
-#     allLetters = list(word + ''.join(letters))
-#     random.shuffle(allLetters)
-#     return ''.join(allLetters)
-=======
 # Function to generate additional random letters
 def generateRandomLetters(remainingLetters, numLetters):
     return random.sample(remainingLetters, numLetters)
@@ -39,7 +19,6 @@ def randomizeLetters(word, letters):
     allLetters = list(word + ''.join(letters))
     random.shuffle(allLetters)
     return ''.join(allLetters)
->>>>>>> 288a33f8290c0efcebd9afb04370040f98613d72
 
 # Function to handle button press event
 def buttonPress(pin):
