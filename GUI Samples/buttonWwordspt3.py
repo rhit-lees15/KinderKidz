@@ -10,19 +10,6 @@ BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 def generateRandomWord(words):
     return random.choice(words)
 
-# Function to remove letters from the alphabet
-def removeLetters(word):
-    alphabet = list(string.ascii_uppercase)
-    
-    for letter in word:
-        if letter in alphabet:
-            alphabet.remove(letter)
-    return alphabet
-
-# Function to generate additional random letters
-def generateRandomLetters(remainingLetters):
-    return random.sample(remainingLetters, 8)
-
 # Function to add all letters to one string
 def randomizeLetters(word, letters):
     allLetters = list(word + ''.join(letters))
@@ -46,9 +33,9 @@ def buttonPress(pin):
 def newWord():
     global randomizedLetters, currentWordIndex
     randomWord = generateRandomWord(wordList)
-    availableLetters = removeLetters(randomWord)
-    remainingLetters = generateRandomLetters(availableLetters)
-    randomizedLetters = randomizeLetters(randomWord, remainingLetters)
+    remainingLetters = list(set(string.ascii_uppercase) - set(randomWord))
+    randomLetters = random.sample(remainingLetters, 8 - len(randomWord))
+    randomizedLetters = randomizeLetters(randomWord, randomLetters)
     currentWordIndex = 0
     print(f"Spell the word: {randomWord}")
 
@@ -62,19 +49,13 @@ for pin in BUTTON_PINS:
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 randomWord = generateRandomWord(wordList)
 
-# Get remaining letters
-availableLetters = removeLetters(randomWord)
-
-# Generate additional random letters
-remainingLetters = generateRandomLetters(availableLetters)
-
 # Final randomized letter sequence
-randomizedLetters = randomizeLetters(randomWord, remainingLetters)
+randomizedLetters = randomizeLetters(randomWord, [])
 
 # Map button pins to random letters
 button_letters = {}
-for idx, pin in enumerate(BUTTON_PINS):
-    button_letters[pin] = randomizedLetters[idx]
+for idx, pin in enumerate(BUTTON_PINS[:len(randomWord)]):
+    button_letters[pin] = randomWord[idx]
 
 # Start the game
 currentWordIndex = 0
