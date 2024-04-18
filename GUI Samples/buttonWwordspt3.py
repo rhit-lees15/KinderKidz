@@ -28,7 +28,7 @@ def buttonPress(pin):
     if letter == randomizedLetters[currentWordIndex]:
         print(f"Button {pin} (Letter {letter}) is pressed - Correct!")
         currentWordIndex += 1
-        if currentWordIndex == len(randomizedLetters):
+        if currentWordIndex == len(randomWord):
             newWord()
     else:
         print(f"Button {pin} (Letter {letter}) is pressed - Incorrect!")
@@ -54,8 +54,14 @@ for pin in BUTTON_PINS:
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 randomWord = generateRandomWord(wordList)
 
+# Get remaining letters
+availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
+# Generate additional random letters
+randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+
 # Final randomized letter sequence
-randomizedLetters = randomizeLetters(randomWord, [])
+randomizedLetters = randomizeLetters(randomWord, randomLetters)
 
 print('Randomized Letters: ', randomizedLetters)
 
@@ -65,7 +71,7 @@ for idx, pin in enumerate(BUTTON_PINS):
     if idx < len(randomWord):
         button_letters[pin] = randomWord[idx]
     else:
-        button_letters[pin] = randomizedLetters[idx - len(randomWord)]
+        button_letters[pin] = randomLetters[idx - len(randomWord)]
 
 # Start the game
 currentWordIndex = 0
