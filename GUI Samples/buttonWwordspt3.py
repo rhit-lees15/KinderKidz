@@ -10,6 +10,7 @@ BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 # def generateRandomWord(words):
 #     return random.choice(words)
 
+<<<<<<< HEAD
 # # Function to remove letters from the alphabet
 # def removeLetters(word):
 #     alphabet = list(string.ascii_uppercase)
@@ -28,6 +29,17 @@ BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 #     allLetters = list(word + ''.join(letters))
 #     random.shuffle(allLetters)
 #     return ''.join(allLetters)
+=======
+# Function to generate additional random letters
+def generateRandomLetters(remainingLetters, numLetters):
+    return random.sample(remainingLetters, numLetters)
+
+# Function to add all letters to one string
+def randomizeLetters(word, letters):
+    allLetters = list(word + ''.join(letters))
+    random.shuffle(allLetters)
+    return ''.join(allLetters)
+>>>>>>> 288a33f8290c0efcebd9afb04370040f98613d72
 
 # Function to handle button press event
 def buttonPress(pin):
@@ -44,11 +56,12 @@ def buttonPress(pin):
 
 # Function to generate and display a new word
 def newWord():
-    global randomizedLetters, currentWordIndex
+    global randomizedLetters, currentWordIndex, randomWord
     randomWord = generateRandomWord(wordList)
-    availableLetters = removeLetters(randomWord)
-    remainingLetters = generateRandomLetters(availableLetters)
-    randomizedLetters = randomizeLetters(randomWord, remainingLetters)
+    print('The random word is:', randomWord)
+    remainingLetters = list(set(string.ascii_uppercase) - set(randomWord))
+    randomLetters = generateRandomLetters(remainingLetters, 8 - len(randomWord))
+    randomizedLetters = randomizeLetters(randomWord, randomLetters)
     currentWordIndex = 0
     print(f"Spell the word: {randomWord}")
 
@@ -62,23 +75,18 @@ for pin in BUTTON_PINS:
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 randomWord = generateRandomWord(wordList)
 
-print('The randomword is: ', randomWord)
-
-# Get remaining letters
-availableLetters = removeLetters(randomWord)
-
-# Generate additional random letters
-remainingLetters = generateRandomLetters(availableLetters)
-
 # Final randomized letter sequence
-randomizedLetters = randomizeLetters(randomWord, remainingLetters)
+randomizedLetters = randomizeLetters(randomWord, [])
 
 print('Randomized Letters: ', randomizedLetters)
 
 # Map button pins to random letters
 button_letters = {}
 for idx, pin in enumerate(BUTTON_PINS):
-    button_letters[pin] = randomizedLetters[idx]
+    if idx < len(randomWord):
+        button_letters[pin] = randomWord[idx]
+    else:
+        button_letters[pin] = randomizedLetters[idx - len(randomWord)]
 
 # Start the game
 currentWordIndex = 0
