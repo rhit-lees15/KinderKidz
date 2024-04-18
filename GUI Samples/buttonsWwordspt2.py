@@ -1,40 +1,81 @@
-# import string
-# import random
 import RPi.GPIO as GPIO
+import string
+import random
 import time
-from gpiozero import Button
 
-# GPIO pin numbers for buttons
-BUTTON_PIN = ([7, 24, 6])
+# GPIO Pins for buttons
+BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 
-#  Use the GPIO number instead of the Raspberry Pi number
+# Function to generate a random word
+def generateRandomWord(words):
+    return random.choice(words)
+
+# Function to generate additional random letters
+def generateRandomLetters(remainingLetters, numLetters):
+    return random.sample(remainingLetters, numLetters)
+
+# Function to add all letters to one string and shuffle them
+def randomizeLetters(word, letters):
+    allLetters = list(word + ''.join(letters))
+    random.shuffle(allLetters)
+    return ''.join(allLetters)
+
+# Function to handle button press event
+def buttonPress(pin):
+    global spelledWord, randomWord, randomizedLetters
+    
+    letter = button_letters[pin]
+    spelledWord += letter
+    print("Current spelling:", spelledWord)
+    if len(spelledWord) == len(randomizedLetters):
+        if spelledWord.upper() == randomWord:
+            print("Correct! You spelled the word correctly.")
+            newWord()
+        else:
+            print("Incorrect! Try again.")
+            spelledWord = ''
+
+# Function to generate and display a new word
+def newWord():
+    global spelledWord, randomWord, randomizedLetters
+    randomWord = generateRandomWord(wordList)
+    print("Let's spell another word.")
+    print(f"Spell the word: {randomWord}")
+    spelledWord = ''
+
+# Initialize GPIO
 GPIO.setmode(GPIO.BCM)
+for pin in BUTTON_PINS:
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=200)
 
-# Don't use resistor, rather use internal one
-# Don't press, state (high) = 3.3 V
-# Press, state (low) = 0 V
-GPIO.setup(BUTTON_PIN[0], GPIO.IN, pull_up_down = GPIO.PUD_UP)
-GPIO.setup(BUTTON_PIN[1], GPIO.IN, pull_up_down = GPIO.PUD_UP)
-GPIO.setup(BUTTON_PIN[2], GPIO.IN, pull_up_down = GPIO.PUD_UP)
+# Generate a random word
+wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+randomWord = generateRandomWord(wordList)
 
-# Will give a value
-Button_1 = GPIO.input(BUTTON_PIN[0])
-Button_2 = GPIO.input(BUTTON_PIN[1])
-Button_3 = GPIO.input(BUTTON_PIN[2])
+# Get remaining letters
+availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
+# Generate additional random letters
+randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+
+# Combine the random word and random letters into a single string and shuffle them
+randomizedLetters = randomizeLetters(randomWord, randomLetters)
+
+# Map each letter to a button
+button_letters = {}
+for idx, pin in enumerate(BUTTON_PINS):
+    button_letters[pin] = randomizedLetters[idx]
+
+# Start the game
+print("Welcome to the Word Spelling Game!")
+print(f"Spell the word: {randomWord}")
+print("Available letters: " + ' '.join(button_letters.values()))
+
+spelledWord = ''
 
 try:
     while True:
-        time.sleep(0.1)
-        if GPIO.input(BUTTON_PIN) == GPIO.LOW:
-            print("Button is pressed")
-        else:
-            print("Button is not pressed")
+        time.sleep(1)
 except KeyboardInterrupt:
-    # Press Ctrl + C -> to exit code
-    # Best practice, clean any GPIO, could burn pins
     GPIO.cleanup()
-
-# Terminal
-# find folder
-    # fjlkadjfla/
-    # python3 buttonPressTest.py
