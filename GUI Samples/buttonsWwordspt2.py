@@ -1,3 +1,4 @@
+# Newest attempt
 import RPi.GPIO as GPIO
 import string
 import random
@@ -78,7 +79,7 @@ for pin in BUTTON_PINS:
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 randomWord = generateRandomWord(wordList)
 
-# Get remaining letter
+# Get remaining letters
 availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
 
 # Generate additional random letters
