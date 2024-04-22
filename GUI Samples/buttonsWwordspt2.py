@@ -117,7 +117,7 @@ button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in ra
 print("Welcome to the Word Spelling Game!")
 print(f"Spell the word: {randomWord}")
 print("Reallocated letters: " + ' '.join(randomizedLetters))
-print("Available letters: " + ' '.join(availableLetters))
+# print("Available letters: " + ' '.join(availableLetters))
 
 spelledWord = ''
 
