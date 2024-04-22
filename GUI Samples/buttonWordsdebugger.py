@@ -1,3 +1,7 @@
+# Works but does not give new letters after word is spelled 
+# and does not care if the letters are in the correct order,
+# as long as the letter is in the word, it counts it.
+
 import RPi.GPIO as GPIO
 import string
 import random

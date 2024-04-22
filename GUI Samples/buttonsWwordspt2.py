@@ -3,9 +3,6 @@ import string
 import random
 import time
 
-# Set GPIO mode
-GPIO.setmode(GPIO.BCM)
-
 # GPIO Pins for buttons
 BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 
@@ -28,11 +25,11 @@ def buttonPress(pin):
     global spelledWord, randomWord, randomizedLetters
     
     letter = button_letters[pin]
-    if len(spelledWord) < len(randomWord) and letter == randomWord[len(spelledWord)]:
+    if letter in randomWord:
         spelledWord += letter
         print("Current spelling:", spelledWord)
     else:
-        print(f"Incorrect! Button {pin} is not the next letter or the word is complete. Try again.")
+        print(f"Incorrect! Button {pin} is not part of the word. Try again.")
     
     if len(spelledWord) == len(randomWord):
         if spelledWord.upper() == randomWord:
@@ -45,20 +42,34 @@ def buttonPress(pin):
 # Function to generate and display a new word
 def newWord():
     global spelledWord, randomWord, randomizedLetters
+    
+    # Generate a new word
     randomWord = generateRandomWord(wordList)
+    
+    # Get remaining letters
+    availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+    
+    # Generate additional random letters
+    randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+    
+    # Combine the random word and random letters into a single string and shuffle them
+    randomizedLetters = randomizeLetters(randomWord, randomLetters)
+    
+    # Map each letter to a button
+    button_letters = {}
+    for idx, pin in enumerate(BUTTON_PINS):
+        button_letters[pin] = randomizedLetters[idx]
+    
+    # Print new word and letters
     print("Let's spell another word.")
     print(f"Spell the word: {randomWord}")
+    print("Available letters: " + ' '.join(button_letters.values()))
+    
+    # Reset spelledWord
     spelledWord = ''
-    displayLetters(randomWord, button_letters)
-
-# Function to display the available letters
-def displayLetters(word, letters):
-    print("Available letters: ", end="")
-    for letter in word:
-        print(letters[letter], end=" ")
-    print()
 
 # Initialize GPIO
+GPIO.setmode(GPIO.BCM)
 for pin in BUTTON_PINS:
     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=200)
@@ -74,24 +85,17 @@ availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
 randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
 
 # Combine the random word and random letters into a single string and shuffle them
-randomizedLetters = {}
-for idx, letter in enumerate(randomWord):
-    randomizedLetters[letter] = letter
-for letter in randomLetters:
-    randomizedLetters[letter] = letter
+randomizedLetters = randomizeLetters(randomWord, randomLetters)
 
 # Map each letter to a button
 button_letters = {}
 for idx, pin in enumerate(BUTTON_PINS):
-    if idx < len(randomWord):
-        button_letters[pin] = randomWord[idx]
-    else:
-        button_letters[pin] = randomLetters[idx - len(randomWord)]
+    button_letters[pin] = randomizedLetters[idx]
 
 # Start the game
 print("Welcome to the Word Spelling Game!")
 print(f"Spell the word: {randomWord}")
-displayLetters(randomWord, button_letters)
+print("Available letters: " + ' '.join(button_letters.values()))
 
 spelledWord = ''
 
