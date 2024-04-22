@@ -2,6 +2,8 @@
 # and does not care if the letters are in the correct order,
 # as long as the letter is in the word, it counts it.
 
+## now it continuously adds letters past 3.
+
 import RPi.GPIO as GPIO
 import string
 import random
@@ -26,15 +28,21 @@ def randomizeLetters(word, letters):
 
 # Function to handle button press event
 def buttonPress(pin):
-    global spelledWord, randomWord, randomizedLetters, button_sequence
+    global spelledWord, randomWord, button_sequence, button_letters
     
     letter = button_letters[pin]
     if letter in randomWord:
         spelledWord += letter
         print("Current spelling:", spelledWord)
-        if checkSequence():
-            print("Correct! You spelled the word correctly.")
-            newWord()
+        
+        # Check if the spelled word matches the next letter in the sequence
+        if spelledWord.upper() == randomWord[:len(spelledWord)]:
+            if len(spelledWord) == len(randomWord):
+                print("Correct! You spelled the word correctly.")
+                newWord()
+        else:
+            print("Incorrect order! Try again.")
+            spelledWord = ''
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
 
