@@ -70,6 +70,7 @@ def newWord():
     # Print new word and letters
     print("Let's spell another word.")
     print(f"Spell the word: {randomWord}")
+    print("Reallocated letters: " + ' '.join(randomizedLetters))
     print("Available letters: " + ' '.join(randomLetters))
     
     # Reset spelledWord
