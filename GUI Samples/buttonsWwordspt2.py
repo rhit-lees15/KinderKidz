@@ -22,14 +22,14 @@ def randomizeLetters(word, letters):
 
 # Function to handle button press event
 def buttonPress(pin):
-    global spelledWord, randomWord, randomizedLetters, button_sequence
+    global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
     
     letter = button_letters[pin]
     if letter in randomWord:
         spelledWord += letter
         print("Current spelling:", spelledWord)
     else:
-        print(f"Incorrect! Button {pin} is not part of the word. Try again.")
+        print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
     
     if len(spelledWord) == len(randomWord):
         if spelledWord.upper() == randomWord:
@@ -51,7 +51,7 @@ def newWord():
     randomWord = generateRandomWord(wordList)
     
     # Get remaining letters
-    availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+    availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
     
     # Generate additional random letters
     randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
@@ -71,7 +71,7 @@ def newWord():
     print("Let's spell another word.")
     print(f"Spell the word: {randomWord}")
     print("Reallocated letters: " + ' '.join(randomizedLetters))
-    print("Available letters: " + ' '.join(randomLetters))
+    print("Available letters: " + ' '.join(availableLetters))
     
     # Reset spelledWord
     spelledWord = ''
@@ -116,7 +116,8 @@ button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in ra
 # Start the game
 print("Welcome to the Word Spelling Game!")
 print(f"Spell the word: {randomWord}")
-print("Available letters: " + ' '.join(randomLetters))
+print("Reallocated letters: " + ' '.join(randomizedLetters))
+print("Available letters: " + ' '.join(availableLetters))
 
 spelledWord = ''
 
