@@ -19,22 +19,22 @@ class GUI(tk.Tk):
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Load and display images in the four corners of the GUI
-        images = ["Chase.jpg", "Marshall.jpg", "Rubble.jpg", "Zuma.jpg"]
-        positions = [(0, 0), (0, self.winfo_screenheight() - 375), (self.winfo_screenwidth() - 375, 0), (self.winfo_screenwidth() - 375, self.winfo_screenheight() - 375)]
+        # images = ["Chase.jpg", "Marshall.jpg", "Rubble.jpg", "Zuma.jpg"]
+        # positions = [(0, 0), (0, self.winfo_screenheight() - 375), (self.winfo_screenwidth() - 375, 0), (self.winfo_screenwidth() - 375, self.winfo_screenheight() - 375)]
 
-        for image_path, position in zip(images, positions):
-            image = self.load_image(image_path)
-            label = tk.Label(start_page, image=image)
-            label.image = image
-            label.place(x=position[0], y=position[1])
+        # for image_path, position in zip(images, positions):
+        #     image = self.load_image(image_path)
+        #     label = tk.Label(start_page, image=image)
+        #     label.image = image
+        #     label.place(x=position[0], y=position[1])
 
         # Start button
-        start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 16),
+        start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
                                  command=self.create_time_selection_page)
         start_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Exit button
-        exit_button = tk.Button(start_page, text="Exit", bg="red", font=("Helvetica", 16),
+        exit_button = tk.Button(start_page, text="Exit", bg="red", font=("Helvetica", 20),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
