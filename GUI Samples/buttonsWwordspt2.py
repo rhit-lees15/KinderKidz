@@ -22,26 +22,32 @@ def randomizeLetters(word, letters):
 
 # Function to handle button press event
 def buttonPress(pin):
-    global spelledWord, randomWord, randomizedLetters
+    global spelledWord, randomWord, randomizedLetters, button_presses
     
     letter = button_letters[pin]
     if letter in randomWord:
         spelledWord += letter
+        button_presses.append(pin)  # Add button press to the list
         print("Current spelling:", spelledWord)
     else:
         print(f"Incorrect! Button {pin} is not part of the word. Try again.")
     
     if len(spelledWord) == len(randomWord):
         if spelledWord.upper() == randomWord:
-            print("Correct! You spelled the word correctly.")
-            newWord()
+            if button_presses == button_sequence:  # Check if button sequence matches
+                print("Correct! You spelled the word correctly.")
+                newWord()
+            else:
+                print("Incorrect order! Try again.")
+                spelledWord = ''
+                button_presses = []  # Clear button presses for the next attempt
         else:
             print("Incorrect! Try again.")
             spelledWord = ''
 
 # Function to generate and display a new word
 def newWord():
-    global spelledWord, randomWord, randomizedLetters
+    global spelledWord, randomWord, randomizedLetters, button_sequence
     
     # Generate a new word
     randomWord = generateRandomWord(wordList)
@@ -65,8 +71,12 @@ def newWord():
     print(f"Spell the word: {randomWord}")
     print("Available letters: " + ' '.join(button_letters.values()))
     
-    # Reset spelledWord
+    # Set button sequence for the new word
+    button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+    
+    # Reset spelledWord and button_presses
     spelledWord = ''
+    button_presses = []
 
 # Initialize GPIO
 GPIO.setmode(GPIO.BCM)
@@ -92,12 +102,16 @@ button_letters = {}
 for idx, pin in enumerate(BUTTON_PINS):
     button_letters[pin] = randomizedLetters[idx]
 
+# Set button sequence for the initial word
+button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+
 # Start the game
 print("Welcome to the Word Spelling Game!")
 print(f"Spell the word: {randomWord}")
 print("Available letters: " + ' '.join(button_letters.values()))
 
 spelledWord = ''
+button_presses = []
 
 try:
     while True:
