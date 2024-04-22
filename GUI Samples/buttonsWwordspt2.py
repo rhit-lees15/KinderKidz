@@ -78,7 +78,7 @@ for pin in BUTTON_PINS:
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 randomWord = generateRandomWord(wordList)
 
-# Get remaining letters
+# Get remaining letter
 availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
 
 # Generate additional random letters
