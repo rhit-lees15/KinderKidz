@@ -22,25 +22,23 @@ def randomizeLetters(word, letters):
 
 # Function to handle button press event
 def buttonPress(pin):
-    global spelledWord, randomWord, randomizedLetters, button_presses
+    global spelledWord, randomWord, randomizedLetters, button_sequence
     
     letter = button_letters[pin]
     if letter in randomWord:
         spelledWord += letter
-        button_presses.append(pin)  # Add button press to the list
         print("Current spelling:", spelledWord)
     else:
         print(f"Incorrect! Button {pin} is not part of the word. Try again.")
     
     if len(spelledWord) == len(randomWord):
         if spelledWord.upper() == randomWord:
-            if button_presses == button_sequence:  # Check if button sequence matches
+            if checkSequence():
                 print("Correct! You spelled the word correctly.")
                 newWord()
             else:
                 print("Incorrect order! Try again.")
                 spelledWord = ''
-                button_presses = []  # Clear button presses for the next attempt
         else:
             print("Incorrect! Try again.")
             spelledWord = ''
@@ -74,9 +72,18 @@ def newWord():
     # Set button sequence for the new word
     button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
     
-    # Reset spelledWord and button_presses
+    # Reset spelledWord
     spelledWord = ''
-    button_presses = []
+
+# Function to check if button presses match the sequence
+def checkSequence():
+    global spelledWord, button_sequence
+    if len(spelledWord) != len(button_sequence):
+        return False
+    for i in range(len(spelledWord)):
+        if button_sequence[i] != BUTTON_PINS[randomizedLetters.index(spelledWord[i])]:
+            return False
+    return True
 
 # Initialize GPIO
 GPIO.setmode(GPIO.BCM)
@@ -111,7 +118,6 @@ print(f"Spell the word: {randomWord}")
 print("Available letters: " + ' '.join(button_letters.values()))
 
 spelledWord = ''
-button_presses = []
 
 try:
     while True:
