@@ -25,9 +25,13 @@ def buttonPress(pin):
     global spelledWord, randomWord, randomizedLetters
     
     letter = button_letters[pin]
-    spelledWord += letter
-    print("Current spelling:", spelledWord)
-    if len(spelledWord) == len(randomizedLetters):
+    if letter in randomWord:
+        spelledWord += letter
+        print("Current spelling:", spelledWord)
+    else:
+        print(f"Incorrect! Button {pin} is not part of the word. Try again.")
+    
+    if len(spelledWord) == len(randomWord):
         if spelledWord.upper() == randomWord:
             print("Correct! You spelled the word correctly.")
             newWord()
