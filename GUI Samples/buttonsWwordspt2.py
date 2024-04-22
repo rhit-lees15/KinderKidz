@@ -46,7 +46,7 @@ def newWord():
     print("Let's spell another word.")
     print(f"Spell the word: {randomWord}")
     spelledWord = ''
-    displayLetters(randomWord, randomizedLetters)
+    displayLetters(randomWord, button_letters)
 
 # Function to display the available letters
 def displayLetters(word, letters):
@@ -81,12 +81,15 @@ for letter in randomLetters:
 # Map each letter to a button
 button_letters = {}
 for idx, pin in enumerate(BUTTON_PINS):
-    button_letters[pin] = randomizedLetters[randomWord[idx]]
+    if idx < len(randomWord):
+        button_letters[pin] = randomWord[idx]
+    else:
+        button_letters[pin] = randomLetters[idx - len(randomWord)]
 
 # Start the game
 print("Welcome to the Word Spelling Game!")
 print(f"Spell the word: {randomWord}")
-displayLetters(randomWord, randomizedLetters)
+displayLetters(randomWord, button_letters)
 
 spelledWord = ''
 
