@@ -25,12 +25,11 @@ def buttonPress(pin):
     global spelledWord, randomWord, randomizedLetters
     
     letter = button_letters[pin]
-    if letter in randomWord[len(spelledWord)]:
+    if len(spelledWord) < len(randomWord) and letter == randomWord[len(spelledWord)]:
         spelledWord += letter
         print("Current spelling:", spelledWord)
     else:
-        print(f"Incorrect! Button {pin} is not the next letter. Try again.")
-        print("Current spelling:", spelledWord)
+        print(f"Incorrect! Button {pin} is not the next letter or the word is complete. Try again.")
     
     if len(spelledWord) == len(randomWord):
         if spelledWord.upper() == randomWord:
@@ -78,6 +77,11 @@ for idx, letter in enumerate(randomWord):
     randomizedLetters[letter] = letter
 for letter in randomLetters:
     randomizedLetters[letter] = letter
+
+# Map each letter to a button
+button_letters = {}
+for idx, pin in enumerate(BUTTON_PINS):
+    button_letters[pin] = randomizedLetters[randomWord[idx]]
 
 # Start the game
 print("Welcome to the Word Spelling Game!")
