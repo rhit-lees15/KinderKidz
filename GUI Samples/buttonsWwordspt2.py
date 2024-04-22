@@ -71,7 +71,7 @@ def newWord():
     print("Let's spell another word.")
     print(f"Spell the word: {randomWord}")
     print("Reallocated letters: " + ' '.join(randomizedLetters))
-    print("Available letters: " + ' '.join(availableLetters))
+    # print("Available letters: " + ' '.join(availableLetters))
     
     # Reset spelledWord
     spelledWord = ''
