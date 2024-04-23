@@ -1,0 +1,169 @@
+from audioplayer import AudioPlayer
+import RPi.GPIO as GPIO 
+import vlc
+import time
+import string
+import random
+from gpiozero import Button
+GPIO.setwarnings(False) 
+GPIO.setmode(GPIO.BCM) 
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
+GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
+
+def init_vlc(song:str):
+    vlc_instance = vlc.Instance()
+    player = vlc_instance.media_player_new()
+
+    media  = vlc_instance.media_new(song)
+    media.get_mrl()
+    player.set_media(media)
+    player.play()
+    # playing = set(State.playing)
+    time.sleep(1.5) # startup time.
+    duration = player.get_length() / 1000
+    mm, ss   = divmod(duration, 60)
+
+# GPIO Pins for buttons
+BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
+
+# Function to generate a random word
+def generateRandomWord(words):
+    return random.choice(words)
+
+# Function to generate additional random letters
+def generateRandomLetters(remainingLetters, numLetters):
+    return random.sample(remainingLetters, numLetters)
+
+# Function to add all letters to one string and shuffle them
+def randomizeLetters(word, letters):
+    allLetters = list(word + ''.join(letters))
+    random.shuffle(allLetters)
+    return ''.join(allLetters)
+
+# Function to handle button press event
+def buttonPress(pin):
+    global spelledWord, randomWord, button_sequence, button_letters
+    
+    letter = button_letters[pin]
+    if letter in randomWord:
+        spelledWord += letter
+        print("Current spelling:", spelledWord)
+        
+        # Check if the spelled word matches the next letter in the sequence
+        if spelledWord.upper() == randomWord[:len(spelledWord)]:
+            if len(spelledWord) == len(randomWord):
+                print("Correct! You spelled the word correctly.")
+                init_vlc('.AudioStuff/goodjob,nowletsfindthenextletter.mp3')
+                newWord()
+        else:
+            print("Incorrect order! Try again.")
+            init_vlc('.AudioStuff/oops,thatsnotright,tryadifferentorder')
+            spelledWord = ''
+    else:
+        print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+        init_vlc('.AudioStuff/nope,thatletterisntpartoftheword')
+
+# Function to generate and display a new word
+def newWord():
+    global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
+    
+    # Generate a new word
+    randomWord = generateRandomWord(wordList)
+    
+    # Get remaining letters
+    availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
+    
+    # Generate additional random letters
+    randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+    
+    # Combine the random word and random letters into a single string and shuffle them
+    randomizedLetters = randomizeLetters(randomWord, randomLetters)
+    
+    # Map each letter to a button
+    button_letters = {}
+    for idx, pin in enumerate(BUTTON_PINS):
+        button_letters[pin] = randomizedLetters[idx]
+    
+    # Set button sequence for the new word
+    button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+    
+    # Print new word and letters
+    init_vlc('.AudioStuff/timetomoveontothenextword.mp3 ')
+    print("Let's spell another word.")
+    print(f"Spell the word: {randomWord}")
+    print("Reallocated letters: " + ' '.join(randomizedLetters))
+    # print("Available letters: " + ' '.join(availableLetters))
+    
+    # Reset spelledWord
+    spelledWord = ''
+
+# Function to check if button presses match the sequence
+def checkSequence():
+    global spelledWord, button_sequence
+    if len(spelledWord) != len(button_sequence):
+        return False
+    for i in range(len(spelledWord)):
+        if button_sequence[i] != BUTTON_PINS[randomizedLetters.index(spelledWord[i])]:
+            return False
+    return True
+
+# Initialize GPIO
+GPIO.setmode(GPIO.BCM)
+for pin in BUTTON_PINS:
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=200)
+
+# Generate a random word
+wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+randomWord = generateRandomWord(wordList)
+
+# Get remaining letters
+availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
+# Generate additional random letters
+randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+
+# Combine the random word and random letters into a single string and shuffle them
+randomizedLetters = randomizeLetters(randomWord, randomLetters)
+
+# Map each letter to a button
+button_letters = {}
+for idx, pin in enumerate(BUTTON_PINS):
+    button_letters[pin] = randomizedLetters[idx]
+
+# Set button sequence for the initial word
+button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+
+# Start the game
+print("Welcome to the Word Spelling Game!")
+init_vlc('.AudioStuff/hicarmine,letsspellsomewordstoday.mp3')
+print(f"Spell the word: {randomWord}")
+print("Reallocated letters: " + ' '.join(randomizedLetters))
+# print("Available letters: " + ' '.join(availableLetters))
+
+spelledWord = ''
+
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    GPIO.cleanup()
+
+
+GPIO.cleanup() # Clean up
+
+# names of audio files for convenience
+
+# first,letsfindtheletterC.mp3
+# Bye,Carmine.mp3 
+# goodjob,nowletsfindthenextletter.mp3 
+# Greatwork,Carmine.mp3 
+# hicarmine,letsspellsomewordstoday.mp3 
+# letsfindtheletterT.mp3 
+# pressthegreenbuttontostart.mp3 
+# repeatafterme,ispelledthewordcat,catisspelledCAT.mp3 
+# thetimerranout,letshaveadancebreak.mp3 
+# timetomoveontothenextword.mp3 
+# werespellingthewordcat,catisspelledCAT.mp3 
+# whereistheletterA_.mp3 
+# youspelledthewordcat,catisspelledCAT.mp3
