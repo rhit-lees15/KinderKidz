@@ -19,7 +19,7 @@ class GUI(tk.Tk):
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Singular Picture
-        image_path = "Carmine.png"  # Change this to your image path
+        image_path = "Carmine.PNG" 
         image = self.load_image(image_path)
         picture_label = tk.Label(start_page, image=image)
         picture_label.image = image
