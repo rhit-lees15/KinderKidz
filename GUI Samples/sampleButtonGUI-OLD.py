@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import PhotoImage, messagebox
 import random
-from PIL import Image, ImageTk
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -20,7 +19,7 @@ class GUI(tk.Tk):
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Singular Picture
-        image_path = "Carmine.PNG"
+        image_path = "Carmine.png"  # Change this to your image path
         image = self.load_image(image_path)
         picture_label = tk.Label(start_page, image=image)
         picture_label.image = image
@@ -109,35 +108,36 @@ class GUI(tk.Tk):
             countdown_label.config(text=f"Time Left: {seconds_left} seconds")
             if seconds_left > 0:
                 frame.after(1000, update_countdown, seconds_left - 1)
-            # else:
-            #     self.create_gif_display_page()
+            else:
+                self.create_gif_display_page()
 
         update_countdown(duration)
 
-    # def create_gif_display_page(self):
-    #     self.hide_current_page()  # Hide current page
-    #     self.current_page = "gif_display"
+    def create_gif_display_page(self):
+        self.hide_current_page()  # Hide current page
+        self.current_page = "gif_display"
+        
+        gif_display_page = tk.Frame(self)
+        gif_display_page.pack(fill=tk.BOTH, expand=True)
 
-    #     gif_display_page = tk.Frame(self)
-    #     gif_display_page.pack(fill=tk.BOTH, expand=True)
+        # Add a label for text above the GIF
+        text_label = tk.Label(gif_display_page, text="GIF Display Page", font=("Helvetica", 24))
+        text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
 
-    #     # Add a label for text above the GIF
-    #     text_label = tk.Label(gif_display_page, text="GIF Display Page", font=("Helvetica", 24))
-    #     text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+        # Load and display the GIF
+        gif_path = "example.gif"  # Change this to your GIF path
+        gif_label = tk.Label(gif_display_page)
+        gif_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        gif_image = PhotoImage(file=gif_path)
+        gif_label.config(image=gif_image)
+        gif_label.image = gif_image
 
-    #     # Load and display the GIF
-    #     gif_path = "example.gif"  # Change this to your GIF path
-    #     resized_gif = self.resize_image(gif_path, 400, 300)  # Resize the image
-    #     gif_label = tk.Label(gif_display_page, image=resized_gif)
-    #     gif_label.image = resized_gif
-    #     gif_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        # Exit button
+        exit_button = tk.Button(gif_display_page, text="Exit", bg="red", font=("Helvetica", 16),
+                                command=self.exit_program)
+        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
-    #     # Exit button
-    #     exit_button = tk.Button(gif_display_page, text="Exit", bg="red", font=("Helvetica", 16),
-    #                             command=self.exit_program)
-    #     exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
-
-    #     self.pages["gif_display"] = gif_display_page  # Store the GIF display page
+        self.pages["gif_display"] = gif_display_page  # Store the GIF display page
 
     def hide_current_page(self):
         if self.current_page in self.pages:
@@ -147,12 +147,6 @@ class GUI(tk.Tk):
         if messagebox.askokcancel("Quit", "Do you want to quit?"):
             self.destroy()
 
-    def resize_image(self, path, width, height):
-        image = Image.open(path)
-        resized_image = image.resize((width, height), Image.ANTIALIAS)
-        tk_image = ImageTk.PhotoImage(resized_image)
-        return tk_image
-
 if __name__ == "__main__":
-    app = GUI()
+    app = GUI()   
     app.mainloop()
