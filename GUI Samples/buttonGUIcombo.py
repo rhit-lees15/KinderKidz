@@ -1,6 +1,14 @@
 import tkinter as tk
 from tkinter import PhotoImage, messagebox
 import random
+from PIL import Image, ImageTk
+import string
+import RPi.GPIO as GPIO
+import time
+
+# Global Variables
+wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -13,13 +21,19 @@ class GUI(tk.Tk):
 
         self.create_start_page()
 
+        # Initialize GPIO
+        GPIO.setmode(GPIO.BCM)
+        for pin in BUTTON_PINS:
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: self.button_press(pin), bouncetime=200)
+
     def create_start_page(self):
         self.current_page = "start"
         start_page = tk.Frame(self)
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Singular Picture
-        image_path = "Carmine.png"  # Change this to your image path
+        image_path = "Carmine.PNG"
         image = self.load_image(image_path)
         picture_label = tk.Label(start_page, image=image)
         picture_label.image = image
@@ -72,19 +86,18 @@ class GUI(tk.Tk):
         self.current_page = "word_display"
 
         # Random word generator
-        word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
-        random_word = random.choice(word_list)
+        randomWord = random.choice(wordList)
 
         # Display word
         word_display_page = tk.Frame(self)
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 48))
+        word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48))
         word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Change color of each letter
         colors = ["red", "blue", "green", "purple", "orange"]  # List of colors
-        for i, letter in enumerate(random_word):
+        for i, letter in enumerate(randomWord):
             color = random.choice(colors)  # Pick a random color
             word_text.config(fg=color)
             word_text.update_idletasks()
@@ -108,36 +121,26 @@ class GUI(tk.Tk):
             countdown_label.config(text=f"Time Left: {seconds_left} seconds")
             if seconds_left > 0:
                 frame.after(1000, update_countdown, seconds_left - 1)
-            else:
-                self.create_gif_display_page()
 
         update_countdown(duration)
 
-    def create_gif_display_page(self):
-        self.hide_current_page()  # Hide current page
-        self.current_page = "gif_display"
-        
-        gif_display_page = tk.Frame(self)
-        gif_display_page.pack(fill=tk.BOTH, expand=True)
+    def button_press(self, pin):
+        global randomWord
+        letter = randomWord[len(spelledWord)]
+        if button_letters[pin] == letter:
+            spelledWord += letter
+            if spelledWord == randomWord:
+                self.correct_spelling()
+        else:
+            self.incorrect_spelling()
 
-        # Add a label for text above the GIF
-        text_label = tk.Label(gif_display_page, text="GIF Display Page", font=("Helvetica", 24))
-        text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+    def correct_spelling(self):
+        messagebox.showinfo("Correct!", "You spelled the word correctly!")
+        self.create_word_display_page(5)  # Restart with a new word
 
-        # Load and display the GIF
-        gif_path = "example.gif"  # Change this to your GIF path
-        gif_label = tk.Label(gif_display_page)
-        gif_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-        gif_image = PhotoImage(file=gif_path)
-        gif_label.config(image=gif_image)
-        gif_label.image = gif_image
-
-        # Exit button
-        exit_button = tk.Button(gif_display_page, text="Exit", bg="red", font=("Helvetica", 16),
-                                command=self.exit_program)
-        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
-
-        self.pages["gif_display"] = gif_display_page  # Store the GIF display page
+    def incorrect_spelling(self):
+        messagebox.showerror("Incorrect!", "Incorrect letter. Try again.")
+        self.create_word_display_page(5)  # Restart with the same word
 
     def hide_current_page(self):
         if self.current_page in self.pages:
@@ -145,8 +148,9 @@ class GUI(tk.Tk):
 
     def exit_program(self):
         if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            GPIO.cleanup()
             self.destroy()
 
 if __name__ == "__main__":
-    app = GUI()   
+    app = GUI()
     app.mainloop()
