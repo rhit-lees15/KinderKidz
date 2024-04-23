@@ -6,6 +6,8 @@
 
 ### I THINK IT WORKS!!!!
 
+## MOST UPDATED CODE AS OF 04.23.24
+
 import RPi.GPIO as GPIO
 import string
 import random
@@ -34,17 +36,21 @@ def buttonPress(pin):
     
     letter = button_letters[pin]
     if letter in randomWord:
-        spelledWord += letter
-        print("Current spelling:", spelledWord)
-        
-        # Check if the spelled word matches the next letter in the sequence
-        if spelledWord.upper() == randomWord[:len(spelledWord)]:
+        # Check if the letter is in the correct position
+        if spelledWord + letter == randomWord[:len(spelledWord) + 1]:
+            spelledWord += letter
+            print("Current spelling:", spelledWord)
+            
+            # If the full word is spelled correctly
             if len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
                 newWord()
         else:
-            print("Incorrect order! Try again.")
-            spelledWord = ''
+            # Find the first incorrect letter position
+            incorrect_position = len(spelledWord)
+            restart_from = randomWord.index(spelledWord[incorrect_position])
+            spelledWord = randomWord[restart_from]
+            print("Incorrect order! Restarting from:", spelledWord)
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
 
@@ -76,20 +82,9 @@ def newWord():
     print("Let's spell another word.")
     print(f"Spell the word: {randomWord}")
     print("Reallocated letters: " + ' '.join(randomizedLetters))
-    # print("Available letters: " + ' '.join(availableLetters))
     
     # Reset spelledWord
     spelledWord = ''
-
-# Function to check if button presses match the sequence
-def checkSequence():
-    global spelledWord, button_sequence
-    if len(spelledWord) != len(button_sequence):
-        return False
-    for i in range(len(spelledWord)):
-        if button_sequence[i] != BUTTON_PINS[randomizedLetters.index(spelledWord[i])]:
-            return False
-    return True
 
 # Initialize GPIO
 GPIO.setmode(GPIO.BCM)
@@ -122,7 +117,6 @@ button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in ra
 print("Welcome to the Word Spelling Game!")
 print(f"Spell the word: {randomWord}")
 print("Reallocated letters: " + ' '.join(randomizedLetters))
-# print("Available letters: " + ' '.join(availableLetters))
 
 spelledWord = ''
 
