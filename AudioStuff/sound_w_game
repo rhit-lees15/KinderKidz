@@ -53,15 +53,15 @@ def buttonPress(pin):
         if spelledWord.upper() == randomWord[:len(spelledWord)]:
             if len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
-                init_vlc('.AudioStuff/goodjob,nowletsfindthenextletter.mp3')
+                init_vlc('./AudioStuff/goodjob,nowletsfindthenextletter.mp3')
                 newWord()
         else:
             print("Incorrect order! Try again.")
-            init_vlc('.AudioStuff/oops,thatsnotright,tryadifferentorder')
+            init_vlc('./AudioStuff/oops,thatsnotright,tryadifferentorder')
             spelledWord = ''
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
-        init_vlc('.AudioStuff/nope,thatletterisntpartoftheword')
+        init_vlc('./AudioStuff/nope,thatletterisntpartoftheword')
 
 # Function to generate and display a new word
 def newWord():
@@ -88,7 +88,7 @@ def newWord():
     button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
     
     # Print new word and letters
-    init_vlc('.AudioStuff/timetomoveontothenextword.mp3 ')
+    init_vlc('./AudioStuff/timetomoveontothenextword.mp3 ')
     print("Let's spell another word.")
     print(f"Spell the word: {randomWord}")
     print("Reallocated letters: " + ' '.join(randomizedLetters))
@@ -136,7 +136,7 @@ button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in ra
 
 # Start the game
 print("Welcome to the Word Spelling Game!")
-init_vlc('.AudioStuff/hicarmine,letsspellsomewordstoday.mp3')
+init_vlc('./AudioStuff/hicarmine,letsspellsomewordstoday.mp3')
 print(f"Spell the word: {randomWord}")
 print("Reallocated letters: " + ' '.join(randomizedLetters))
 # print("Available letters: " + ' '.join(availableLetters))
