@@ -48,17 +48,17 @@ class GUI(tk.Tk):
         time_selection_page.pack(fill=tk.BOTH, expand=True)
 
         # Time selection buttons
-        five_sec_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 16),
+        five_sec_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 20),
                                     command=lambda: self.create_word_display_page(5))
-        five_sec_button.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
+        five_sec_button.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
 
-        thirty_sec_button = tk.Button(time_selection_page, text="30 Seconds", font=("Helvetica", 16),
+        thirty_sec_button = tk.Button(time_selection_page, text="30 Seconds", font=("Helvetica", 20),
                                       command=lambda: self.create_word_display_page(30))
-        thirty_sec_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+        thirty_sec_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        one_min_button = tk.Button(time_selection_page, text="1 Minute", font=("Helvetica", 16),
+        one_min_button = tk.Button(time_selection_page, text="1 Minute", font=("Helvetica", 20),
                                    command=lambda: self.create_word_display_page(60))
-        one_min_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
+        one_min_button.place(relx=0.7, rely=0.5, anchor=tk.CENTER)
 
         # Exit button
         exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
