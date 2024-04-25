@@ -61,7 +61,7 @@ def buttonPress(pin):
     letter = button_letters[pin]
     if letter in randomWord:
         # Check if the letter is in the correct position
-        if spelledWord + letter == randomWord[:len(spelledWord) + 1]:
+        if letter == randomWord[len(spelledWord)]:
             spelledWord += letter
             print("Current spelling:", spelledWord)
             if len(spelledWord) != len(randomWord):
@@ -73,17 +73,17 @@ def buttonPress(pin):
                 newWord()
         else:
             # Find the first incorrect letter position
-            incorrect_position = len(spelledWord)
+            #incorrect_position = spelledWord[]
             # restart_from = randomWord.index(spelledWord[incorrect_position])
-            # if incorrect_position == 1:
-            #     print("Incorrect order!")
-            #     spelledWord = ''
-            #     init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
-            #     print("Current spelling:", spelledWord)
-             
-            # spelledWord = randomWord[incorrect_position]
-            # print("Incorrect order! Restarting from:", spelledWord)
-            # init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+            if len(spelledWord) == 0:
+                print("Incorrect order!")
+                #spelledWord = ''
+                init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+                print("Current spelling:", spelledWord)
+            else:
+                #spelledWord = randomWord[incorrect_position]
+                print("Incorrect order! Restarting from:", spelledWord)
+                init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
         init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
