@@ -46,7 +46,7 @@ def buttonPress(pin):
         if spelledWord + letter == randomWord[:len(spelledWord) + 1]:
             spelledWord += letter
             print("Current spelling:", spelledWord)
-            
+            init_vlc('./AudioStuff/goodjob,nowletsfindthenextletter.mp3')
             # If the full word is spelled correctly
             if len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
