@@ -1,17 +1,32 @@
+#!/usr/bin/env python3
+# NeoPixel library strandtest example
+# Author: Tony DiCola (tony@tonydicola.com)
+#
+# Direct port of the Arduino NeoPixel library strandtest example.  Showcases
+# various animations on a strip of NeoPixels.
+
 import time
-from pygame import Color
 import randomLetters
+from pygame import Color
 from rpi_ws281x import *
+import argparse
 import RPi.GPIO as GPIO
 
-# Set Up
+# LED strip configuration:
 LED_COUNT      = 100      # Number of LED pixels.
-LED_PIN        = 18      # GPIO pin connected to the pixels
+LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).
+#LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 65     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-LED_CHANNEL    = 0   
+LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+
+BUTTON_PIN = 7
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.input(BUTTON_PIN)
 
 A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 81, 88]
 B = [13, 14, 15, 16, 17, 22, 27, 32, 37, 42, 43, 44, 45, 56, 52, 57, 62,  67, 72, 77, 82, 83, 84, 85, 86]
@@ -40,17 +55,10 @@ X = [11, 18, 22, 27, 33, 36, 44, 45, 54, 55, 63, 66, 72, 77, 81, 88]
 Y = [11, 18, 21, 22, 27, 28, 32, 33, 36, 37, 43, 46, 54, 55, 64, 65, 74, 75, 84, 85]
 Z = [11, 12, 13, 14, 15, 16, 17, 18, 28, 32, 33, 45, 55, 62, 63, 78, 81, 82, 83, 84, 85, 86, 87, 88]
 
+
 letter_arrays = {'A': A, 'B': B, 'C': C, 'D': D, 'E': E, 'F': F, 'G': G, 'H': H, 'I': I, 'J': J,
     'K': K, 'L': L, 'M': M, 'N': N, 'O': O, 'P': P, 'Q': Q, 'R': R, 'S': S, 'T': T,
     'U': U, 'V': V, 'W': W, 'X': X, 'Y': Y, 'Z': Z}
-
-wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
-
-BUTTON_PIN = 10
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-GPIO.input(BUTTON_PIN)
-
 
 def turn_off():
     for i in range(strip.numPixels()):
@@ -68,21 +76,43 @@ def display_letter(letter, color):
         strip.setPixelColor(current_pixel, color)
         strip.show()  
 
-def main():
-        # alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+# Main program logic follows:
+if __name__ == '__main__':
+    # Process arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    args = parser.parse_args()
+
+    # Create NeoPixel object with appropriate configuration.
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    # Intialize the library (must be called once before other functions).
+    strip.begin()
+
+    print ('Press Ctrl-C to quit.')
+    if not args.clear:
+        print('Use "-c" argument to clear LEDs on exit')
+
+    try:
         word = randomLetters.generateRandomWord(wordList)
         print(word)
         letters = list(word)
-        for letter in letters:
-            current_letter = letter_arrays[letter]
-            display_letter(current_letter, Color(150, 150,150))
-            while GPIO.input(BUTTON_PIN) == GPIO.LOW:
-                 display_letter(current_letter, Color(10, 10,10))
-            else:
-                 turn_off()
-                 
-                
 
-if __name__ == '__main__':
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    main()
+        while True:
+            for letter in letters:
+                current_letter = letter_arrays[letter]
+                display_letter(current_letter, Color(150, 150,150))
+
+                while True:
+                    if GPIO.input(BUTTON_PIN) == GPIO.LOW:
+                        print("here")
+                        break
+                    # time.sleep(0.1)
+                turn_off()
+                time.sleep(800/1000)
+
+
+
+    except KeyboardInterrupt:
+        if args.clear:
+            colorWipe(strip, Color(0,0,0), 10)
