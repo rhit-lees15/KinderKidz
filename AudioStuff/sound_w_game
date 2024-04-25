@@ -55,8 +55,8 @@ def buttonPress(pin):
         else:
             # Find the first incorrect letter position
             incorrect_position = len(spelledWord)
-            restart_from = randomWord.index(spelledWord[incorrect_position])
-            spelledWord = randomWord[restart_from]
+            # restart_from = randomWord.index(spelledWord[incorrect_position])
+            spelledWord = randomWord[incorrect_position]
             print("Incorrect order! Restarting from:", spelledWord)
             init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
     else:
