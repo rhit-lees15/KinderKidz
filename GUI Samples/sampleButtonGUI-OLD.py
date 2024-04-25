@@ -18,15 +18,12 @@ class GUI(tk.Tk):
         start_page = tk.Frame(self)
         start_page.pack(fill=tk.BOTH, expand=True)
 
-        # Load and display images in the four corners of the GUI
-        # images = ["Chase.jpg", "Marshall.jpg", "Rubble.jpg", "Zuma.jpg"]
-        # positions = [(0, 0), (0, self.winfo_screenheight() - 375), (self.winfo_screenwidth() - 375, 0), (self.winfo_screenwidth() - 375, self.winfo_screenheight() - 375)]
-
-        # for image_path, position in zip(images, positions):
-        #     image = self.load_image(image_path)
-        #     label = tk.Label(start_page, image=image)
-        #     label.image = image
-        #     label.place(x=position[0], y=position[1])
+        # Singular Picture
+        image_path = "Carmine.png"  # Change this to your image path
+        image = self.load_image(image_path)
+        picture_label = tk.Label(start_page, image=image)
+        picture_label.image = image
+        picture_label.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
 
         # Start button
         start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
@@ -51,17 +48,17 @@ class GUI(tk.Tk):
         time_selection_page.pack(fill=tk.BOTH, expand=True)
 
         # Time selection buttons
-        five_sec_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 16),
+        five_sec_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 20),
                                     command=lambda: self.create_word_display_page(5))
-        five_sec_button.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
+        five_sec_button.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
 
-        thirty_sec_button = tk.Button(time_selection_page, text="30 Seconds", font=("Helvetica", 16),
+        thirty_sec_button = tk.Button(time_selection_page, text="30 Seconds", font=("Helvetica", 20),
                                       command=lambda: self.create_word_display_page(30))
-        thirty_sec_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+        thirty_sec_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        one_min_button = tk.Button(time_selection_page, text="1 Minute", font=("Helvetica", 16),
+        one_min_button = tk.Button(time_selection_page, text="1 Minute", font=("Helvetica", 20),
                                    command=lambda: self.create_word_display_page(60))
-        one_min_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
+        one_min_button.place(relx=0.7, rely=0.5, anchor=tk.CENTER)
 
         # Exit button
         exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
@@ -82,13 +79,16 @@ class GUI(tk.Tk):
         word_display_page = tk.Frame(self)
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Text(word_display_page, font=("Helvetica", 48))
-        word_text.insert(tk.END, random_word)
-        word_text.config(state=tk.DISABLED)  # Disable editing
-        word_text.pack(expand=True)
+        word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 48))
+        word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        # Highlight letters one by one
-        self.highlight_letters(word_text, random_word)
+        # Change color of each letter
+        colors = ["red", "blue", "green", "purple", "orange"]  # List of colors
+        for i, letter in enumerate(random_word):
+            color = random.choice(colors)  # Pick a random color
+            word_text.config(fg=color)
+            word_text.update_idletasks()
+            word_text.after(1000 * i, lambda: None)  # Delay for each letter
 
         # Create countdown
         self.create_countdown(word_display_page, duration)
@@ -99,16 +99,6 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["word_display"] = word_display_page  # Store the word display page
-
-    def highlight_letters(self, text_widget, word):
-        for i, char in enumerate(word):
-            index = f"1.{i}"  # Index for the character in the text widget
-            text_widget.tag_add("highlight", index, f"{index}+1c")  # Add tag to the character
-            text_widget.tag_config("highlight", foreground="red")  # Configure the tag
-            text_widget.after(1000 * (i + 1), lambda: self.remove_highlight(text_widget, index))  # Schedule removal of highlight
-
-    def remove_highlight(self, text_widget, index):
-        text_widget.tag_remove("highlight", index, f"{index}+1c")  # Remove highlight tag
 
     def create_countdown(self, frame, duration):
         countdown_label = tk.Label(frame, font=("Helvetica", 16))
@@ -135,7 +125,7 @@ class GUI(tk.Tk):
         text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
 
         # Load and display the GIF
-        gif_path = "MARSHALL.gif"
+        gif_path = "example.gif"  # Change this to your GIF path
         gif_label = tk.Label(gif_display_page)
         gif_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         gif_image = PhotoImage(file=gif_path)
@@ -158,5 +148,5 @@ class GUI(tk.Tk):
             self.destroy()
 
 if __name__ == "__main__":
-    app = GUI()
+    app = GUI()   
     app.mainloop()

@@ -3,7 +3,7 @@
 import RPi.GPIO as GPIO
 import time
 
-BUTTON_PIN = 10
+BUTTON_PIN = 24
 # Use the GPIO number instead of the Raspberry Pi number
 GPIO.setmode(GPIO.BCM)
 
@@ -17,7 +17,7 @@ GPIO.input(BUTTON_PIN)
 
 try:
     while True:
-        time.sleep(0.1)
+        time.sleep(0.5)
         if GPIO.input(BUTTON_PIN) == GPIO.LOW:
             print("Button is pressed")
         else:

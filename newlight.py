@@ -55,10 +55,15 @@ def turn_off():
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0, 0, 0))
     strip.show()
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
 
 def display_letter(letter, color):
     for i in range(len(letter)):
         current_pixel = letter[i]
+        strip.setPixelColor(current_pixel, color)
+        strip.show()  
         strip.setPixelColor(current_pixel, color)
         strip.show()  
 
@@ -80,5 +85,6 @@ def main():
                 
 
 if __name__ == '__main__':
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     main()

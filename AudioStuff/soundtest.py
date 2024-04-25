@@ -36,29 +36,28 @@ import vlc
 #     print("main thread")
 
 
-# from subprocess import *
-# import threading
+from subprocess import *
+import threading
 
 # def play_sound(sound_file):
 #     print("Playing sound:", sound_file)
 #     subprocess.Popen(["afplay", sound_file])  # Use appropriate command based on your OS
 
-# Path to the sound file
+# # Path to the sound file
 # sound_file = "sample2.mp3"
 
 # # Create a thread to play the sound
 # sound_thread = threading.Thread(target=play_sound, args=(sound_file,))
 # sound_thread.start()
 
-# Continue with other tasks while the sound is playng
+# Continue with other tasks while the sound is playing
 
-# from subprocess import Popen, PIPE
-
+from subprocess import Popen, PIPE
 import time
 
 
-# def handle_results(arg):
-#     print(arg)
+def handle_results(arg):
+    print(arg)
 
     
 # def play_my_sound(pinnumber):
@@ -76,9 +75,8 @@ import time
 #             if retcode is not None: # Process finished.
 #                 running_procs.remove(proc)
 
-# #     inpu
-
-   
+#     inpu
+                
 # def play_my_sound2(pinnumber):
 #     print(pinnumber)
 #     running_procs = [
@@ -104,20 +102,20 @@ import time
 #             print("bad")
 #         handle_results(proc.stdout)
 
-                                                                                                                                                                         
 
 
-def button_callback():
-    print("Button was pushed!")
+
+# def button_callback():
+#     print("Button was pushed!")
 
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BCM) 
-GPIO.setup(7, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
-# GPIO.add_event_detect(7,GPIO.FALLING,callback=play_sound) # Setup event on pin 10 rising edge
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
+#GPIO.add_event_detect(10,GPIO.FALLING,callback=play_sound) # Setup event on pin 10 rising edge
 GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
-# GPIO.add_event_detect(24,GPIO.FALLING,callback=play_sound2) # Setup event on pin 10 rising edge
-# message = input("Press enter to quit\n\n") # Run until someone presses enter
+#GPIO.add_event_detect(24,GPIO.FALLING,callback=play_sound2) # Setup event on pin 10 rising edge
+#message = input("Press enter to quit\n\n") # Run until someone presses enter
 
 
 def init_vlc(song:str):
@@ -133,165 +131,28 @@ def init_vlc(song:str):
     duration = player.get_length() / 1000
     mm, ss   = divmod(duration, 60)
 
-    print("Current song is : ", song, "Length:", "%02d:%02d" % (mm,ss))
+    # print("Current song is : ", song, "Length:", "%02d:%02d" % (mm,ss))
 
     time_left = True
 
     # the while loop checks every x seconds if the song is finished.
-    while time_left == True:
-        song_time = player.get_state()
-        print('song time to go: %s' % song_time)
-        if song_time != vlc.State.Playing:
-            print(song_time)
-            time_left = False
-        time.sleep(1) # if 1, then delay is 1 second.
-    print ('Finished playing your song')
+    # while time_left == True:
+    #     song_time = player.get_state()
+    #     print('song time to go: %s' % song_time)
+    #     if song_time != vlc.State.Playing:
+    #         print(song_time)
+    #         time_left = False
+    #     time.sleep(1) # if 1, then delay is 1 second.
+    # print ('Finished playing your song')
 
 while True:
     print("Reading Buttons!!")
-    input_state = GPIO.input(7)
-    if input_state == False:
-        init_vlc('./sample2.mp3')
-
-    input_state = GPIO.input(24)
+    input_state = GPIO.input(10)
     if input_state == False:
         init_vlc('./sample.wav')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #input_state = GPIO.input(24)
-    #if input_state == False:
-        #init_vlc('./sample2.mp3')
-        #input_state = GPIO.input(24)
-    #if input_state == False:
-        #init_vlc('./sample2.mp3')
+    input_state = GPIO.input(24)
+    if input_state == False:
+        init_vlc('.AudioStuff/sample2.mp3')
     time.sleep(1)
 
 

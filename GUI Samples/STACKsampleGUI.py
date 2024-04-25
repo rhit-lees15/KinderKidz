@@ -1,4 +1,5 @@
 #### NEED TO MAKE THE PAGES NOT STACK ON ONE ANOTHER
+### ALSO PICS DON'T WORK ON THIS ONE & NO FULL SCREEN
 
 import tkinter as tk
 from tkinter import messagebox
