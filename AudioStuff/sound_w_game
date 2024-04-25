@@ -4,22 +4,22 @@ import vlc
 import time
 import string
 import random
-from soundtest import init_vlc
+# from soundtest import init_vlc
 
 
 
-# def init_vlc(song:str):
-#     vlc_instance = vlc.Instance()
-#     player = vlc_instance.media_player_new()
+def init_vlc(song:str):
+    vlc_instance = vlc.Instance()
+    player = vlc_instance.media_player_new()
 
-#     media  = vlc_instance.media_new(song)
-#     media.get_mrl()
-#     player.set_media(media)
-#     player.play()
-#     # playing = set(State.playing)
-#     time.sleep(1.5) # startup time.
-#     duration = player.get_length() / 1000
-#     mm, ss   = divmod(duration, 60)
+    media  = vlc_instance.media_new(song)
+    media.get_mrl()
+    player.set_media(media)
+    player.play()
+    # playing = set(State.playing)
+    time.sleep(1.5) # startup time.
+    duration = player.get_length() / 1000
+    mm, ss   = divmod(duration, 60)
     
 
 # GPIO Pins for buttons
