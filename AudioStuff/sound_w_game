@@ -46,9 +46,10 @@ def buttonPress(pin):
         if spelledWord + letter == randomWord[:len(spelledWord) + 1]:
             spelledWord += letter
             print("Current spelling:", spelledWord)
-            init_vlc('./AudioStuff/goodjobnowletsfindthenextletter.mp3')
+            if len(spelledWord) != len(randomWord):
+                init_vlc('./AudioStuff/goodjobnowletsfindthenextletter.mp3')
             # If the full word is spelled correctly
-            if len(spelledWord) == len(randomWord):
+            elif len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
                 init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
                 newWord()
@@ -56,9 +57,15 @@ def buttonPress(pin):
             # Find the first incorrect letter position
             incorrect_position = len(spelledWord)
             # restart_from = randomWord.index(spelledWord[incorrect_position])
-            spelledWord = randomWord[incorrect_position]
-            print("Incorrect order! Restarting from:", spelledWord)
-            init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+            # if incorrect_position == 1:
+            #     print("Incorrect order!")
+            #     spelledWord = ''
+            #     init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+            #     print("Current spelling:", spelledWord)
+             
+            # spelledWord = randomWord[incorrect_position]
+            # print("Incorrect order! Restarting from:", spelledWord)
+            # init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
         init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
@@ -174,7 +181,7 @@ except KeyboardInterrupt:
     GPIO.cleanup()
 
 
-GPIO.cleanup() # Clean up
+# GPIO.cleanup() # Clean up
 
 # names of audio files for convenience
 
