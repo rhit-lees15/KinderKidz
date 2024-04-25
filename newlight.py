@@ -2,7 +2,7 @@ import time
 from pygame import Color
 import randomLetters
 from rpi_ws281x import *
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # Set Up
 LED_COUNT      = 100      # Number of LED pixels.
@@ -47,6 +47,7 @@ letter_arrays = {'A': A, 'B': B, 'C': C, 'D': D, 'E': E, 'F': F, 'G': G, 'H': H,
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 
 BUTTON_PIN = 10
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.input(BUTTON_PIN)
 
