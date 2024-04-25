@@ -46,7 +46,7 @@ def buttonPress(pin):
         if spelledWord + letter == randomWord[:len(spelledWord) + 1]:
             spelledWord += letter
             print("Current spelling:", spelledWord)
-            init_vlc('./AudioStuff/goodjob,nowletsfindthenextletter.mp3')
+            init_vlc('./AudioStuff/goodjobnowletsfindthenextletter.mp3')
             # If the full word is spelled correctly
             if len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
@@ -178,18 +178,18 @@ GPIO.cleanup() # Clean up
 
 # names of audio files for convenience
 
-# first,letsfindtheletterC.mp3
-# Bye,Carmine.mp3 
-# goodjob,nowletsfindthenextletter.mp3 
-# Greatwork,Carmine.mp3 
-# hicarmine,letsspellsomewordstoday.mp3 
+# firstletsfindtheletterC.mp3
+# ByeCarmine.mp3 
+# goodjobnowletsfindthenextletter.mp3 
+# GreatworkCarmine.mp3 
+# hicarmineletsspellsomewordstoday.mp3 
 # letsfindtheletterT.mp3 
 # pressthegreenbuttontostart.mp3 
-# repeatafterme,ispelledthewordcat,catisspelledCAT.mp3 
-# thetimerranout,letshaveadancebreak.mp3 
+# repeataftermeispelledthewordcatcatisspelledCAT.mp3 
+# thetimerranoutletshaveadancebreak.mp3 
 # timetomoveontothenextword.mp3 
-# werespellingthewordcat,catisspelledCAT.mp3 
+# werespellingthewordcatcatisspelledCAT.mp3 
 # whereistheletterA_.mp3 
-# youspelledthewordcat,catisspelledCAT.mp3
-# nope,thatletterisntpartoftheword.mp3
-# oops,thatsnotright,tryadifferentorder.mp3
+# youspelledthewordcatcatisspelledCAT.mp3
+# nopethatletterisntpartoftheword.mp3
+# oopsthatsnotrighttryadifferentorder.mp3
