@@ -119,6 +119,7 @@ GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pi
 
 
 def init_vlc(song:str):
+    p = vlc.MediaPlayer()
     vlc_instance = vlc.Instance()
     player = vlc_instance.media_player_new()
 
@@ -130,6 +131,7 @@ def init_vlc(song:str):
     time.sleep(1.5) # startup time.
     duration = player.get_length() / 1000
     mm, ss   = divmod(duration, 60)
+    
 
     # print("Current song is : ", song, "Length:", "%02d:%02d" % (mm,ss))
 
