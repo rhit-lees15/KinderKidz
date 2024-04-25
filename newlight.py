@@ -2,6 +2,7 @@ import time
 from pygame import Color
 import randomLetters
 from rpi_ws281x import *
+import RPI.GPIO as GPIO
 
 # Set Up
 LED_COUNT      = 100      # Number of LED pixels.
@@ -45,8 +46,15 @@ letter_arrays = {'A': A, 'B': B, 'C': C, 'D': D, 'E': E, 'F': F, 'G': G, 'H': H,
 
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 
+BUTTON_PIN = 10
+GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.input(BUTTON_PIN)
+
 
 def turn_off():
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0, 0, 0))
     strip.show()
@@ -56,22 +64,27 @@ def display_letter(letter, color):
         current_pixel = letter[i]
         strip.setPixelColor(current_pixel, color)
         strip.show()  
+        strip.setPixelColor(current_pixel, color)
+        strip.show()  
 
 def main():
-        #wordList = ['BATH', 'CARE', 'LOVE']
+        # alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        # wordList = ['BATH', 'CARE', 'LOVE']
         word = randomLetters.generateRandomWord(wordList)
         print(word)
         # word = 'CAT'
         letters = list(word)
         for letter in letters:
             current_letter = letter_arrays[letter]
-        # alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-            print(letter)
             display_letter(current_letter, Color(10, 10,10))
-            time.sleep(800/1000.0)
-            turn_off()
-
+            while GPIO.input(BUTTON_PIN) == GPIO.LOW:
+                 display_letter(current_letter, Color(10, 10,10))
+            else:
+                 turn_off()
+                 
+                
 
 if __name__ == '__main__':
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     main()
