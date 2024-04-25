@@ -13,7 +13,7 @@ import argparse
 import RPi.GPIO as GPIO
 
 # LED strip configuration:
-LED_COUNT      = 100      # Number of LED pixels.
+LED_COUNT      = 300      # Number of LED pixels.
 LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).
 #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
@@ -97,11 +97,24 @@ if __name__ == '__main__':
         word = randomLetters.generateRandomWord(wordList)
         print(word)
         letters = list(word)
+        current_index = 0
 
         while True:
             for letter in letters:
-                current_letter = letter_arrays[letter]
-                display_letter(current_letter, Color(150, 150,150))
+                if current_index == 1:
+                    current_letter = letter_arrays[letter]
+                    display_letter(current_letter, Color(150, 150,150))
+                elif current_index == 2:
+                    current_letter = letter_arrays[letter]
+                    current_letter = [[num + 100 for num in row] for row in current_letter]
+                    display_letter(current_letter, Color(150, 150,150))
+
+                elif current_index ==3:
+                    current_letter = letter_arrays[letter]
+                    current_letter = [[num + 200 for num in row] for row in current_letter]
+
+                    display_letter(current_letter, Color(150, 150,150))
+
 
                 while True:
                     if GPIO.input(BUTTON_PIN) == GPIO.LOW:
