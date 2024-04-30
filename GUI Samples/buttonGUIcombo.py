@@ -1,156 +1,150 @@
 import tkinter as tk
-from tkinter import PhotoImage, messagebox
 import random
-from PIL import Image, ImageTk
 import string
-import RPi.GPIO as GPIO
 import time
+import vlc
 
-# Global Variables
-wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+# Function to generate a random word
+def generateRandomWord(words):
+    return random.choice(words)
+
+# Function to generate additional random letters
+def generateRandomLetters(remainingLetters, numLetters):
+    return random.sample(remainingLetters, numLetters)
+
+# Function to add all letters to one string and shuffle them
+def randomizeLetters(word, letters):
+    allLetters = list(word + ''.join(letters))
+    random.shuffle(allLetters)
+    return ''.join(allLetters)
+
+# Function to initialize VLC and play audio
+def init_vlc(sound_file:str):
+    p = vlc.MediaPlayer(sound_file)
+    p.play()
+    time.sleep(1) #this is necessary because is_playing() returns false if called right away
+    while p.is_playing():
+        time.sleep(1)
+    p.release()
+
+# Function to handle button press event
+def buttonPress(pin):
+    global spelledWord, randomWord
+    
+    letter = button_letters[pin]
+    if letter in randomWord:
+        if letter == randomWord[len(spelledWord)]:
+            spelledWord += letter
+            print("Current spelling:", spelledWord)
+            if len(spelledWord) != len(randomWord):
+                init_vlc('./AudioStuff/goodjobnowletsfindthenextletter.mp3')
+            elif len(spelledWord) == len(randomWord):
+                print("Correct! You spelled the word correctly.")
+                init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
+                newWord()
+        else:
+            if len(spelledWord) == 0:
+                print("Incorrect order!")
+                init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+                print("Current spelling:", spelledWord)
+            else:
+                print("Incorrect order! Restarting from:", spelledWord)
+                init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+    else:
+        print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+        init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
+
+# Function to generate and display a new word
+def newWord():
+    global spelledWord, randomWord, randomizedLetters, button_letters
+    
+    randomWord = generateRandomWord(wordList)
+    availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
+    randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+    randomizedLetters = randomizeLetters(randomWord, randomLetters)
+    
+    button_letters = {}
+    for idx, pin in enumerate(BUTTON_PINS):
+        button_letters[pin] = randomizedLetters[idx]
+    
+    button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+    
+    print("Let's spell another word.")
+    print(f"Spell the word: {randomWord}")
+    print("Reallocated letters: " + ' '.join(randomizedLetters))
+    
+    spelledWord = ''
+
+# Initialize Tkinter
+root = tk.Tk()
+root.configure(background='black')
+root.geometry("800x600")
+
+# Start Page
+start_frame = tk.Frame(root, bg='black')
+start_frame.pack(expand=True)
+
+start_image = tk.PhotoImage(file="path/to/image.png")
+start_label = tk.Label(start_frame, image=start_image, bg='black')
+start_label.place(relx=0.5, rely=0.5, anchor='center')
+
+start_button = tk.Button(start_frame, text="Start", bg='green', fg='white', font=('Helvetica', 16))
+start_button.place(relx=0.5, rely=0.5, anchor='center')
+
+exit_button = tk.Button(start_frame, text="Exit", bg='red', fg='white', font=('Helvetica', 16))
+exit_button.pack(side=tk.BOTTOM, pady=20)
+
+# Game Page
+game_frame = tk.Frame(root, bg='black')
+game_label = tk.Label(game_frame, text="", font=('Helvetica', 24), bg='black', fg='white')
+game_label.pack()
+
+# Function to switch to the game page
+def start_game():
+    start_frame.pack_forget()
+    game_frame.pack(expand=True)
+    newWord()
+
+# Function to handle timer selection
+def select_timer(timer):
+    print("Timer selected:", timer)
+
+# Bind button clicks
+start_button.config(command=start_game)
+exit_button.config(command=root.destroy)
+
+# Timer selection buttons
+timer_5_button = tk.Button(game_frame, text="5 sec", command=lambda: select_timer(5))
+timer_5_button.pack()
+
+timer_30_button = tk.Button(game_frame, text="30 sec", command=lambda: select_timer(30))
+timer_30_button.pack()
+
+timer_60_button = tk.Button(game_frame, text="1 min", command=lambda: select_timer(60))
+timer_60_button.pack()
+
+# GPIO Pins for buttons
 BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 
-class GUI(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Interactive GUI")
-        self.attributes('-fullscreen', True)  # Make the GUI full screen
+# Generate a random word
+wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+randomWord = generateRandomWord(wordList)
 
-        self.current_page = None
-        self.pages = {}  # Dictionary to store pages
+# Get remaining letters
+availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
 
-        self.create_start_page()
+# Generate additional random letters
+randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
 
-        # Initialize GPIO
-        GPIO.setmode(GPIO.BCM)
-        for pin in BUTTON_PINS:
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: self.button_press(pin), bouncetime=200)
+# Combine the random word and random letters into a single string and shuffle them
+randomizedLetters = randomizeLetters(randomWord, randomLetters)
 
-    def create_start_page(self):
-        self.current_page = "start"
-        start_page = tk.Frame(self)
-        start_page.pack(fill=tk.BOTH, expand=True)
+# Map each letter to a button
+button_letters = {}
+for idx, pin in enumerate(BUTTON_PINS):
+    button_letters[pin] = randomizedLetters[idx]
 
-        # Singular Picture
-        image_path = "Carmine.PNG"
-        image = self.load_image(image_path)
-        picture_label = tk.Label(start_page, image=image)
-        picture_label.image = image
-        picture_label.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
+# Set button sequence for the initial word
+button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
 
-        # Start button
-        start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
-                                 command=self.create_time_selection_page)
-        start_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-
-        # Exit button
-        exit_button = tk.Button(start_page, text="Exit", bg="red", font=("Helvetica", 20),
-                                command=self.exit_program)
-        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
-
-        self.pages["start"] = start_page  # Store the start page
-
-    def load_image(self, path):
-        image = tk.PhotoImage(file=path)
-        return image
-
-    def create_time_selection_page(self):
-        self.hide_current_page()  # Hide current page
-        self.current_page = "time_selection"
-        time_selection_page = tk.Frame(self)
-        time_selection_page.pack(fill=tk.BOTH, expand=True)
-
-        # Time selection buttons
-        five_sec_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 16),
-                                    command=lambda: self.create_word_display_page(5))
-        five_sec_button.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
-
-        thirty_sec_button = tk.Button(time_selection_page, text="30 Seconds", font=("Helvetica", 16),
-                                      command=lambda: self.create_word_display_page(30))
-        thirty_sec_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
-
-        one_min_button = tk.Button(time_selection_page, text="1 Minute", font=("Helvetica", 16),
-                                   command=lambda: self.create_word_display_page(60))
-        one_min_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
-
-        # Exit button
-        exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
-                                command=self.exit_program)
-        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
-
-        self.pages["time_selection"] = time_selection_page  # Store the time selection page
-
-    def create_word_display_page(self, duration):
-        self.hide_current_page()  # Hide current page
-        self.current_page = "word_display"
-
-        # Random word generator
-        randomWord = random.choice(wordList)
-
-        # Display word
-        word_display_page = tk.Frame(self)
-        word_display_page.pack(fill=tk.BOTH, expand=True)
-
-        word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48))
-        word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-
-        # Change color of each letter
-        colors = ["red", "blue", "green", "purple", "orange"]  # List of colors
-        for i, letter in enumerate(randomWord):
-            color = random.choice(colors)  # Pick a random color
-            word_text.config(fg=color)
-            word_text.update_idletasks()
-            word_text.after(1000 * i, lambda: None)  # Delay for each letter
-
-        # Create countdown
-        self.create_countdown(word_display_page, duration)
-
-        # Exit button
-        exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
-                                command=self.exit_program)
-        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
-
-        self.pages["word_display"] = word_display_page  # Store the word display page
-
-    def create_countdown(self, frame, duration):
-        countdown_label = tk.Label(frame, font=("Helvetica", 16))
-        countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
-
-        def update_countdown(seconds_left):
-            countdown_label.config(text=f"Time Left: {seconds_left} seconds")
-            if seconds_left > 0:
-                frame.after(1000, update_countdown, seconds_left - 1)
-
-        update_countdown(duration)
-
-    def button_press(self, pin):
-        global randomWord
-        letter = randomWord[len(spelledWord)]
-        if button_letters[pin] == letter:
-            spelledWord += letter
-            if spelledWord == randomWord:
-                self.correct_spelling()
-        else:
-            self.incorrect_spelling()
-
-    def correct_spelling(self):
-        messagebox.showinfo("Correct!", "You spelled the word correctly!")
-        self.create_word_display_page(5)  # Restart with a new word
-
-    def incorrect_spelling(self):
-        messagebox.showerror("Incorrect!", "Incorrect letter. Try again.")
-        self.create_word_display_page(5)  # Restart with the same word
-
-    def hide_current_page(self):
-        if self.current_page in self.pages:
-            self.pages[self.current_page].pack_forget()  # Withdraw the current page
-
-    def exit_program(self):
-        if messagebox.askokcancel("Quit", "Do you want to quit?"):
-            GPIO.cleanup()
-            self.destroy()
-
-if __name__ == "__main__":
-    app = GUI()
-    app.mainloop()
+root.mainloop()
