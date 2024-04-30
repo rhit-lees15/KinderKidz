@@ -37,13 +37,13 @@ def init_vlc(sound_file:str):
 BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 
 # Function to generate a random word
-def generateRandomWord(wordList):
-    # # Remove the word after chosen
-    # word = random.choice(wordList)
-    # for word in wordList:
-    #     wordList.remove(word)
-    # return word
-    return random.choice(wordList)
+# def generateRandomWord(wordList):
+#     # # Remove the word after chosen
+#     # word = random.choice(wordList)
+#     # for word in wordList:
+#     #     wordList.remove(word)
+#     # return word
+#     return random.choice(wordList)
 
 # Function to generate additional random letters
 def generateRandomLetters(remainingLetters, numLetters):
@@ -119,7 +119,10 @@ def newWord():
     global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
     
     # Generate a new word
-    randomWord = generateRandomWord(wordList)
+    n = 0
+    while n <= len(randomList - 1):
+        randomWord = randomList[n]
+        n += 1
     
     # Get remaining letters
     availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
@@ -166,7 +169,12 @@ for pin in BUTTON_PINS:
 
 # Generate a random word
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
-randomWord = generateRandomWord(wordList)
+randomList = random.shuffle(wordList)
+# randomWord = generateRandomWord(wordList)
+# n = 0
+# while n <= len(randomList - 1):
+#     randomWord = randomList[n]
+#     n += 1
 
 # Get remaining letters
 availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
