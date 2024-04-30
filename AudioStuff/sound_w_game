@@ -38,11 +38,12 @@ BUTTON_PINS = [24, 25, 8, 7, 5, 6, 13, 12]
 
 # Function to generate a random word
 def generateRandomWord(wordList):
-    # Remove the word after chosen
-    word = random.choice(wordList)
-    for word in wordList:
-        wordList.remove(word)
-    return word
+    # # Remove the word after chosen
+    # word = random.choice(wordList)
+    # for word in wordList:
+    #     wordList.remove(word)
+    # return word
+    return random.choice(wordList)
 
 # Function to generate additional random letters
 def generateRandomLetters(remainingLetters, numLetters):
