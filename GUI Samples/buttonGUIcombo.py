@@ -84,7 +84,7 @@ root.geometry("800x600")
 start_frame = tk.Frame(root, bg='black')
 start_frame.pack(expand=True)
 
-start_image = tk.PhotoImage(file="path/to/image.png")
+start_image = tk.PhotoImage(file="Carmine.PNG")
 start_label = tk.Label(start_frame, image=start_image, bg='black')
 start_label.place(relx=0.5, rely=0.5, anchor='center')
 
