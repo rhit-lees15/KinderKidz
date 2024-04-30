@@ -120,8 +120,8 @@ def newWord():
     
     # Generate a new word
     n = 0
-    while n <= len(randomList - 1):
-        randomWord = randomList[n]
+    while n <= len(wordList) - 1:
+        randomWord = wordList[n]
         n += 1
     
     # Get remaining letters
@@ -169,12 +169,12 @@ for pin in BUTTON_PINS:
 
 # Generate a random word
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
-randomList = random.shuffle(wordList)
+random.shuffle(wordList)
 # randomWord = generateRandomWord(wordList)
-# n = 0
-# while n <= len(randomList - 1):
-#     randomWord = randomList[n]
-#     n += 1
+n = 0
+while n <= len(wordList) - 1:
+    randomWord = wordList[n]
+    n += 1
 
 # Get remaining letters
 availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
