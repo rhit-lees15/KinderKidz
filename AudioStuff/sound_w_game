@@ -9,6 +9,7 @@ import random
 
 
 
+
 # def init_vlc(song:str):
 #     vlc_instance = vlc.Instance()
 #     player = vlc_instance.media_player_new()
@@ -22,13 +23,13 @@ import random
 #     duration = player.get_length() / 1000
 #     mm, ss   = divmod(duration, 60)
 
-def init_vlc(sound_file:str):
-    p = vlc.MediaPlayer(sound_file)
-    p.play()
-    time.sleep(1) #this is necessary because is_playing() returns false if called right away
-    while p.is_playing():
-        time.sleep(1)
-    p.release()
+# def init_vlc(sound_file:str):
+#     p = vlc.MediaPlayer(sound_file)
+#     p.play()
+#     time.sleep(1) #this is necessary because is_playing() returns false if called right away
+#     while p.is_playing():
+#         time.sleep(1)
+#     p.release()
     
 
     
