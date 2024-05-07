@@ -1,0 +1,34 @@
+import vlc
+import time
+import random
+
+
+def init_vlc(sound_file:str):
+    p = vlc.MediaPlayer(sound_file)
+    p.play()
+    time.sleep(1) #this is necessary because is_playing() returns false if called right away
+    while p.is_playing():
+        time.sleep(1)
+    p.release()
+
+intro_sounds = ['','',''] #insert different sounds
+correct_letter_sounds = ['','',''] #insert different sounds
+next_word_sounds = ['','',''] #insert different sounds
+wrong_order_sounds = ['','',''] #insert different sounds
+wrong_letter_sounds = ['','',''] #insert different sounds
+next_word_sounds = ['','',''] #insert different sounds
+happy_sounds = ['./AudioStuff/90s-game-ui.mp3','./AudioStuff/copper-bell-ding-4','/AudioStuff/correct-choice'] #insert different sounds
+transition_sounds = ['','',''] #insert different sounds
+
+# happy sounds
+# ./AudioStuff/90s-game-ui.mp3
+# ./AudioStuff/copper-bell-ding-4
+# ./AudioStuff/correct-choice
+# ./AudioStuff/cute-level-up-1
+# ./AudioStuff/cute-level-up-2
+# ./AudioStuff/cute-level-up-3
+# ./AudioStuff/game-bonus
+# ./AudioStuff/level-up
+# ./AudioStuff/level-up-2
+# ./AudioStuff/YayKidsCrowd
+# ./AudioStuff/bonus-points
