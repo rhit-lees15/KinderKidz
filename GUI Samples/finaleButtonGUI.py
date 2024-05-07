@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-import sound_w_game as gamesound 
+from AudioStuff import sound_w_game as gamesound 
 # from sound_w_game import * 
 
 class GUI(tk.Tk):
@@ -15,6 +15,7 @@ class GUI(tk.Tk):
         self.pages = {}  # Dictionary to store pages
 
         self.create_start_page()
+        gamesound.play_happy()
 
     def create_start_page(self):
         self.current_page = "start"
