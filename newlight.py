@@ -55,31 +55,26 @@ GPIO.input(BUTTON_PIN)
 def turn_off():
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0, 0, 0))
-    strip.show()
-    for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(0, 0, 0))
-    strip.show()
+        strip.show()
+
 
 def display_letter(letter, color):
     for i in range(len(letter)):
         current_pixel = letter[i]
         strip.setPixelColor(current_pixel, color)
         strip.show()  
-        strip.setPixelColor(current_pixel, color)
-        strip.show()  
 
 def main():
-        # alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         word = randomLetters.generateRandomWord(wordList)
         print(word)
         letters = list(word)
         for letter in letters:
             current_letter = letter_arrays[letter]
             display_letter(current_letter, Color(150, 150,150))
-            while GPIO.input(BUTTON_PIN) == GPIO.LOW:
-                 display_letter(current_letter, Color(10, 10,10))
-            else:
-                 turn_off()
+            # while GPIO.input(BUTTON_PIN) == GPIO.LOW:
+            #      display_letter(current_letter, Color(10, 10,10))
+            # else:
+            #      turn_off()
                  
                 
 

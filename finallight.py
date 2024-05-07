@@ -64,15 +64,11 @@ def turn_off():
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0, 0, 0))
     strip.show()
-    for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(0, 0, 0))
-    strip.show()
+
 
 def display_letter(letter, color):
     for i in range(len(letter)):
         current_pixel = letter[i]
-        strip.setPixelColor(current_pixel, color)
-        strip.show()  
         strip.setPixelColor(current_pixel, color)
         strip.show()  
 
@@ -97,38 +93,35 @@ if __name__ == '__main__':
         word = randomLetters.generateRandomWord(wordList)
         print(word)
         letters = list(word)
-        current_index = 1
+        current_index = 0
 
         while True:
-            current_letter = 'A'
-            display_letter(current_letter, Color(150, 150,150))
-                
-            # for letter in letters:
-            #     current_index += 1
+            for letter in letters:
+                current_index += 1
 
-            #     if current_index == 1:
-            #         current_letter = letter_arrays[letter]
-            #         display_letter(current_letter, Color(150, 150,150))
-            #     elif current_index == 2:
-            #         print("here222")
-            #         current_letter = letter_arrays[letter]
-            #         current_letter = [[num + 100 for num in row] for row in current_letter]
-            #         display_letter(current_letter, Color(150, 150,150))
+                if current_index == 1:
+                    current_letter = letter_arrays[letter]
+                    display_letter(current_letter, Color(150, 150,150))
+                elif current_index == 2:
+                    print("here222")
+                    current_letter = letter_arrays[letter]
+                    current_letter = [[num + 100 for num in row] for row in current_letter]
+                    display_letter(current_letter, Color(150, 150,150))
 
-            #     elif current_index == 3:
-            #         current_letter = letter_arrays[letter]
-            #         current_letter = [[num + 200 for num in row] for row in current_letter]
+                elif current_index == 3:
+                    current_letter = letter_arrays[letter]
+                    current_letter = [[num + 200 for num in row] for row in current_letter]
 
-            #         display_letter(current_letter, Color(150, 150,150))
+                    display_letter(current_letter, Color(150, 150,150))
                 
 
-                # while True:
-                #     if GPIO.input(BUTTON_PIN) == GPIO.LOW:
-                #         print("here")
-                #         break
-                #     # time.sleep(0.1)
-                # turn_off()
-                # time.sleep(800/1000)
+                while True:
+                    if GPIO.input(BUTTON_PIN) == GPIO.LOW:
+                        print("here")
+                        break
+                    # time.sleep(0.1)
+                turn_off()
+                time.sleep(800/1000)
 
 
 
