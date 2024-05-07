@@ -2,8 +2,12 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-from AudioStuff import sound_w_game as gamesound 
+# from AudioStuff import sound_w_game as gamesound 
 # from sound_w_game import * 
+
+lessonONE = 0
+lessonTWO = 0
+lessonTHREE = 0
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -15,7 +19,7 @@ class GUI(tk.Tk):
         self.pages = {}  # Dictionary to store pages
 
         self.create_start_page()
-        gamesound.play_happy()
+        # gamesound.play_happy()
 
     def create_start_page(self):
         self.current_page = "start"
@@ -25,16 +29,16 @@ class GUI(tk.Tk):
         # Picture Left
         image_path = "Carmine.PNG" # ./Images/name.type
         image = self.load_image(image_path)
-        picture_label = tk.Label(start_page, image=image, borderwidth=5)
+        picture_label = tk.Label(start_page, image=image, borderwidth=0)
         picture_label.image = image
         picture_label.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
 
-        # # Picture Right
-        # image_path2 = "Zuma.jpg"
-        # image2 = self.load_image(image_path2)
-        # picture_label2 = tk.Label(start_page, image=image2, borderwidth=0)
-        # picture_label2.image = image2
-        # picture_label2.place(relx=0.6, rely=0.5, anchor=tk.CENTER)
+        # Picture Right
+        image_path2 = "COW.PNG"
+        image2 = self.load_image(image_path2)
+        picture_label2 = tk.Label(start_page, image=image2, borderwidth=0)
+        picture_label2.image = image2
+        picture_label2.place(relx=0.6, rely=0.5, anchor=tk.CENTER)
 
         # Start button
         start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
