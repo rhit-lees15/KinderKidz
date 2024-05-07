@@ -5,8 +5,7 @@ import time
 import string
 import random
 
-import game_sound as gamesound
-
+# from game_sound import *
 
 
 
@@ -24,7 +23,13 @@ import game_sound as gamesound
 #     duration = player.get_length() / 1000
 #     mm, ss   = divmod(duration, 60)
 
-
+# def init_vlc(sound_file:str):
+#     p = vlc.MediaPlayer(sound_file)
+#     p.play()
+#     time.sleep(1) #this is necessary because is_playing() returns false if called right away
+#     while p.is_playing():
+#         time.sleep(1)
+#     p.release()
     
 
     
@@ -63,11 +68,11 @@ def buttonPress(pin):
             spelledWord += letter
             print("Current spelling:", spelledWord)
             if len(spelledWord) != len(randomWord):
-                gamesound.play_happy()
+                init_vlc('./AudioStuff/goodjobnowletsfindthenextletter.mp3')
             # If the full word is spelled correctly
             elif len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
-                gamesound.init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
+                init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
                 newWord()
         else:
             # Find the first incorrect letter position
@@ -76,15 +81,15 @@ def buttonPress(pin):
             if len(spelledWord) == 0:
                 print("Incorrect order!")
                 #spelledWord = ''
-                gamesound.init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+                init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
                 print("Current spelling:", spelledWord)
             else:
                 #spelledWord = randomWord[incorrect_position]
                 print("Incorrect order! Restarting from:", spelledWord)
-                gamesound.init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+                init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
-        gamesound.init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
+        init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
 
 
 # # Function to handle button press event
@@ -191,7 +196,7 @@ button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in ra
 
 # Start the game
 print("Welcome to the Word Spelling Game!")
-gamesound.init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
+init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
 print(f"Spell the word: {randomWord}")
 print("Reallocated letters: " + ' '.join(randomizedLetters))
 # print("Available letters: " + ' '.join(availableLetters))
