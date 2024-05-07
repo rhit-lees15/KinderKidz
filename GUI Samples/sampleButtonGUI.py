@@ -21,7 +21,7 @@ class GUI(tk.Tk):
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Picture Left
-        image_path = "Carmine.png" # ./Images/name.type
+        image_path = "./Images/Carmine.png" # ./Images/name.type
         image = self.load_image(image_path)
         picture_label = tk.Label(start_page, image=image, borderwidth=5)
         picture_label.image = image
