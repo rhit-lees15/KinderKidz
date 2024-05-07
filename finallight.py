@@ -100,32 +100,35 @@ if __name__ == '__main__':
         current_index = 1
 
         while True:
-            for letter in letters:
-                current_index += 1
+            current_letter = 'A'
+            display_letter(current_letter, Color(150, 150,150))
+                
+            # for letter in letters:
+            #     current_index += 1
 
-                if current_index == 1:
-                    current_letter = letter_arrays[letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_index == 2:
-                    print("here222")
-                    current_letter = letter_arrays[letter]
-                    current_letter = [[num + 100 for num in row] for row in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
+            #     if current_index == 1:
+            #         current_letter = letter_arrays[letter]
+            #         display_letter(current_letter, Color(150, 150,150))
+            #     elif current_index == 2:
+            #         print("here222")
+            #         current_letter = letter_arrays[letter]
+            #         current_letter = [[num + 100 for num in row] for row in current_letter]
+            #         display_letter(current_letter, Color(150, 150,150))
 
-                elif current_index == 3:
-                    current_letter = letter_arrays[letter]
-                    current_letter = [[num + 200 for num in row] for row in current_letter]
+            #     elif current_index == 3:
+            #         current_letter = letter_arrays[letter]
+            #         current_letter = [[num + 200 for num in row] for row in current_letter]
 
-                    display_letter(current_letter, Color(150, 150,150))
+            #         display_letter(current_letter, Color(150, 150,150))
                 
 
-                while True:
-                    if GPIO.input(BUTTON_PIN) == GPIO.LOW:
-                        print("here")
-                        break
-                    # time.sleep(0.1)
-                turn_off()
-                time.sleep(800/1000)
+                # while True:
+                #     if GPIO.input(BUTTON_PIN) == GPIO.LOW:
+                #         print("here")
+                #         break
+                #     # time.sleep(0.1)
+                # turn_off()
+                # time.sleep(800/1000)
 
 
 
