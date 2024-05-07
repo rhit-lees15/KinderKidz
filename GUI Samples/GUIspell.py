@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import PhotoImage, messagebox
 import random
-from sound_w_game import *
+# from sound_w_game import *
 
 class GUI(tk.Tk):
     def create_word_display_page(self, duration):
