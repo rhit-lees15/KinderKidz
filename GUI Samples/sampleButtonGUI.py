@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
+import sound_w_game as gamesound 
 # from sound_w_game import * 
 
 class GUI(tk.Tk):
@@ -199,11 +200,12 @@ class GUI(tk.Tk):
             # get selected items
             selected_songs = ",".join([listbox.get(i) for i in selected_indices])
             msg = f'You selected: {selected_songs}'
-            # messagebox.askokcancel(f'You selected: {selected_songs},
-            #                     Is this your final choice')
 
             showinfo(title='Information', message=msg)
-
+        
+        listbox.bind('<<ListboxSelect>>', items_selected)
+        
+        # root.mainloop()
 
         # listbox.bind('<<ListboxSelect>>', items_selected)
 
