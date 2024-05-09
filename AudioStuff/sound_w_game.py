@@ -177,8 +177,12 @@ for pin in BUTTON_PINS:
     GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=200)
 
 # Generate a random word
-wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+# wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 # wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
+wordList = ['ABC', 'LMNO', 'XYZ']
+
+words_remaining = True
+
 random.shuffle(wordList)
 # randomWord = generateRandomWord(wordList)
 n = 0
@@ -213,8 +217,13 @@ print("Reallocated letters: " + ' '.join(randomizedLetters))
 spelledWord = ''
 
 try:
-    while True:
+    while words_remaining:
+        if not wordList:
+            words_remaining = False
+            
         time.sleep(1)
+        
+
 except KeyboardInterrupt:
     GPIO.cleanup()
 
