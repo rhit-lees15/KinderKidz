@@ -2,8 +2,12 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-# from AudioStuff import sound_w_game as gamesound 
+# from AudioStuff import sound_w_game as gamesound -- should work
+    # gamesound.fxnname
+
+
 # from sound_w_game import * 
+# import sound_w_game as kafjakjd
 
 lessonONE = 0
 lessonTWO = 0
@@ -36,9 +40,9 @@ class GUI(tk.Tk):
         # Picture Right
         image_path2 = "COW.PNG"
         image2 = self.load_image(image_path2)
-        picture_label2 = tk.Label(start_page, image=image2, borderwidth=0)
-        picture_label2.image = image2
-        picture_label2.place(relx=0.6, rely=0.5, anchor=tk.CENTER)
+        picture_label = tk.Label(start_page, image2=image2, borderwidth=0)
+        picture_label.image = image2
+        picture_label.place(relx=0.6, rely=0.5, anchor=tk.CENTER)
 
         # Start button
         start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
