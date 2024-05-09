@@ -28,7 +28,7 @@ def init_vlc(sound_file:str):
     p.play()
     time.sleep(1) #this is necessary because is_playing() returns false if called right away
     while p.is_playing():
-        time.sleep(1)
+        time.sleep(0.25)
     p.release()
     
 
@@ -119,6 +119,14 @@ def buttonPress(pin):
 def newWord():
     global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
     
+## NOOR NEW ADDITION 05.09.24
+    if not wordList:
+        print("Congratulations! You've spelled all the words in the list!")
+        return
+    
+    wordList.remove(randomWord)
+    ################# END OF ADDITION
+
     # Generate a new word
     n = 0
     while n <= len(wordList) - 1:
@@ -170,6 +178,7 @@ for pin in BUTTON_PINS:
 
 # Generate a random word
 wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+# wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
 random.shuffle(wordList)
 # randomWord = generateRandomWord(wordList)
 n = 0

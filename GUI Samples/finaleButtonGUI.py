@@ -38,11 +38,11 @@ class GUI(tk.Tk):
         picture_label.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
 
         # Picture Right
-        image_path2 = "COW.PNG"
-        image2 = self.load_image(image_path2)
-        picture_label = tk.Label(start_page, image2=image2, borderwidth=0)
-        picture_label.image = image2
-        picture_label.place(relx=0.6, rely=0.5, anchor=tk.CENTER)
+        # image_path2 = "COW.PNG"
+        # image2 = self.load_image(image_path2)
+        # picture_label = tk.Label(start_page, image2=image2, borderwidth=0)
+        # picture_label.image = image2
+        # picture_label.place(relx=0.6, rely=0.5, anchor=tk.CENTER)
 
         # Start button
         start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
