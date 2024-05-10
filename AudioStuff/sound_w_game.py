@@ -212,25 +212,26 @@ for idx, pin in enumerate(BUTTON_PINS):
 # Set button sequence for the initial word
 button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
 
-#####* Start the game
-print("Welcome to the Word Spelling Game!")
-init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
-print(f"Spell the word: {randomWord}")
-print("Reallocated letters: " + ' '.join(randomizedLetters))
-# print("Available letters: " + ' '.join(availableLetters))
+if __name__ == '__main__':
+    #####* Start the game
+    print("Welcome to the Word Spelling Game!")
+    init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
+    print(f"Spell the word: {randomWord}")
+    print("Reallocated letters: " + ' '.join(randomizedLetters))
+    # print("Available letters: " + ' '.join(availableLetters))
 
-spelledWord = ''
+    spelledWord = ''
 
-try:
-    while words_remaining:
-        if not wordList:
-            words_remaining = False
+    try:
+        while words_remaining:
+            if not wordList:
+                words_remaining = False
+                
+            time.sleep(0.25)
             
-        time.sleep(0.25)
-        
 
-except KeyboardInterrupt:
-    GPIO.cleanup()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 
 # GPIO.cleanup() # Clean up
