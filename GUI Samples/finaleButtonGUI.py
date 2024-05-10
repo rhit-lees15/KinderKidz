@@ -5,6 +5,8 @@ import random
 # from AudioStuff import sound_w_game as gamesound -- should work
     # gamesound.fxnname
 
+# time per lesson (3 min = 180)
+
 duration = 5
 
 # from sound_w_game import * 
@@ -70,35 +72,35 @@ class GUI(tk.Tk):
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
         self.current_page = "list_selection"
-        time_selection_page = tk.Frame(self, bg="black")
-        time_selection_page.pack(fill=tk.BOTH, expand=True)
+        list_selection_page = tk.Frame(self, bg="black")
+        list_selection_page.pack(fill=tk.BOTH, expand=True)
 
         # Label for word list selection
-        list_label = tk.Label(time_selection_page, text="Select a Word List:", font=("Helvetica", 20), bg="black", fg="white")
+        list_label = tk.Label(list_selection_page, text="Select a Word List:", font=("Helvetica", 20), bg="black", fg="white")
         list_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
 
        # Button to select first word list
-        first_list_button = tk.Button(time_selection_page, text="List 1", font=("Helvetica", 16),
+        first_list_button = tk.Button(list_selection_page, text="List 1", font=("Helvetica", 16),
                                     bg="blue", fg="white", command=lambda: self.create_word_display_page("List 1"))
         first_list_button.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
         # Button to select second word list
-        second_list_button = tk.Button(time_selection_page, text="List 2", font=("Helvetica", 16),
+        second_list_button = tk.Button(list_selection_page, text="List 2", font=("Helvetica", 16),
                                     bg="green", fg="white", command=lambda: self.create_word_display_page("List 2"))
         second_list_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
 
         # Button to select third word list
-        third_list_button = tk.Button(time_selection_page, text="List 3", font=("Helvetica", 16),
+        third_list_button = tk.Button(list_selection_page, text="List 3", font=("Helvetica", 16),
                                     bg="red", fg="white", command=lambda: self.create_word_display_page("List 3"))
         third_list_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
 
         # Exit button
-        exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
+        exit_button = tk.Button(list_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
-        self.pages["time_selection"] = time_selection_page  # Store the time selection page
+        self.pages["list_selection"] = list_selection_page  # Store the time selection page
 
 
 # ############################
@@ -205,10 +207,20 @@ class GUI(tk.Tk):
         countdown_label = tk.Label(frame, font=("Helvetica", 16))
         countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
 
-        def update_countdown(seconds_left):
-            countdown_label.config(text=f"Time Left: {seconds_left} seconds", bg = "black", fg = "white")
-            if seconds_left > 0:
-                frame.after(1000, update_countdown, seconds_left - 1)
+        # minutes, seconds = divmod(duration, 60)
+        # # timer = '{:02d}:{:02d}'.format(mins, secs) 
+        # countdown_label.config(text=f"Time Left: {minutes}:{seconds}", bg="black", fg="white") 
+        # time.sleep(1) 
+
+
+        def update_countdown(duration):    
+        
+            min, sec = divmod(duration,60)
+            countdown_label.config(text=f"Time Left: {min}:{sec}", bg = "black", fg = "white")
+
+
+            if duration > 0:
+                frame.after(1000, update_countdown, duration - 1)
             else:
                 self.create_dance_display_page()
 
@@ -219,18 +231,21 @@ class GUI(tk.Tk):
     def create_dance_display_page(self):
         self.hide_current_page()  # Hide current page
         self.current_page = "Dance_display"
-        
         dance_display_page = tk.Frame(self, bg="black")
         dance_display_page.pack(fill=tk.BOTH, expand=True)
 
-        # Add a label for text above the Listbox
-        text_label = tk.Label(dance_display_page, text="Dance Display Page", font=("Helvetica", 24), bg="black", fg="white")
-        text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+        # Label for word list selection
+        dance_label = tk.Label(dance_display_page, text="Select a Song:", font=("Helvetica", 20), bg="black", fg="white")
+        dance_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+
+        # # Add a label for text above the Listbox
+        # text_label = tk.Label(dance_display_page, text="Dance Display Page", font=("Helvetica", 24), bg="black", fg="white")
+        # text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
 
         # Create a Listbox
         songs = ('Song 1', 'Song 2', 'Song 3', 'Song 4')
         listbox = tk.Listbox(dance_display_page, height=6, selectmode=tk.EXTENDED, bg="black", fg="white", font=("Helvetica", 24))
-        listbox.pack(side=tk.LEFT, padx=20, pady=20, fill=tk.BOTH, expand=True)
+        listbox.pack(side=tk.LEFT, padx=0, pady=20, fill=tk.BOTH, expand=True)
 
         for song in songs:
             listbox.insert(tk.END, song)
