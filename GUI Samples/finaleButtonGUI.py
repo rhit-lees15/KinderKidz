@@ -79,17 +79,17 @@ class GUI(tk.Tk):
 
        # Button to select first word list
         first_list_button = tk.Button(time_selection_page, text="List 1", font=("Helvetica", 16),
-                                    bg="blue", fg="white", command=lambda: self.create_word_display_page("List 1", duration))
+                                    bg="blue", fg="white", command=lambda: self.create_word_display_page("List 1"))
         first_list_button.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
         # Button to select second word list
         second_list_button = tk.Button(time_selection_page, text="List 2", font=("Helvetica", 16),
-                                    bg="green", fg="white", command=lambda: self.create_word_display_page("List 2", duration))
+                                    bg="green", fg="white", command=lambda: self.create_word_display_page("List 2"))
         second_list_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
 
         # Button to select third word list
         third_list_button = tk.Button(time_selection_page, text="List 3", font=("Helvetica", 16),
-                                    bg="red", fg="white", command=lambda: self.create_word_display_page("List 3", duration))
+                                    bg="red", fg="white", command=lambda: self.create_word_display_page("List 3"))
         third_list_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
 
