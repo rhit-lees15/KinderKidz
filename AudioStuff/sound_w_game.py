@@ -65,9 +65,11 @@ def buttonPress(pin):
     if letter in randomWord:
         # Check if the letter is in the correct position
         if letter == randomWord[len(spelledWord)]:
+            ## The letter is in the word
             spelledWord += letter
             print("Current spelling:", spelledWord)
             if len(spelledWord) != len(randomWord):
+                ## The letter is in correct position - correct
                 init_vlc('./AudioStuff/goodjobnowletsfindthenextletter.mp3')
             # If the full word is spelled correctly
             elif len(spelledWord) == len(randomWord):
@@ -209,7 +211,7 @@ for idx, pin in enumerate(BUTTON_PINS):
 # Set button sequence for the initial word
 button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
 
-# Start the game
+#####* Start the game
 print("Welcome to the Word Spelling Game!")
 init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
 print(f"Spell the word: {randomWord}")
