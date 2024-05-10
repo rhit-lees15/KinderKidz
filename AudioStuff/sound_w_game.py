@@ -120,11 +120,13 @@ def newWord():
     global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
     
 ## NOOR NEW ADDITION 05.09.24
+    wordList.remove(randomWord)
+    
     if not wordList:
         print("Congratulations! You've spelled all the words in the list!")
         return
     
-    wordList.remove(randomWord)
+
     ################# END OF ADDITION
 
     # Generate a new word
