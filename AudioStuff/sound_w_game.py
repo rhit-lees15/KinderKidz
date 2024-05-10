@@ -128,6 +128,7 @@ def newWord():
         print("Congratulations! You've spelled all the words in the list!")
         return
     
+    
 
     ################# END OF ADDITION
 
@@ -211,25 +212,39 @@ for idx, pin in enumerate(BUTTON_PINS):
 # Set button sequence for the initial word
 button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
 
-#####* Start the game
-print("Welcome to the Word Spelling Game!")
-init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
-print(f"Spell the word: {randomWord}")
-print("Reallocated letters: " + ' '.join(randomizedLetters))
-# print("Available letters: " + ' '.join(availableLetters))
+if __name__ == '__main__':
+    #####* Start the game
 
-spelledWord = ''
+    # Initialization of lights    
+    # Process arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    args = parser.parse_args()
 
-try:
-    while words_remaining:
-        if not wordList:
-            words_remaining = False
+    # Create NeoPixel object with appropriate configuration.
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    # Intialize the library (must be called once before other functions).
+    strip.begin()
+
+
+    print("Welcome to the Word Spelling Game!")
+    init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
+    print(f"Spell the word: {randomWord}")
+    print("Reallocated letters: " + ' '.join(randomizedLetters))
+    # print("Available letters: " + ' '.join(availableLetters))
+
+    spelledWord = ''
+
+    try:
+        while words_remaining:
+            if not wordList:
+                words_remaining = False
+                
+            time.sleep(0.25)
             
-        time.sleep(0.25)
-        
 
-except KeyboardInterrupt:
-    GPIO.cleanup()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 
 # GPIO.cleanup() # Clean up
