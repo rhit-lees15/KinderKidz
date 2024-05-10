@@ -214,6 +214,19 @@ button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in ra
 
 if __name__ == '__main__':
     #####* Start the game
+
+    # Initialization of lights    
+    # Process arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    args = parser.parse_args()
+
+    # Create NeoPixel object with appropriate configuration.
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    # Intialize the library (must be called once before other functions).
+    strip.begin()
+
+
     print("Welcome to the Word Spelling Game!")
     init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
     print(f"Spell the word: {randomWord}")
