@@ -2,15 +2,10 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-# from AudioStuff import sound_w_game as gamesound -- should work
-    # gamesound.fxnname
+# from AudioStuff import sound_w_game as gamesound
 
 # time per lesson (3 min = 180)
-
 duration = 5
-
-# from sound_w_game import * 
-# import sound_w_game as kafjakjd
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -58,8 +53,6 @@ class GUI(tk.Tk):
         image = tk.PhotoImage(file=path)
         return image
 
-############## NEW ADDITION 05.04.24
-
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
         self.current_page = "list_selection"
@@ -92,41 +85,6 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
         self.pages["list_selection"] = list_selection_page  # Store the time selection page
-
-
-# ############################
-
-    # def create_time_selection_page(self):
-    #     self.hide_current_page()  # Hide current page
-    #     self.current_page = "time_selection"
-    #     time_selection_page = tk.Frame(self, bg = "black")
-    #     time_selection_page.pack(fill=tk.BOTH, expand=True)
-
-    #     # Time selection buttons
-    #     first_time_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 20),
-    #                                 bg = "black", fg = "white",
-    #                                 command=lambda: self.create_word_display_page(5))
-    #     first_time_button.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
-
-    #     second_time_button = tk.Button(time_selection_page, text="5 Minutes", font=("Helvetica", 20),
-    #                                   bg = "black", fg = "white",
-    #                                   command=lambda: self.create_word_display_page(300))
-    #     second_time_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-
-    #     third_time_button = tk.Button(time_selection_page, text="10 Minutes", font=("Helvetica", 20),
-    #                                bg = "black", fg = "white",
-    #                                command=lambda: self.create_word_display_page(600))
-    #     third_time_button.place(relx=0.7, rely=0.5, anchor=tk.CENTER)
-
-    #     # Exit button
-    #     exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
-    #                             command=self.exit_program)
-    #     exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
-
-    #     self.pages["time_selection"] = time_selection_page  # Store the time selection page
-
-
-#############################
 
     def create_word_display_page(self, word_list_name):
         self.hide_current_page()  # Hide current page
@@ -163,7 +121,7 @@ class GUI(tk.Tk):
         self.hide_current_page()  # Hide current page
         self.current_page = "word_display"
 
-        # Random word generator
+        # Random word generator -- used for initial testing
         # word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
         
         random_word = random.choice(self.word_lists[word_list_name])
@@ -176,13 +134,16 @@ class GUI(tk.Tk):
                              bg = "black", fg = "white")
         word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        # # Change color of each letter
+
+        ## This is too much of a distraction, so we removed it
+        # # Change color of each word
         # colors = ["red", "blue", "green", "purple", "orange"]  # List of colors
         # for i, letter in enumerate(random_word):
         #     color = random.choice(colors)  # Pick a random color
         #     word_text.config(fg=color)
         #     word_text.update_idletasks()
         #     word_text.after(1000 * i, lambda: None)  # Delay for each letter
+
 
         # Create countdown
         self.create_countdown(word_display_page, duration)
@@ -198,12 +159,6 @@ class GUI(tk.Tk):
         countdown_label = tk.Label(frame, font=("Helvetica", 16))
         countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
 
-        # minutes, seconds = divmod(duration, 60)
-        # # timer = '{:02d}:{:02d}'.format(mins, secs) 
-        # countdown_label.config(text=f"Time Left: {minutes}:{seconds}", bg="black", fg="white") 
-        # time.sleep(1) 
-
-
         def update_countdown(duration):    
         
             min, sec = divmod(duration,60)
@@ -217,21 +172,15 @@ class GUI(tk.Tk):
 
         update_countdown(duration)
 
-############# NEW ADDITION ATTEMPT 05.08.24
-
     def create_dance_display_page(self):
         self.hide_current_page()  # Hide current page
         self.current_page = "Dance_display"
         dance_display_page = tk.Frame(self, bg="black")
         dance_display_page.pack(fill=tk.BOTH, expand=True)
 
-        # Label for word list selection
+        # Label for word list selection -- this does not show up, and unsure as to why
         dance_label = tk.Label(dance_display_page, text="Select a Song:", font=("Helvetica", 20), bg="black", fg="white")
         dance_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
-
-        # # Add a label for text above the Listbox
-        # text_label = tk.Label(dance_display_page, text="Dance Display Page", font=("Helvetica", 24), bg="black", fg="white")
-        # text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
 
         # Create a Listbox
         songs = ('Song 1', 'Song 2', 'Song 3', 'Song 4')
@@ -252,79 +201,6 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["dance_display"] = dance_display_page  # Store the data
-
-##############
-
-    # def create_dance_display_page(self):
-    #     self.hide_current_page()  # Hide current page
-    #     self.current_page = "Dance_display"
-        
-    #     dance_display_page = tk.Frame(self, bg = "black")
-    #     dance_display_page.pack(fill=tk.BOTH, expand=True)
-
-    #     # Add a label for text above the GIF
-    #     text_label = tk.Label(dance_display_page, text="Dance Display Page", font=("Helvetica", 24), bg = "black", fg = "white")
-    #     text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
-
-    #     root = tk.Tk()
-
-    #     root.title('Listbox')
-
-    #     # create a list box
-    #     songs = ('Song 1', 'Song 2', 'Song 3', 'Song 4')
-
-    #     var = tk.Variable(value=songs)
-
-    #     listbox = tk.Listbox(
-    #         root,
-    #         listvariable=var,
-    #         height=6,
-    #         selectmode=tk.EXTENDED)
-
-    #     listbox.pack(expand=True, fill=tk.BOTH, side=tk.LEFT)
-
-    #     # link a scrollbar to a list
-    #     scrollbar = ttk.Scrollbar(
-    #         root,
-    #         orient=tk.VERTICAL,
-    #         command=listbox.yview
-    #     )
-
-    #     listbox['yscrollcommand'] = scrollbar.set
-
-    #     scrollbar.pack(side=tk.LEFT, expand=True, fill=tk.Y)
-
-    #     def items_selected(event):
-    #         # get selected indices
-    #         selected_indices = listbox.curselection()
-    #         # get selected items
-    #         selected_songs = ",".join([listbox.get(i) for i in selected_indices])
-    #         msg = f'You selected: {selected_songs}'
-
-    #         showinfo(title='Information', message=msg)
-        
-    #     listbox.bind('<<ListboxSelect>>', items_selected)
-        
-    #     # root.mainloop()
-
-    #     # listbox.bind('<<ListboxSelect>>', items_selected)
-
-    #     # # Load and display the GIF
-    #     # gif_path = "example.gif"  # Change this to your GIF path
-    #     # gif_label = tk.Label(gif_display_page)
-    #     # gif_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-    #     # gif_image = PhotoImage(file=gif_path)
-    #     # gif_label.config(image=gif_image)
-    #     # gif_label.image = gif_image
-
-    #     # Exit button
-    #     exit_button = tk.Button(dance_display_page, text="Exit", bg="red", font=("Helvetica", 16),
-    #                             command=self.exit_program)
-    #     exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
-
-    #     self.pages["dance_display"] = dance_display_page  # Store the GIF display page
-
-###################
 
     def hide_current_page(self):
         if self.current_page in self.pages:
