@@ -221,7 +221,7 @@ try:
         if not wordList:
             words_remaining = False
             
-        time.sleep(1)
+        time.sleep(0.25)
         
 
 except KeyboardInterrupt:
