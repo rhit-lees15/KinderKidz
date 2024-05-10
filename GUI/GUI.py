@@ -31,11 +31,11 @@ class GUI(tk.Tk):
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Central Picture 
-        image_path = "Carmine.PNG" # ./Images/name.type
+        image_path = "./Images/ANIMALS.png" # ./Images/name.type
         image = self.load_image(image_path)
         picture_label = tk.Label(start_page, image=image, borderwidth=0)
         picture_label.image = image
-        picture_label.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
+        picture_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Start button
         start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
