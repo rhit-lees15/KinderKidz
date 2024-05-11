@@ -7,32 +7,9 @@ import string
 import random
 from pygame import Color
 from rpi_ws281x import *
-
-# from game_sound import *
-
+import game_sound as gamesound
 
 
-
-# def init_vlc(song:str):
-#     vlc_instance = vlc.Instance()
-#     player = vlc_instance.media_player_new()
-
-#     media  = vlc_instance.media_new(song)
-#     media.get_mrl()
-#     player.set_media(media)
-#     player.play()
-#     # playing = set(State.playing)
-#     time.sleep(1.5) # startup time.
-#     duration = player.get_length() / 1000
-#     mm, ss   = divmod(duration, 60)
-
-def init_vlc(sound_file:str):
-    p = vlc.MediaPlayer(sound_file)
-    p.play()
-    time.sleep(1) #this is necessary because is_playing() returns false if called right away
-    while p.is_playing():
-        time.sleep(0.25)
-    p.release()
 
 # Initialize lights
 # LED strip configuration:
@@ -44,8 +21,6 @@ LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 65     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
-
-    
 
     
 
@@ -85,11 +60,13 @@ def buttonPress(pin):
             print("Current spelling:", spelledWord)
             if len(spelledWord) != len(randomWord):
                 ## The letter is in correct position - correct
-                init_vlc('./AudioStuff/goodjobnowletsfindthenextletter.mp3')
+                gamesound.play_happy()
+                gamesound.play_correct_letter()
             # If the full word is spelled correctly
             elif len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
-                init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
+                gamesound.play_happy()
+                gamesound.play_next_word()
                 newWord()
         else:
             # Find the first incorrect letter position
@@ -98,15 +75,15 @@ def buttonPress(pin):
             if len(spelledWord) == 0:
                 print("Incorrect order!")
                 #spelledWord = ''
-                init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+                gamesound.play_wrong_order()
                 print("Current spelling:", spelledWord)
             else:
                 #spelledWord = randomWord[incorrect_position]
                 print("Incorrect order! Restarting from:", spelledWord)
-                init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+                gamesound.play_wrong_order()
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
-        init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
+        gamesound.play_wrong_letter()
 
 
 # # Function to handle button press event
@@ -243,7 +220,7 @@ if __name__ == '__main__':
 
 
     print("Welcome to the Word Spelling Game!")
-    init_vlc('./AudioStuff/hicarmineletsspellsomewordstoday.mp3')
+    gamesound.play_intro()
     print(f"Spell the word: {randomWord}")
     print("Reallocated letters: " + ' '.join(randomizedLetters))
     # print("Available letters: " + ' '.join(availableLetters))
@@ -262,22 +239,3 @@ if __name__ == '__main__':
         GPIO.cleanup()
 
 
-# GPIO.cleanup() # Clean up
-
-# names of audio files for convenience
-
-# firstletsfindtheletterC.mp3
-# ByeCarmine.mp3 
-# goodjobnowletsfindthenextletter.mp3 
-# GreatworkCarmine.mp3 
-# hicarmineletsspellsomewordstoday.mp3 
-# letsfindtheletterT.mp3 
-# pressthegreenbuttontostart.mp3 
-# repeataftermeispelledthewordcatcatisspelledCAT.mp3 
-# thetimerranoutletshaveadancebreak.mp3 
-# timetomoveontothenextword.mp3 
-# werespellingthewordcatcatisspelledCAT.mp3 
-# whereistheletterA_.mp3 
-# youspelledthewordcatcatisspelledCAT.mp3
-# nopethatletterisntpartoftheword.mp3
-# oopsthatsnotrighttryadifferentorder.mp3
