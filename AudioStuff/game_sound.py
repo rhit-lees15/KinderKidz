@@ -11,13 +11,13 @@ def init_vlc(sound_file:str):
         time.sleep(1)
     p.release()
 
-intro_sounds = ['','',''] #insert different sounds
-correct_letter_sounds = ['','',''] #insert different sounds
-next_word_sounds = ['','',''] #insert different sounds
-wrong_order_sounds = ['','',''] #insert different sounds
-wrong_letter_sounds = ['','',''] #insert different sounds
-happy_sounds = ['./AudioStuff/90s-game-ui.mp3','./AudioStuff/copper-bell-ding-4','/AudioStuff/correct-choice'] #insert different sounds
-transition_sounds = ['','',''] #insert different sounds
+intro_sounds = ['./AudioStuff/hicarmineletsspellsomewordstoday.mp3','./AudioStuff/hicarmineareyoureadytospellsomewords.mp3','./AudioStuff/whatsupcarmineletsdosomespelling.mp3','./AudioStuff/letsspellsomewordstodaycarmine.mp3','./AudioStuff/hicarmineletsplaythespellinggame.mp3'] 
+correct_letter_sounds = ['./AudioStuff/correctnowletsfindthenextletter.mp3','./AudioStuff/goodjobcarmineletsfindthenextletter.mp3','./AudioStuff/nicecarmineletsfindthenextletter.mp3','./AudioStuff/goodjobcarmine.mp3','./AudioStuff/greatjobcarmine.mp3'] 
+next_word_sounds = ['./AudioStuff/greatjobnowletsspellthenextword.mp3','./AudioStuff/yayyouspelledthewordnowletsdothenextone.mp3','./AudioStuff/goodjobatspellingcarmineletsdothenextword.mp3','./AudioStuff/goodjobcarmine.mp3','./AudioStuff/greatjobcarmine.mp3'] 
+wrong_order_sounds = ['./AudioStuff/soclosetrytofindadifferentletter.mp3','./AudioStuff/almostletstryadifferentorder.mp3','./AudioStuff/thatletterispartofthewordbutitsnottherightorder.mp3','./AudioStuff/soclosetryadifferentletter.mp3','./AudioStuff/oopsthatsnottherightlettertryadifferentone.mp3'] 
+wrong_letter_sounds = ['./AudioStuff/almostthatletterisntpartoftheword.mp3','./AudioStuff/oopsthatletterisntpartofthewordtryadifferentone.mp3','./AudioStuff/soclosetryadifferentletter.mp3','./AudioStuff/oopsthatsnottherightlettertryadifferentone.mp3'] 
+happy_sounds = ['./AudioStuff/90s-game-ui.mp3','./AudioStuff/copper-bell-ding-4','/AudioStuff/correct-choice','./AudioStuff/cute-level-up-1.mp3','./AudioStuff/cute-level-up-2.mp3','./AudioStuff/cute-level-up-3.mp3','./AudioStuff/game-bonus.mp3','./AudioStuff/level-up.mp3','./AudioStuff/level-up-2.mp3','./AudioStuff/YayKidsCrowd.mp3','./AudioStuff/bonus-points.mp3']
+dance_break_sounds = ['./AudioStuff/hicarmineletstakeabreakchoosethesongyouwannadanceto.mp3','./AudioStuff/goodjobatspellingcarmineletstakeabreakanddance.mp3','./AudioStuff/okaycarminetimeforabreakletsdance.mp3'] 
 
 def play_happy():
     init_vlc(random.choice(happy_sounds))
@@ -37,42 +37,59 @@ def play_wrong_order():
 def play_wrong_letter():
     init_vlc(random.choice(wrong_letter_sounds))
 
-def play_transition():
-    init_vlc(random.choice(transition_sounds))
+def play_dance_break():
+    init_vlc(random.choice(dance_break_sounds))
 
 
-# intro sounds
-# ./AudioStuff/hicarmineletsspellsomewordstoday
-# ./AudioStuff/hicarmineareyoureadytospellsomewords
-# ./AudioStuff/whatsupcarmineletsdosomespelling
-# ./AudioStuff/letsspellsomewordstodaycarmine
-# ./AudioStuff/hicarmineletsplaythespellinggame
+# # intro sounds
+# ./AudioStuff/hicarmineletsspellsomewordstoday.mp3
+# ./AudioStuff/hicarmineareyoureadytospellsomewords.mp3
+# ./AudioStuff/whatsupcarmineletsdosomespelling.mp3
+# ./AudioStuff/letsspellsomewordstodaycarmine.mp3
+# ./AudioStuff/hicarmineletsplaythespellinggame.mp3
 
-# correct letter sounds
-# ./AudioStuff/correctnowletsfindthenextletter
-# ./AudioStuff/goodjobcarmineletsfindthenextletter
-# ./AudioStuff/nicecarmineletsfindthenextletter
-# ./AudioStuff/goodjobcarmine
-# ./AudioStuff/greatjobcarmine
+# # correct letter sounds
+# ./AudioStuff/correctnowletsfindthenextletter.mp3
+# ./AudioStuff/goodjobcarmineletsfindthenextletter.mp3
+# ./AudioStuff/nicecarmineletsfindthenextletter.mp3
+# ./AudioStuff/goodjobcarmine.mp3
+# ./AudioStuff/greatjobcarmine.mp3
 
-# next word sounds
-./AudioStuff/greatjobnowletsspellthenextword
-./AudioStuff/yayyouspelledthewordnowletsdothenextone
-./AudioStuff/
-./AudioStuff/
-./AudioStuff/
+# # next word sounds
+# ./AudioStuff/greatjobnowletsspellthenextword.mp3
+# ./AudioStuff/yayyouspelledthewordnowletsdothenextone.mp3
+# ./AudioStuff/goodjobatspellingcarmineletsdothenextword.mp3
+# ./AudioStuff/goodjobcarmine.mp3
+# ./AudioStuff/greatjobcarmine.mp3
 
-# happy sounds
+
+# # happy sounds
 # ./AudioStuff/90s-game-ui.mp3
-# ./AudioStuff/copper-bell-ding-4
-# ./AudioStuff/correct-choice
-# ./AudioStuff/cute-level-up-1
-# ./AudioStuff/cute-level-up-2
-# ./AudioStuff/cute-level-up-3
-# ./AudioStuff/game-bonus
-# ./AudioStuff/level-up
-# ./AudioStuff/level-up-2
-# ./AudioStuff/YayKidsCrowd
-# ./AudioStuff/bonus-points
+# ./AudioStuff/copper-bell-ding-4.mp3
+# ./AudioStuff/correct-choice.mp3
+# ./AudioStuff/cute-level-up-1.mp3
+# ./AudioStuff/cute-level-up-2.mp3
+# ./AudioStuff/cute-level-up-3.mp3
+# ./AudioStuff/game-bonus.mp3
+# ./AudioStuff/level-up.mp3
+# ./AudioStuff/level-up-2.mp3
+# ./AudioStuff/YayKidsCrowd.mp3
+# ./AudioStuff/bonus-points.mp3
 
+# # wrong order sounds
+# ./AudioStuff/soclosetrytofindadifferentletter.mp3
+# ./AudioStuff/almostletstryadifferentorder.mp3
+# ./AudioStuff/thatletterispartofthewordbutitsnottherightorder.mp3
+# ./AudioStuff/soclosetryadifferentletter.mp3
+# ./AudioStuff/oopsthatsnottherightlettertryadifferentone.mp3
 
+# # wrong letter sounds
+# ./AudioStuff/almostthatletterisntpartoftheword.mp3
+# ./AudioStuff/oopsthatletterisntpartofthewordtryadifferentone.mp3
+# ./AudioStuff/soclosetryadifferentletter.mp3
+# ./AudioStuff/oopsthatsnottherightlettertryadifferentone.mp3
+
+# # dance break sounds
+# ./AudioStuff/hicarmineletstakeabreakchoosethesongyouwannadanceto.mp3
+# ./AudioStuff/goodjobatspellingcarmineletstakeabreakanddance.mp3
+# ./AudioStuff/okaycarminetimeforabreakletsdance.mp3
