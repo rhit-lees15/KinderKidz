@@ -49,13 +49,9 @@ class GUI(tk.Tk):
         picture_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Start button
-        start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
+        start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 40),
                                  command=self.create_list_selection_page)
-        start_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-
-        gamesound.play_intro()
-
-        spelledWord = ''
+        start_button.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
 
         # Exit button
         exit_button = tk.Button(start_page, text="Exit", bg="red", font=("Helvetica", 20),
@@ -70,6 +66,11 @@ class GUI(tk.Tk):
 
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
+        
+        gamesound.play_intro()
+
+        spelledWord = ''
+
         self.current_page = "list_selection"
         list_selection_page = tk.Frame(self, bg="black")
         list_selection_page.pack(fill=tk.BOTH, expand=True)
@@ -79,19 +80,19 @@ class GUI(tk.Tk):
         list_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
 
        # Button to select first word list
-        first_list_button = tk.Button(list_selection_page, text="List 1", font=("Helvetica", 16),
+        first_list_button = tk.Button(list_selection_page, text="List 1", font=("Helvetica", 40),
                                     bg="blue", fg="white", command=lambda: self.create_word_display_page("List 1"))
-        first_list_button.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
+        first_list_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
 
         # Button to select second word list
-        second_list_button = tk.Button(list_selection_page, text="List 2", font=("Helvetica", 16),
+        second_list_button = tk.Button(list_selection_page, text="List 2", font=("Helvetica", 40),
                                     bg="green", fg="white", command=lambda: self.create_word_display_page("List 2"))
-        second_list_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+        second_list_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Button to select third word list
-        third_list_button = tk.Button(list_selection_page, text="List 3", font=("Helvetica", 16),
+        third_list_button = tk.Button(list_selection_page, text="List 3", font=("Helvetica", 40),
                                     bg="red", fg="white", command=lambda: self.create_word_display_page("List 3"))
-        third_list_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
+        third_list_button.place(relx=0.8, rely=0.5, anchor=tk.CENTER)
 
         # Exit button
         exit_button = tk.Button(list_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
