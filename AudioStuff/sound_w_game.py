@@ -9,20 +9,6 @@ from pygame import Color
 from rpi_ws281x import *
 import game_sound as gamesound
 
-import pyb
-
-def wait_pin_change(pin):
-    # wait for pin to change value
-    # it needs to be stable for a continuous 20ms
-    cur_value = pin.value()
-    active = 0
-    while active < 20:
-        if pin.value() != cur_value:
-            active += 1
-        else:
-            active = 0
-        pyb.delay(0.05)
-
 # Initialize lights
 # LED strip configuration:
 LED_COUNT      = 300      # Number of LED pixels.
