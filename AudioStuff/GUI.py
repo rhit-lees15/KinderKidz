@@ -25,15 +25,6 @@ class GUI(tk.Tk):
             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
         }
 
-        words_remaining = True
-
-        random.shuffle(self.word_lists[word_list_name])
-        # randomWord = generateRandomWord(wordList)
-        n = 0
-        while n <= len(self.word_lists[word_list_name]) - 1:
-            randomWord = self.word_lists[word_list_name[n]]
-            n += 1
-
         self.create_start_page()
 
     def create_start_page(self):
@@ -113,6 +104,15 @@ class GUI(tk.Tk):
 
         # Generate a new random word from the selected word list
         random_word = random.choice(self.word_lists[word_list_name])
+
+        words_remaining = True
+
+        random.shuffle(self.word_lists[word_list_name])
+        # randomWord = generateRandomWord(wordList)
+        n = 0
+        while n <= len(self.word_lists[word_list_name]) - 1:
+            randomWord = self.word_lists[word_list_name[n]]
+            n += 1
 
         # Display word
         word_display_page = tk.Frame(self, bg="black")
