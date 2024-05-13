@@ -139,6 +139,22 @@ class GUI(tk.Tk):
         # Random word generator -- used for initial testing
         # word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
         
+        availableLetters = list(set(game_sequence.string.ascii_uppercase) - set(game_sequence.spelledWord) - set(game_sequence.randomWord))
+    
+        # Generate additional random letters
+        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(game_sequence.randomWord))
+        
+        # Combine the random word and random letters into a single string and shuffle them
+        randomizedLetters = game_sequence.randomizeLetters(game_sequence.randomWord, randomLetters)
+        
+        # Map each letter to a button
+        button_letters = {}
+        for idx, pin in enumerate(game_sequence.BUTTON_PINS):
+            button_letters[pin] = randomizedLetters[idx]
+        
+        # Set button sequence for the new word
+        button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in game_sequence.randomWord]
+
         game_sequence.generateRandomLetters()
         game_sequence.randomizeLetters()
         game_sequence.buttonPress()
