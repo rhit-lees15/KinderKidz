@@ -160,6 +160,8 @@ class GUI(tk.Tk):
         game_sequence.buttonPress()
         game_sequence.newWord()
 
+        spelledWord = ''
+
         # random_word = random.choice(self.word_lists[word_list_name])
 
         # Display word
