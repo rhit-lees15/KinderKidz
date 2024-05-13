@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-from AudioStuff import sound_w_game as game_sequence
-from AudioStuff import game_sound as gamesound
+import sound_w_game as game_sequence
+import game_sound as gamesound
 import time
 
 # time per lesson (3 min = 180)
