@@ -8,7 +8,7 @@ def init_vlc(sound_file:str):
     p.play()
     time.sleep(0.2) #this is necessary because is_playing() returns false if called right away
     while p.is_playing():
-        time.sleep(0.2)
+        time.sleep(1)
     p.release()
 
 intro_sounds = ['./AudioStuff/hicarmineletsspellsomewordstoday.mp3','./AudioStuff/hicarmineareyoureadytospellsomewords.mp3','./AudioStuff/whatsupcarmineletsdosomespelling.mp3','./AudioStuff/letsspellsomewordstodaycarmine.mp3','./AudioStuff/hicarmineletsplaythespellinggame.mp3'] 
