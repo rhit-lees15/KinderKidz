@@ -25,6 +25,15 @@ class GUI(tk.Tk):
             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
         }
 
+        words_remaining = True
+
+        random.shuffle(self.word_lists[word_list_name])
+        # randomWord = generateRandomWord(wordList)
+        n = 0
+        while n <= len(self.word_lists[word_list_name]) - 1:
+            randomWord = self.word_lists[word_list_name[n]]
+            n += 1
+
         self.create_start_page()
 
     def create_start_page(self):
@@ -84,7 +93,6 @@ class GUI(tk.Tk):
                                     bg="red", fg="white", command=lambda: self.create_word_display_page("List 3"))
         third_list_button.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
-
         # Exit button
         exit_button = tk.Button(list_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
                                 command=self.exit_program)
@@ -130,13 +138,18 @@ class GUI(tk.Tk):
         # Random word generator -- used for initial testing
         # word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
         
-        random_word = random.choice(self.word_lists[word_list_name])
+        game_sequence.generateRandomLetters()
+        game_sequence.randomizeLetters()
+        game_sequence.buttonPress()
+        game_sequence.newWord()
+
+        # random_word = random.choice(self.word_lists[word_list_name])
 
         # Display word
         word_display_page = tk.Frame(self, bg = "black")
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 48),
+        word_text = tk.Label(word_display_page, text=game_sequence.randomWord, font=("Helvetica", 48),
                              bg = "black", fg = "white")
         word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
