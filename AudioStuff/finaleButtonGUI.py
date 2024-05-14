@@ -103,199 +103,197 @@ class GUI(tk.Tk):
 
         self.pages["list_selection"] = list_selection_page  # Store the time selection page
 
-    ############## TRY IN WHILE LOOP???
-    while duration > 0:
-        def create_word_display_page(self, word_list_name):
-            self.hide_current_page()  # Hide current page
-            self.current_page = "word_display"
+    def create_word_display_page(self, word_list_name):
+        self.hide_current_page()  # Hide current page
+        self.current_page = "word_display"
 
-            # Generate a new random word
-            # newWord()
+        # Generate a new random word
+        # newWord()
 
-            # Get the random word
-            # randomWord = spelledWord
+        # Get the random word
+        # randomWord = spelledWord
 
-            print('Before ButtonPress')
+        print('Before ButtonPress')
 
-            # Generate a new random word from the selected word list
-            randomWord = random.choice(self.word_lists[word_list_name])
+        # Generate a new random word from the selected word list
+        randomWord = random.choice(self.word_lists[word_list_name])
 
-    #############################
+#############################
 
-            # Function to generate additional random letters
-            def generateRandomLetters(remainingLetters, numLetters):
-                return random.sample(remainingLetters, numLetters)
+        # Function to generate additional random letters
+        def generateRandomLetters(remainingLetters, numLetters):
+            return random.sample(remainingLetters, numLetters)
 
-            # Function to add all letters to one string and shuffle them
-            def randomizeLetters(randomWord, letters):
-                allLetters = list(randomWord + ''.join(letters))
-                random.shuffle(allLetters)
-                return ''.join(allLetters)
+        # Function to add all letters to one string and shuffle them
+        def randomizeLetters(randomWord, letters):
+            allLetters = list(randomWord + ''.join(letters))
+            random.shuffle(allLetters)
+            return ''.join(allLetters)
 
-            GPIO.setmode(GPIO.BCM)
-            for pin in BUTTON_PINS:
-                GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-                GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
+        GPIO.setmode(GPIO.BCM)
+        for pin in BUTTON_PINS:
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
 
-            words_remaining = True
+        words_remaining = True
 
-            random.shuffle(self.word_lists[word_list_name])
-            # randomWord = generateRandomWord(wordList)
+        random.shuffle(self.word_lists[word_list_name])
+        # randomWord = generateRandomWord(wordList)
+        n = 0
+        while n <= len(self.word_lists[word_list_name]) - 1:
+            randomWord = self.word_lists[word_list_name][n]
+            n += 1
+
+        # Get remaining letters
+        availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
+        # Generate additional random letters
+        randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+
+        # Combine the random word and random letters into a single string and shuffle them
+        randomizedLetters = randomizeLetters(randomWord, randomLetters)
+
+        # Map each letter to a button
+        button_letters = {}
+        for idx, pin in enumerate(BUTTON_PINS):
+            button_letters[pin] = randomizedLetters[idx]
+
+        # Set button sequence for the initial word
+        button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+
+        # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
+        # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
+        # game_sequence.generateRandomLetters()
+        # game_sequence.randomizeLetters()
+        # game_sequence.buttonPress(pin, randomWord)
+        def buttonPress(pin, randomWord):
+            global spelledWord, button_sequence, button_letters
+            
+            spelledWord = ""
+
+            letter = button_letters[pin]
+            time.sleep(0.25)
+            if letter in randomWord:
+                # Check if the letter is in the correct position
+                if letter == randomWord[len(spelledWord)]:
+                    ## The letter is in the word
+                    spelledWord += letter
+                    print("Current spelling:", spelledWord)
+                    if len(spelledWord) != len(randomWord):
+                        ## The letter is in correct position - correct
+                        gamesound.play_happy()
+                        gamesound.play_correct_letter()
+                    # If the full word is spelled correctly
+                    elif len(spelledWord) == len(randomWord):
+                        print("Correct! You spelled the word correctly.")
+                        gamesound.play_happy()
+                        gamesound.play_next_word()
+                        newWord()
+                else:
+                    # Find the first incorrect letter position
+                    #incorrect_position = spelledWord[]
+                    # restart_from = randomWord.index(spelledWord[incorrect_position])
+                    if len(spelledWord) == 0:
+                        print("Incorrect order!")
+                        #spelledWord = ''
+                        gamesound.play_wrong_order()
+                        print("Current spelling:", spelledWord)
+                    else:
+                        #spelledWord = randomWord[incorrect_position]
+                        print("Incorrect order! Restarting from:", spelledWord)
+                        gamesound.play_wrong_order()
+            else:
+                print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+                gamesound.play_wrong_letter()
+
+        def newWord():
+            global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
+            
+        ## NOOR NEW ADDITION 05.09.24
+            self.word_lists[word_list_name].remove(randomWord)
+            
+            if not self.word_lists[word_list_name]:
+                print("Congratulations! You've spelled all the words in the list!")
+                return
+            
+            
+
+            ################# END OF ADDITION
+
+            # Generate a new word
             n = 0
             while n <= len(self.word_lists[word_list_name]) - 1:
                 randomWord = self.word_lists[word_list_name][n]
                 n += 1
-
+            
             # Get remaining letters
+            # availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
             availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
 
             # Generate additional random letters
             randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
-
+            
             # Combine the random word and random letters into a single string and shuffle them
             randomizedLetters = randomizeLetters(randomWord, randomLetters)
-
+            
             # Map each letter to a button
             button_letters = {}
             for idx, pin in enumerate(BUTTON_PINS):
                 button_letters[pin] = randomizedLetters[idx]
-
-            # Set button sequence for the initial word
-            button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
-
-            # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
-            # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
-            # game_sequence.generateRandomLetters()
-            # game_sequence.randomizeLetters()
-            # game_sequence.buttonPress(pin, randomWord)
-            def buttonPress(pin, randomWord):
-                global spelledWord, button_sequence, button_letters
-                
-                spelledWord = ""
-
-                letter = button_letters[pin]
-                time.sleep(0.25)
-                if letter in randomWord:
-                    # Check if the letter is in the correct position
-                    if letter == randomWord[len(spelledWord)]:
-                        ## The letter is in the word
-                        spelledWord += letter
-                        print("Current spelling:", spelledWord)
-                        if len(spelledWord) != len(randomWord):
-                            ## The letter is in correct position - correct
-                            gamesound.play_happy()
-                            gamesound.play_correct_letter()
-                        # If the full word is spelled correctly
-                        elif len(spelledWord) == len(randomWord):
-                            print("Correct! You spelled the word correctly.")
-                            gamesound.play_happy()
-                            gamesound.play_next_word()
-                            newWord()
-                    else:
-                        # Find the first incorrect letter position
-                        #incorrect_position = spelledWord[]
-                        # restart_from = randomWord.index(spelledWord[incorrect_position])
-                        if len(spelledWord) == 0:
-                            print("Incorrect order!")
-                            #spelledWord = ''
-                            gamesound.play_wrong_order()
-                            print("Current spelling:", spelledWord)
-                        else:
-                            #spelledWord = randomWord[incorrect_position]
-                            print("Incorrect order! Restarting from:", spelledWord)
-                            gamesound.play_wrong_order()
-                else:
-                    print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
-                    gamesound.play_wrong_letter()
-
-            def newWord():
-                global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
-                
-            ## NOOR NEW ADDITION 05.09.24
-                self.word_lists[word_list_name].remove(randomWord)
-                
-                if not self.word_lists[word_list_name]:
-                    print("Congratulations! You've spelled all the words in the list!")
-                    return
-                
-                
-
-                ################# END OF ADDITION
-
-                # Generate a new word
-                n = 0
-                while n <= len(self.word_lists[word_list_name]) - 1:
-                    randomWord = self.word_lists[word_list_name][n]
-                    n += 1
-                
-                # Get remaining letters
-                # availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
-                availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
-
-                # Generate additional random letters
-                randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
-                
-                # Combine the random word and random letters into a single string and shuffle them
-                randomizedLetters = randomizeLetters(randomWord, randomLetters)
-                
-                # Map each letter to a button
-                button_letters = {}
-                for idx, pin in enumerate(BUTTON_PINS):
-                    button_letters[pin] = randomizedLetters[idx]
-                
-                # Set button sequence for the new word
-                button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
-                
-                # Print new word and letters
-                # init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
-                print("Let's spell another word.")
-                print(f"Spell the word: {randomWord}")
-                print("Reallocated letters: " + ' '.join(randomizedLetters))
-                # print("Available letters: " + ' '.join(availableLetters))
-                
-                # Reset spelledWord
-                spelledWord = ''
-
             
+            # Set button sequence for the new word
+            button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+            
+            # Print new word and letters
+            # init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
+            print("Let's spell another word.")
+            print(f"Spell the word: {randomWord}")
+            print("Reallocated letters: " + ' '.join(randomizedLetters))
+            # print("Available letters: " + ' '.join(availableLetters))
+            
+            # Reset spelledWord
+            spelledWord = ''
 
-            # spelledWord = ''
+        
 
-
-        # if __name__ == '__main__':
-        #     gamesound.play_intro()
-        #     spelledWord = ''
-
-
-            try:
-                while words_remaining:
-                    if not self.word_lists[word_list_name]:
-                        words_remaining = False
-                    
-                    time.sleep(0.25)
-
-            except KeyboardInterrupt:
-                GPIO.cleanup()
-
-    #################################
+        # spelledWord = ''
 
 
-            # Display word
-            word_display_page = tk.Frame(self, bg="black")
-            word_display_page.pack(fill=tk.BOTH, expand=True)
+    # if __name__ == '__main__':
+    #     gamesound.play_intro()
+    #     spelledWord = ''
 
-            word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48),
-                                bg="black", fg="white")
-            word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-            # Create countdown
-            self.create_countdown(word_display_page, duration)
+        try:
+            while words_remaining:
+                if not self.word_lists[word_list_name]:
+                    words_remaining = False
+                  
+                time.sleep(0.25)
 
-            # Exit button
-            exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
-                                    command=self.exit_program)
-            exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+        except KeyboardInterrupt:
+            GPIO.cleanup()
 
-            self.pages["word_display"] = word_display_page  # Store the word display page
+#################################
+
+
+        # Display word
+        word_display_page = tk.Frame(self, bg="black")
+        word_display_page.pack(fill=tk.BOTH, expand=True)
+
+        word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48),
+                            bg="black", fg="white")
+        word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+        # Create countdown
+        self.create_countdown(word_display_page, duration)
+
+        # Exit button
+        exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
+                                command=self.exit_program)
+        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+
+        self.pages["word_display"] = word_display_page  # Store the word display page
     
     def create_word_display_page(self, word_list_name):
         self.hide_current_page()  # Hide current page
