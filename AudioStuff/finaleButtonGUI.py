@@ -218,10 +218,25 @@ class GUI(tk.Tk):
 ########################
 
        # Button for songs
-        audio_button = tk.Button(dance_display_page, text="Correct Choice", font=("Helvetica", 40),
+        audio_button_1 = tk.Button(dance_display_page, text="Song 1", font=("Helvetica", 25),
                                     bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/correct-choice.mp3"))
-        audio_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
+        audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
+        audio_button_2 = tk.Button(dance_display_page, text="Song 2", font=("Helvetica", 25),
+                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/copper-bell-ding-4.mp3"))
+        audio_button_2.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
+
+        audio_button_3 = tk.Button(dance_display_page, text="Song 3", font=("Helvetica", 25),
+                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/cute-level-up-1.mp3"))
+        audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
+
+        audio_button_4 = tk.Button(dance_display_page, text="Song 4", font=("Helvetica", 25),
+                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/bonus-points.mp3"))
+        audio_button_4.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
+
+        audio_button_5 = tk.Button(dance_display_page, text="Song 5", font=("Helvetica", 25),
+                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/cute-level-up-3.mp3"))
+        audio_button_5.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
 #####################
 
