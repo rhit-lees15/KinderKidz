@@ -295,9 +295,9 @@ class GUI(tk.Tk):
 
         self.pages["word_display"] = word_display_page  # Store the word display page
     
-    def create_word_display_page(self, word_list_name):
-        self.hide_current_page()  # Hide current page
-        self.current_page = "word_display"
+    # def create_word_display_page(self, word_list_name):
+    #     self.hide_current_page()  # Hide current page
+    #     self.current_page = "word_display"
 
         # Random word generator -- used for initial testing
         # word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
