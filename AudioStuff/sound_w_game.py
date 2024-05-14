@@ -12,7 +12,7 @@ import finallight as light
 
 # Initialize lights
 # LED strip configuration:
-LED_COUNT      = 300      # Number of LED pixels.
+LED_COUNT      = 800      # Number of LED pixels.
 LED_PIN        = 10  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
