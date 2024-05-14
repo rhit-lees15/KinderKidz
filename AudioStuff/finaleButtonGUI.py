@@ -65,7 +65,7 @@ class GUI(tk.Tk):
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
         
-        # gamesound.play_intro()
+        gamesound.play_intro()
 
         spelledWord = ''
 
