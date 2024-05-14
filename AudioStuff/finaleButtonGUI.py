@@ -137,11 +137,11 @@ class GUI(tk.Tk):
 
         words_remaining = True
 
-        random.shuffle(word_list_name)
+        random.shuffle(self.word_lists[word_list_name])
         # randomWord = generateRandomWord(wordList)
         n = 0
-        while n <= len(word_list_name) - 1:
-            randomWord = word_list_name[n]
+        while n <= len(self.word_lists[word_list_name]) - 1:
+            randomWord = self.word_lists[word_list_name][n]
             n += 1
 
         # Get remaining letters
@@ -210,9 +210,9 @@ class GUI(tk.Tk):
             global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
             
         ## NOOR NEW ADDITION 05.09.24
-            word_list_name.remove(randomWord)
+            self.word_lists[word_list_name].remove(randomWord)
             
-            if not word_list_name:
+            if not self.word_lists[word_list_name]:
                 print("Congratulations! You've spelled all the words in the list!")
                 return
             
@@ -222,8 +222,8 @@ class GUI(tk.Tk):
 
             # Generate a new word
             n = 0
-            while n <= len(word_list_name) - 1:
-                randomWord = word_list_name[n]
+            while n <= len(self.word_lists[word_list_name]) - 1:
+                randomWord = self.word_lists[word_list_name][n]
                 n += 1
             
             # Get remaining letters
@@ -266,7 +266,7 @@ class GUI(tk.Tk):
 
         try:
             while words_remaining:
-                if not word_list_name:
+                if not self.word_lists[word_list_name]:
                     words_remaining = False
                   
                 time.sleep(0.25)
