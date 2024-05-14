@@ -121,7 +121,44 @@ class GUI(tk.Tk):
 
         game_sequence.generateRandomLetters()
         game_sequence.randomizeLetters()
-        game_sequence.buttonPress()
+        # game_sequence.buttonPress()
+        def buttonPress(pin):
+            global spelledWord, randomWord, button_sequence, button_letters
+            
+            letter = button_letters[pin]
+            time.sleep(0.25)
+            if letter in randomWord:
+                # Check if the letter is in the correct position
+                if letter == randomWord[len(spelledWord)]:
+                    ## The letter is in the word
+                    spelledWord += letter
+                    print("Current spelling:", spelledWord)
+                    if len(spelledWord) != len(randomWord):
+                        ## The letter is in correct position - correct
+                        gamesound.play_happy()
+                        gamesound.play_correct_letter()
+                    # If the full word is spelled correctly
+                    elif len(spelledWord) == len(randomWord):
+                        print("Correct! You spelled the word correctly.")
+                        gamesound.play_happy()
+                        gamesound.play_next_word()
+                        newWord()
+                else:
+                    # Find the first incorrect letter position
+                    #incorrect_position = spelledWord[]
+                    # restart_from = randomWord.index(spelledWord[incorrect_position])
+                    if len(spelledWord) == 0:
+                        print("Incorrect order!")
+                        #spelledWord = ''
+                        gamesound.play_wrong_order()
+                        print("Current spelling:", spelledWord)
+                    else:
+                        #spelledWord = randomWord[incorrect_position]
+                        print("Incorrect order! Restarting from:", spelledWord)
+                        gamesound.play_wrong_order()
+            else:
+                print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+                gamesound.play_wrong_letter()
         game_sequence.newWord()
 
         GPIO.setmode(GPIO.BCM)
@@ -156,13 +193,22 @@ class GUI(tk.Tk):
         button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
 
         # spelledWord = ''
-        
-        # try:
-        while words_remaining:
-            if not word_list_name:
-                words_remaining = False
+
+
+    # if __name__ == '__main__':
+    #     gamesound.play_intro()
+    #     spelledWord = ''
+
+
+        try:
+            while words_remaining:
+                if not word_list_name:
+                    words_remaining = False
                   
-            time.sleep(0.25)
+                time.sleep(0.25)
+
+        except KeyboardInterrupt:
+            GPIO.cleanup()
 
 #################################
 
