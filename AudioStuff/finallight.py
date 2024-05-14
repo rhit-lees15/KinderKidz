@@ -6,7 +6,6 @@
 # various animations on a strip of NeoPixels.
 
 import time
-import randomLetters
 from pygame import Color
 from rpi_ws281x import *
 import argparse
@@ -60,56 +59,56 @@ letter_arrays = {'A': A, 'B': B, 'C': C, 'D': D, 'E': E, 'F': F, 'G': G, 'H': H,
     'K': K, 'L': L, 'M': M, 'N': N, 'O': O, 'P': P, 'Q': Q, 'R': R, 'S': S, 'T': T,
     'U': U, 'V': V, 'W': W, 'X': X, 'Y': Y, 'Z': Z}
 
-def turn_off():
-    for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(0, 0, 0))
-    strip.show()
+# def turn_off():
+#     for i in range(strip.numPixels()):
+#         strip.setPixelColor(i, Color(0, 0, 0))
+#     strip.show()
 
 
-def display_letter(letter, color):
-    for i in range(len(letter)):
-        current_pixel = letter[i]
-        strip.setPixelColor(current_pixel, color)
-        strip.show()  
+# def display_letter(letter, color):
+#     for i in range(len(letter)):
+#         current_pixel = letter[i]
+#         strip.setPixelColor(current_pixel, color)
+#         strip.show()  
 
 
 # Main program logic follows:
-if __name__ == '__main__':
-    # Process arguments
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
-    args = parser.parse_args()
+# if __name__ == '__main__':
+#     # Process arguments
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+#     args = parser.parse_args()
 
-    # Create NeoPixel object with appropriate configuration.
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    # Intialize the library (must be called once before other functions).
-    strip.begin()
+#     # Create NeoPixel object with appropriate configuration.
+#     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+#     # Intialize the library (must be called once before other functions).
+#     strip.begin()
 
-    print ('Press Ctrl-C to quit.')
-    if not args.clear:
-        print('Use "-c" argument to clear LEDs on exit')
+#     print ('Press Ctrl-C to quit.')
+#     if not args.clear:
+#         print('Use "-c" argument to clear LEDs on exit')
 
-    try:
-        word = randomLetters.generateRandomWord(wordList)
-        print(word)
-        letters = list(word)
-        current_index = 0
+#     try:
+#         word = randomLetters.generateRandomWord(wordList)
+#         print(word)
+#         letters = list(word)
+#         current_index = 0
 
-        while True:
-            for letter in letters:
-                current_index += 1
-                print(letter)
-                if current_index == 1:
-                    current_letter = letter_arrays[letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_index == 2:
-                    current_letter = letter_arrays[letter]
-                    current_letter = [x + 100 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_index == 3:
-                    current_letter = letter_arrays[letter]
-                    current_letter = [x + 200 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
+#         while True:
+#             for letter in letters:
+#                 current_index += 1
+#                 print(letter)
+#                 if current_index == 1:
+#                     current_letter = letter_arrays[letter]
+#                     display_letter(current_letter, Color(150, 150,150))
+#                 elif current_index == 2:
+#                     current_letter = letter_arrays[letter]
+#                     current_letter = [x + 100 for x in current_letter]
+#                     display_letter(current_letter, Color(150, 150,150))
+#                 elif current_index == 3:
+#                     current_letter = letter_arrays[letter]
+#                     current_letter = [x + 200 for x in current_letter]
+#                     display_letter(current_letter, Color(150, 150,150))
                 
 
                 # while True:
@@ -122,6 +121,6 @@ if __name__ == '__main__':
 
 
 
-    except KeyboardInterrupt:
-        if args.clear:
-            colorWipe(strip, Color(0,0,0), 10)
+    # except KeyboardInterrupt:
+    #     if args.clear:
+    #         colorWipe(strip, Color(0,0,0), 10)
