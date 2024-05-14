@@ -81,7 +81,7 @@ class GUI(tk.Tk):
         list_label = tk.Label(list_selection_page, text="Select a Word List:", font=("Helvetica", 20), bg="black", fg="white")
         list_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
 
-       # Button to select first word list
+        # Button to select first word list
         first_list_button = tk.Button(list_selection_page, text="List 1", font=("Helvetica", 40),
                                     bg="blue", fg="white", command=lambda: self.create_word_display_page("List 1"))
         first_list_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
@@ -121,9 +121,10 @@ class GUI(tk.Tk):
 
 #############################
 
-        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
-        randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
-        game_sequence.newWord()
+        # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
+        # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
+        game_sequence.generateRandomLetters()
+        game_sequence.randomizeLetters()
         # game_sequence.buttonPress(pin, randomWord)
         def buttonPress(pin):
             global spelledWord, randomWord, button_sequence, button_letters
@@ -162,7 +163,7 @@ class GUI(tk.Tk):
             else:
                 print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
                 gamesound.play_wrong_letter()
-    
+        game_sequence.newWord()
 
         GPIO.setmode(GPIO.BCM)
         for pin in game_sequence.BUTTON_PINS:
