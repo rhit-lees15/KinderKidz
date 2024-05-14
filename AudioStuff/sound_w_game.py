@@ -54,6 +54,10 @@ def display_letter(letter, color):
 def buttonPress(pin):
     global spelledWord, randomWord, button_sequence, button_letters
     
+    spelledWord = ""
+
+    print("This is running in sound_w_game NOT GUI")
+
     letter = button_letters[pin]
     time.sleep(0.25)
     if letter in randomWord:

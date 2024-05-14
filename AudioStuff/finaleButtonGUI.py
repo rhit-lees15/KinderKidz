@@ -121,6 +121,11 @@ class GUI(tk.Tk):
 
 #############################
 
+        GPIO.setmode(GPIO.BCM)
+        for pin in game_sequence.BUTTON_PINS:
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: game_sequence.buttonPress(pin, randomWord), bouncetime=3000)
+
         # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
         # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
         game_sequence.generateRandomLetters()
@@ -166,11 +171,6 @@ class GUI(tk.Tk):
                 print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
                 gamesound.play_wrong_letter()
         game_sequence.newWord()
-
-        GPIO.setmode(GPIO.BCM)
-        for pin in game_sequence.BUTTON_PINS:
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: game_sequence.buttonPress(pin, randomWord), bouncetime=3000)
 
         words_remaining = True
 
