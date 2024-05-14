@@ -121,6 +121,11 @@ class GUI(tk.Tk):
 
 #############################
 
+        game_sequence.generateRandomLetters()
+        game_sequence.randomizeLetters()
+        game_sequence.buttonPress()
+        game_sequence.newWord()
+
         n = 0
         while n <= len(word_list_name) - 1:
             randomWord = word_list_name[n]
@@ -185,12 +190,6 @@ class GUI(tk.Tk):
                 words_remaining = False
                   
             time.sleep(0.25)
-
-        game_sequence.generateRandomLetters()
-        game_sequence.randomizeLetters()
-        game_sequence.buttonPress()
-        game_sequence.newWord()
-
 
 #################################
 
