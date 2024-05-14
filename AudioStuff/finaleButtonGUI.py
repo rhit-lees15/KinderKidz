@@ -1,5 +1,3 @@
-## The following code works in the AudioStuff folder, only adds the first audio track, nothing additional at this time.
-
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
@@ -20,7 +18,7 @@ BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 # pygame.mixer.init()
 
 # time per lesson (3 min = 180)
-duration = 5
+duration = 30
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -125,31 +123,6 @@ class GUI(tk.Tk):
         game_sequence.randomizeLetters()
         game_sequence.buttonPress()
         game_sequence.newWord()
-
-        n = 0
-        while n <= len(word_list_name) - 1:
-            randomWord = word_list_name[n]
-            n += 1
-        
-        # Get remaining letters
-        availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
-        
-        # Generate additional random letters
-        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
-        
-        # Combine the random word and random letters into a single string and shuffle them
-        randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
-        
-        # Map each letter to a button
-        button_letters = {}
-        for idx, pin in enumerate(game_sequence.BUTTON_PINS):
-            button_letters[pin] = randomizedLetters[idx]
-        
-        # Set button sequence for the new word
-        button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
-        
-        # Reset spelledWord
-        # spelledWord = ''
 
         GPIO.setmode(GPIO.BCM)
         for pin in game_sequence.BUTTON_PINS:
