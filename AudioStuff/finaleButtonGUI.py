@@ -112,54 +112,55 @@ class GUI(tk.Tk):
         # newWord()
 
         # Get the random word
-        # random_word = spelledWord
+        # randomWord = spelledWord
 
         # Generate a new random word from the selected word list
-        random_word = random.choice(self.word_lists[word_list_name])
+        randomWord = random.choice(self.word_lists[word_list_name])
 
 #############################
 
-        game_sequence.generateRandomLetters()
-        game_sequence.randomizeLetters()
-        # game_sequence.buttonPress()
-        def buttonPress(pin):
-            global spelledWord, randomWord, button_sequence, button_letters
-            
-            letter = button_letters[pin]
-            time.sleep(0.25)
-            if letter in randomWord:
-                # Check if the letter is in the correct position
-                if letter == randomWord[len(spelledWord)]:
-                    ## The letter is in the word
-                    spelledWord += letter
-                    print("Current spelling:", spelledWord)
-                    if len(spelledWord) != len(randomWord):
-                        ## The letter is in correct position - correct
-                        gamesound.play_happy()
-                        gamesound.play_correct_letter()
-                    # If the full word is spelled correctly
-                    elif len(spelledWord) == len(randomWord):
-                        print("Correct! You spelled the word correctly.")
-                        gamesound.play_happy()
-                        gamesound.play_next_word()
-                        newWord()
-                else:
-                    # Find the first incorrect letter position
-                    #incorrect_position = spelledWord[]
-                    # restart_from = randomWord.index(spelledWord[incorrect_position])
-                    if len(spelledWord) == 0:
-                        print("Incorrect order!")
-                        #spelledWord = ''
-                        gamesound.play_wrong_order()
-                        print("Current spelling:", spelledWord)
-                    else:
-                        #spelledWord = randomWord[incorrect_position]
-                        print("Incorrect order! Restarting from:", spelledWord)
-                        gamesound.play_wrong_order()
-            else:
-                print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
-                gamesound.play_wrong_letter()
+        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
+        randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
         game_sequence.newWord()
+        game_sequence.buttonPress(pin)
+        # def buttonPress(pin):
+        #     global spelledWord, randomWord, button_sequence, button_letters
+            
+        #     letter = button_letters[pin]
+        #     time.sleep(0.25)
+        #     if letter in randomWord:
+        #         # Check if the letter is in the correct position
+        #         if letter == randomWord[len(spelledWord)]:
+        #             ## The letter is in the word
+        #             spelledWord += letter
+        #             print("Current spelling:", spelledWord)
+        #             if len(spelledWord) != len(randomWord):
+        #                 ## The letter is in correct position - correct
+        #                 gamesound.play_happy()
+        #                 gamesound.play_correct_letter()
+        #             # If the full word is spelled correctly
+        #             elif len(spelledWord) == len(randomWord):
+        #                 print("Correct! You spelled the word correctly.")
+        #                 gamesound.play_happy()
+        #                 gamesound.play_next_word()
+        #                 newWord()
+        #         else:
+        #             # Find the first incorrect letter position
+        #             #incorrect_position = spelledWord[]
+        #             # restart_from = randomWord.index(spelledWord[incorrect_position])
+        #             if len(spelledWord) == 0:
+        #                 print("Incorrect order!")
+        #                 #spelledWord = ''
+        #                 gamesound.play_wrong_order()
+        #                 print("Current spelling:", spelledWord)
+        #             else:
+        #                 #spelledWord = randomWord[incorrect_position]
+        #                 print("Incorrect order! Restarting from:", spelledWord)
+        #                 gamesound.play_wrong_order()
+        #     else:
+        #         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+        #         gamesound.play_wrong_letter()
+    
 
         GPIO.setmode(GPIO.BCM)
         for pin in game_sequence.BUTTON_PINS:
@@ -217,7 +218,7 @@ class GUI(tk.Tk):
         word_display_page = tk.Frame(self, bg="black")
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 48),
+        word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48),
                             bg="black", fg="white")
         word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
@@ -238,13 +239,13 @@ class GUI(tk.Tk):
         # Random word generator -- used for initial testing
         # word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
         
-        random_word = random.choice(self.word_lists[word_list_name])
+        randomWord = random.choice(self.word_lists[word_list_name])
 
         # Display word
         word_display_page = tk.Frame(self, bg = "black")
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 48),
+        word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48),
                              bg = "black", fg = "white")
         word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
@@ -252,7 +253,7 @@ class GUI(tk.Tk):
         ## This is too much of a distraction, so we removed it
         # # Change color of each word
         # colors = ["red", "blue", "green", "purple", "orange"]  # List of colors
-        # for i, letter in enumerate(random_word):
+        # for i, letter in enumerate(randomWord):
         #     color = random.choice(colors)  # Pick a random color
         #     word_text.config(fg=color)
         #     word_text.update_idletasks()

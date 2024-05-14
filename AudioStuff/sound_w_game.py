@@ -135,8 +135,9 @@ def newWord():
         n += 1
     
     # Get remaining letters
-    availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
-    
+    # availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
+    availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
     # Generate additional random letters
     randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
     
