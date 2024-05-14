@@ -184,7 +184,7 @@ for pin in BUTTON_PINS:
 # Generate a random word
 # wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 # wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
-wordList = ['ABC', 'LMNO', 'XYZ']
+# wordList = ['ABC', 'LMNO', 'XYZ']
 
 words_remaining = True
 
