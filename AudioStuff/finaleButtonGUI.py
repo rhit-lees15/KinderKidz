@@ -96,7 +96,6 @@ class GUI(tk.Tk):
                                     bg="red", fg="white", command=lambda: self.create_word_display_page("List 3"))
         third_list_button.place(relx=0.8, rely=0.5, anchor=tk.CENTER)
 
-
         # Exit button
         exit_button = tk.Button(list_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
                                 command=self.exit_program)
@@ -126,10 +125,41 @@ class GUI(tk.Tk):
             return random.sample(remainingLetters, numLetters)
 
         # Function to add all letters to one string and shuffle them
-        def randomizeLetters(word, letters):
-            allLetters = list(word + ''.join(letters))
+        def randomizeLetters(randomWord, letters):
+            allLetters = list(randomWord + ''.join(letters))
             random.shuffle(allLetters)
             return ''.join(allLetters)
+
+        GPIO.setmode(GPIO.BCM)
+        for pin in BUTTON_PINS:
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
+
+        words_remaining = True
+
+        random.shuffle(word_list_name)
+        # randomWord = generateRandomWord(wordList)
+        n = 0
+        while n <= len(word_list_name) - 1:
+            randomWord = word_list_name[n]
+            n += 1
+
+        # Get remaining letters
+        availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
+        # Generate additional random letters
+        randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+
+        # Combine the random word and random letters into a single string and shuffle them
+        randomizedLetters = randomizeLetters(randomWord, randomLetters)
+
+        # Map each letter to a button
+        button_letters = {}
+        for idx, pin in enumerate(BUTTON_PINS):
+            button_letters[pin] = randomizedLetters[idx]
+
+        # Set button sequence for the initial word
+        button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
 
         # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
         # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
@@ -224,36 +254,7 @@ class GUI(tk.Tk):
             # Reset spelledWord
             spelledWord = ''
 
-        GPIO.setmode(GPIO.BCM)
-        for pin in BUTTON_PINS:
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
-
-        words_remaining = True
-
-        random.shuffle(word_list_name)
-        # randomWord = generateRandomWord(wordList)
-        n = 0
-        while n <= len(word_list_name) - 1:
-            randomWord = word_list_name[n]
-            n += 1
-
-        # Get remaining letters
-        availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
-
-        # Generate additional random letters
-        randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
-
-        # Combine the random word and random letters into a single string and shuffle them
-        randomizedLetters = randomizeLetters(randomWord, randomLetters)
-
-        # Map each letter to a button
-        button_letters = {}
-        for idx, pin in enumerate(BUTTON_PINS):
-            button_letters[pin] = randomizedLetters[idx]
-
-        # Set button sequence for the initial word
-        button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+        
 
         # spelledWord = ''
 
