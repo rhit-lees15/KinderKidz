@@ -18,7 +18,7 @@ BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 # pygame.mixer.init()
 
 # time per lesson (3 min = 180)
-duration = 30
+duration = 60
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -114,15 +114,17 @@ class GUI(tk.Tk):
         # Get the random word
         # randomWord = spelledWord
 
+        print('Before ButtonPress')
+
         # Generate a new random word from the selected word list
         randomWord = random.choice(self.word_lists[word_list_name])
 
 #############################
 
-        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
-        randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
-        game_sequence.newWord()
-        game_sequence.buttonPress(pin)
+        # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
+        # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
+        # game_sequence.newWord()
+        game_sequence.ButtonPress(pin, randomWord)
         # def buttonPress(pin):
         #     global spelledWord, randomWord, button_sequence, button_letters
             
@@ -165,7 +167,7 @@ class GUI(tk.Tk):
         GPIO.setmode(GPIO.BCM)
         for pin in game_sequence.BUTTON_PINS:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=3000)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: game_sequence.ButtonPress(pin, randomWord), bouncetime=3000)
 
         words_remaining = True
 
