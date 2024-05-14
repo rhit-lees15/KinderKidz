@@ -231,7 +231,7 @@ class GUI(tk.Tk):
         audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
 
         audio_button_4 = tk.Button(dance_display_page, text="Song 4", font=("Helvetica", 25),
-                                    bg="pink", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/bonus-points.mp3"))
+                                    bg="yellow", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/bonus-points.mp3"))
         audio_button_4.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
 
         audio_button_5 = tk.Button(dance_display_page, text="Song 5", font=("Helvetica", 25),
