@@ -319,24 +319,24 @@ class GUI(tk.Tk):
 ########################
 
        # Button for songs
-        audio_button_1 = tk.Button(dance_display_page, text="Song 1", font=("Helvetica", 25),
-                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/correct-choice.mp3"))
+        audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
+                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"))
         audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
-        audio_button_2 = tk.Button(dance_display_page, text="Song 2", font=("Helvetica", 25),
-                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/copper-bell-ding-4.mp3"))
+        audio_button_2 = tk.Button(dance_display_page, text="Twinkle, Twinkle", font=("Helvetica", 20),
+                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"))
         audio_button_2.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
-        audio_button_3 = tk.Button(dance_display_page, text="Song 3", font=("Helvetica", 25),
-                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/cute-level-up-1.mp3"))
+        audio_button_3 = tk.Button(dance_display_page, text="My Year - ZOMBIES", font=("Helvetica", 20),
+                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"))
         audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
 
-        audio_button_4 = tk.Button(dance_display_page, text="Song 4", font=("Helvetica", 25),
-                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/bonus-points.mp3"))
+        audio_button_4 = tk.Button(dance_display_page, text="If You're Happy and You Know It", font=("Helvetica", 20),
+                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"))
         audio_button_4.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
 
-        audio_button_5 = tk.Button(dance_display_page, text="Song 5", font=("Helvetica", 25),
-                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/cute-level-up-3.mp3"))
+        audio_button_5 = tk.Button(dance_display_page, text="Body Bop Bop", font=("Helvetica", 20),
+                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"))
         audio_button_5.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
 #####################
