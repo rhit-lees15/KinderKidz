@@ -18,7 +18,7 @@ BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 # pygame.mixer.init()
 
 # time per lesson (3 min = 180)
-duration = 60
+duration = 5
 
 class GUI(tk.Tk):
     def __init__(self):

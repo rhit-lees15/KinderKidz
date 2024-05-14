@@ -12,8 +12,8 @@ import finallight as light
 
 # Initialize lights
 # LED strip configuration:
-LED_COUNT      = 800      # Number of LED pixels.
-LED_PIN        = 10  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+LED_COUNT      = 300      # Number of LED pixels.
+LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 30     # Set to 0 for darkest and 255 for brightest
@@ -179,7 +179,7 @@ def newWord():
 GPIO.setmode(GPIO.BCM)
 for pin in BUTTON_PINS:
     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=3000)
+    GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=1000)
 
 # Generate a random word
 # wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
