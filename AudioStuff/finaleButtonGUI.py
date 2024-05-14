@@ -71,7 +71,7 @@ class GUI(tk.Tk):
         
         gamesound.play_intro()
 
-        spelledWord = ''
+        # spelledWord = ''
 
         self.current_page = "list_selection"
         list_selection_page = tk.Frame(self, bg="black")
@@ -129,6 +129,8 @@ class GUI(tk.Tk):
         def buttonPress(pin):
             global spelledWord, randomWord, button_sequence, button_letters
             
+            spelledWord = ""
+
             letter = button_letters[pin]
             time.sleep(0.25)
             if letter in randomWord:
