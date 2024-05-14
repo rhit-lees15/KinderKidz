@@ -6,7 +6,6 @@
 # various animations on a strip of NeoPixels.
 
 import time
-import randomLetters
 from pygame import Color
 from rpi_ws281x import *
 import argparse
