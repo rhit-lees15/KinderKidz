@@ -144,7 +144,7 @@ class GUI(tk.Tk):
         button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
         
         # Reset spelledWord
-        spelledWord = ''
+        # spelledWord = ''
 
         GPIO.setmode(GPIO.BCM)
         for pin in game_sequence.BUTTON_PINS:
@@ -177,7 +177,7 @@ class GUI(tk.Tk):
         # Set button sequence for the initial word
         button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
 
-        spelledWord = ''
+        # spelledWord = ''
         
         # try:
         while words_remaining:
