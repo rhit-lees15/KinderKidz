@@ -4,10 +4,16 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-# import sound_w_game as game_sequence
+import sound_w_game as game_sequence
 import game_sound as gamesound
 import time
 import vlc
+import string
+import RPi.GPIO as GPIO 
+from pygame import Color
+from rpi_ws281x import *
+
+BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
 # import pygame.mixer
 
@@ -112,6 +118,82 @@ class GUI(tk.Tk):
 
         # Generate a new random word from the selected word list
         random_word = random.choice(self.word_lists[word_list_name])
+
+#############################
+
+        n = 0
+        while n <= len(word_list_name) - 1:
+            randomWord = word_list_name[n]
+            n += 1
+        
+        # Get remaining letters
+        availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
+        
+        # Generate additional random letters
+        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
+        
+        # Combine the random word and random letters into a single string and shuffle them
+        randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
+        
+        # Map each letter to a button
+        button_letters = {}
+        for idx, pin in enumerate(game_sequence.BUTTON_PINS):
+            button_letters[pin] = randomizedLetters[idx]
+        
+        # Set button sequence for the new word
+        button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+        
+        # Reset spelledWord
+        spelledWord = ''
+
+        GPIO.setmode(GPIO.BCM)
+        for pin in game_sequence.BUTTON_PINS:
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=3000)
+
+        words_remaining = True
+
+        random.shuffle(word_list_name)
+        # randomWord = generateRandomWord(wordList)
+        n = 0
+        while n <= len(word_list_name) - 1:
+            randomWord = word_list_name[n]
+            n += 1
+
+        # Get remaining letters
+        availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
+        # Generate additional random letters
+        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
+
+        # Combine the random word and random letters into a single string and shuffle them
+        randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
+
+        # Map each letter to a button
+        button_letters = {}
+        for idx, pin in enumerate(game_sequence.BUTTON_PINS):
+            button_letters[pin] = randomizedLetters[idx]
+
+        # Set button sequence for the initial word
+        button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+
+        spelledWord = ''
+        
+        # try:
+        while words_remaining:
+            if not word_list_name:
+                words_remaining = False
+                  
+            time.sleep(0.25)
+
+        game_sequence.generateRandomLetters()
+        game_sequence.randomizeLetters()
+        game_sequence.buttonPress()
+        game_sequence.newWord()
+
+
+#################################
+
 
         # Display word
         word_display_page = tk.Frame(self, bg="black")
