@@ -5,17 +5,10 @@ import random
 # import sound_w_game as game_sequence
 import game_sound as gamesound
 import time
-import vlc
+# import vlc
 import string
-import RPi.GPIO as GPIO 
-from pygame import Color
-from rpi_ws281x import *
 
-BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
-
-# import pygame.mixer
-
-# pygame.mixer.init()
+# BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
 # time per lesson (3 min = 180)
 duration = 60
@@ -107,6 +100,8 @@ class GUI(tk.Tk):
         self.hide_current_page()  # Hide current page
         self.current_page = "word_display"
 
+        wordList = self.word_lists[word_list_name]
+
         # Generate a new random word
         # newWord()
 
@@ -114,9 +109,6 @@ class GUI(tk.Tk):
         # randomWord = spelledWord
 
         print('Before ButtonPress')
-
-        # Generate a new random word from the selected word list
-        randomWord = random.choice(self.word_lists[word_list_name])
 
 #############################
 
@@ -129,47 +121,13 @@ class GUI(tk.Tk):
             allLetters = list(randomWord + ''.join(letters))
             random.shuffle(allLetters)
             return ''.join(allLetters)
-
-        GPIO.setmode(GPIO.BCM)
-        for pin in BUTTON_PINS:
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
-
-        words_remaining = True
-
-        random.shuffle(self.word_lists[word_list_name])
-        # randomWord = generateRandomWord(wordList)
-        n = 0
-        while n <= len(self.word_lists[word_list_name]) - 1:
-            randomWord = self.word_lists[word_list_name][n]
-            n += 1
-
-        # Get remaining letters
-        availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
-
-        # Generate additional random letters
-        randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
-
-        # Combine the random word and random letters into a single string and shuffle them
-        randomizedLetters = randomizeLetters(randomWord, randomLetters)
-
-        # Map each letter to a button
-        button_letters = {}
-        for idx, pin in enumerate(BUTTON_PINS):
-            button_letters[pin] = randomizedLetters[idx]
-
-        # Set button sequence for the initial word
-        button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
-
-        # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
-        # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
-        # game_sequence.generateRandomLetters()
-        # game_sequence.randomizeLetters()
-        # game_sequence.buttonPress(pin, randomWord)
-        def buttonPress(pin, randomWord):
-            global spelledWord, button_sequence, button_letters
+        
+        def buttonPress(pin):
+            global spelledWord, randomWord, button_sequence, button_letters
             
             spelledWord = ""
+
+            print("This is running in sound_w_game NOT GUI")
 
             letter = button_letters[pin]
             time.sleep(0.25)
@@ -205,99 +163,126 @@ class GUI(tk.Tk):
             else:
                 print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
                 gamesound.play_wrong_letter()
-
+        
         def newWord():
             global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
-            
+    
         ## NOOR NEW ADDITION 05.09.24
-            self.word_lists[word_list_name].remove(randomWord)
+            wordList.remove(randomWord)
             
-            if not self.word_lists[word_list_name]:
+            if not wordList:
                 print("Congratulations! You've spelled all the words in the list!")
                 return
-            
-            
-
-            ################# END OF ADDITION
-
             # Generate a new word
             n = 0
-            while n <= len(self.word_lists[word_list_name]) - 1:
-                randomWord = self.word_lists[word_list_name][n]
+            while n <= len(wordList) - 1:
+                randomWord = wordList[n]
                 n += 1
-            
+        
             # Get remaining letters
-            # availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
             availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
 
             # Generate additional random letters
             randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
-            
+
             # Combine the random word and random letters into a single string and shuffle them
             randomizedLetters = randomizeLetters(randomWord, randomLetters)
-            
-            # Map each letter to a button
-            button_letters = {}
-            for idx, pin in enumerate(BUTTON_PINS):
-                button_letters[pin] = randomizedLetters[idx]
-            
-            # Set button sequence for the new word
-            button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
-            
-            # Print new word and letters
-            # init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
-            print("Let's spell another word.")
+
+            # # Map each letter to a button
+            # button_letters = {}
+            # for idx, pin in enumerate(BUTTON_PINS):
+            #     button_letters[pin] = randomizedLetters[idx]
+
+            # # Set button sequence for the initial word
+            # button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+
+            spelledWord = ""
+
+        # GPIO.setmode(GPIO.BCM)
+        # for pin in BUTTON_PINS:
+        #     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        #     GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=3000)
+
+#-----------------------------------ATTEMPT
+
+
+        wordList = self.word_lists[word_list_name]
+
+        words_remaining = True
+
+        random.shuffle(wordList)
+        # randomWord = generateRandomWord(wordList)
+        n = 0
+        while n <= len(wordList) - 1:
+            randomWord = wordList[n]
+            n += 1
+
+        # Get remaining letters
+        availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
+        # Generate additional random letters
+        randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+
+        # Combine the random word and random letters into a single string and shuffle them
+        randomizedLetters = randomizeLetters(randomWord, randomLetters)
+
+        # Map each letter to a button
+        # button_letters = {}
+        # for idx, pin in enumerate(BUTTON_PINS):
+        #     button_letters[pin] = randomizedLetters[idx]
+
+        # Set button sequence for the initial word
+        # button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+
+        if __name__ == '__main__':
+            #####* Start the game
+
+            print("Welcome to the Word Spelling Game!")
+            gamesound.play_intro()
             print(f"Spell the word: {randomWord}")
             print("Reallocated letters: " + ' '.join(randomizedLetters))
             # print("Available letters: " + ' '.join(availableLetters))
-            
-            # Reset spelledWord
+
             spelledWord = ''
 
-        
 
-        # spelledWord = ''
+            try:
+                while words_remaining:
+                    if not wordList:
+                        words_remaining = False
+                        
+                    time.sleep(0.25)
+                    
+
+            except KeyboardInterrupt:
+                # GPIO.cleanup()
 
 
-    # if __name__ == '__main__':
-    #     gamesound.play_intro()
-    #     spelledWord = ''
-
-
-        try:
-            while words_remaining:
-                if not self.word_lists[word_list_name]:
-                    words_remaining = False
-                  
-                time.sleep(0.25)
-
-        except KeyboardInterrupt:
-            GPIO.cleanup()
+#-----------------------------------ATTEMPT
 
 #################################
 
-
         # Display word
-        word_display_page = tk.Frame(self, bg="black")
-        word_display_page.pack(fill=tk.BOTH, expand=True)
+                word_display_page = tk.Frame(self, bg="black") 
+            word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48),
-                            bg="black", fg="white")
-        word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+            word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48),
+                                bg="black", fg="white")
+            word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        # Create countdown
-        self.create_countdown(word_display_page, duration)
+            # Create countdown
+            self.create_countdown(word_display_page, duration)
 
-        # Exit button
-        exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
-                                command=self.exit_program)
-        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+            # Exit button
+            exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
+                                    command=self.exit_program)
+            exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
-        self.pages["word_display"] = word_display_page  # Store the word display page
+            self.pages["word_display"] = word_display_page  # Store the word display page
     
-    # def create_word_display_page(self, word_list_name):
-    #     self.hide_current_page()  # Hide current page
-    #     self.current_page = "word_display"
+    def create_word_display_page(self, word_list_name):
+        self.hide_current_page()  # Hide current page
+        self.current_page = "word_display"
 
         # Random word generator -- used for initial testing
         # word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
@@ -382,54 +367,25 @@ class GUI(tk.Tk):
 ########################
 
        # Button for songs
-        audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
-                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"))
+        audio_button_1 = tk.Button(dance_display_page, text="Song 1", font=("Helvetica", 25),
+                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/correct-choice.mp3"))
         audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
-        audio_button_2 = tk.Button(dance_display_page, text="Twinkle, Twinkle", font=("Helvetica", 20),
-                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"))
+        audio_button_2 = tk.Button(dance_display_page, text="Song 2", font=("Helvetica", 25),
+                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/copper-bell-ding-4.mp3"))
         audio_button_2.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
-        audio_button_3 = tk.Button(dance_display_page, text="My Year - ZOMBIES", font=("Helvetica", 20),
-                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"))
+        audio_button_3 = tk.Button(dance_display_page, text="Song 3", font=("Helvetica", 25),
+                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/cute-level-up-1.mp3"))
         audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
 
-        audio_button_4 = tk.Button(dance_display_page, text="If You're Happy and You Know It", font=("Helvetica", 20),
-                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"))
+        audio_button_4 = tk.Button(dance_display_page, text="Song 4", font=("Helvetica", 25),
+                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/bonus-points.mp3"))
         audio_button_4.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
 
-        audio_button_5 = tk.Button(dance_display_page, text="Body Bop Bop", font=("Helvetica", 20),
-                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"))
+        audio_button_5 = tk.Button(dance_display_page, text="Song 5", font=("Helvetica", 25),
+                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/cute-level-up-3.mp3"))
         audio_button_5.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
-
-#####################
-
-
-
-        # # Create a Listbox
-        # songs = ('Song 1', 'Song 2', 'Song 3', 'Song 4')
-        
-        # listbox = tk.Listbox(dance_display_page, height=6, selectmode=tk.EXTENDED, bg="black", fg="white", font=("Helvetica", 24))
-        # listbox.pack(side=tk.LEFT, padx=0, pady=20, fill=tk.BOTH, expand=True)
-
-        # # for song in songs:
-        # #     listbox.insert(tk.END, song)
-
-        # # Link a scrollbar to the Listbox
-        # # scrollbar = ttk.Scrollbar(dance_display_page, orient=tk.VERTICAL, command=listbox.yview)
-        # # scrollbar.pack(side=tk.LEFT, fill=tk.Y)
-        # # listbox.config(yscrollcommand=scrollbar.set)
-
-        # # Function to handle song selection
-        # def play_song():
-        #     selected_song_index = listbox.curselection()
-        #     if selected_song_index:
-        #         selected_song = songs[selected_song_index[0]]  # Get the selected song
-        #         play_selected_song(selected_song)
-
-        # # Button to play the selected song
-        # play_button = tk.Button(dance_display_page, text="Play", bg="green", font=("Helvetica", 16), command=play_song)
-        # play_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         # Exit button
         exit_button = tk.Button(dance_display_page, text="Exit", bg="red", font=("Helvetica", 16),
