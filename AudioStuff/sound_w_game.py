@@ -89,7 +89,7 @@ def display_letter(letter, color):
 #         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
 #         gamesound.play_wrong_letter()
 # ---------------------------------------------Heere\ we playin--------------------
-def ButtonPress(pin,randomWord):
+def buttonPress(pin,randomWord):
     global spelledWord, button_letters
     
     letter = button_letters[pin]

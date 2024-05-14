@@ -124,7 +124,7 @@ class GUI(tk.Tk):
         # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
         # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
         # game_sequence.newWord()
-        game_sequence.ButtonPress(pin, randomWord)
+        game_sequence.buttonPress(pin, randomWord)
         # def buttonPress(pin):
         #     global spelledWord, randomWord, button_sequence, button_letters
             
@@ -167,7 +167,7 @@ class GUI(tk.Tk):
         GPIO.setmode(GPIO.BCM)
         for pin in game_sequence.BUTTON_PINS:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: game_sequence.ButtonPress(pin, randomWord), bouncetime=3000)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: game_sequence.buttonPress(pin, randomWord), bouncetime=3000)
 
         words_remaining = True
 
