@@ -121,47 +121,47 @@ class GUI(tk.Tk):
 
 #############################
 
-        # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
-        # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
-        # game_sequence.newWord()
-        game_sequence.buttonPress(pin, randomWord)
-        # def buttonPress(pin):
-        #     global spelledWord, randomWord, button_sequence, button_letters
+        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
+        randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
+        game_sequence.newWord()
+        # game_sequence.buttonPress(pin, randomWord)
+        def buttonPress(pin):
+            global spelledWord, randomWord, button_sequence, button_letters
             
-        #     letter = button_letters[pin]
-        #     time.sleep(0.25)
-        #     if letter in randomWord:
-        #         # Check if the letter is in the correct position
-        #         if letter == randomWord[len(spelledWord)]:
-        #             ## The letter is in the word
-        #             spelledWord += letter
-        #             print("Current spelling:", spelledWord)
-        #             if len(spelledWord) != len(randomWord):
-        #                 ## The letter is in correct position - correct
-        #                 gamesound.play_happy()
-        #                 gamesound.play_correct_letter()
-        #             # If the full word is spelled correctly
-        #             elif len(spelledWord) == len(randomWord):
-        #                 print("Correct! You spelled the word correctly.")
-        #                 gamesound.play_happy()
-        #                 gamesound.play_next_word()
-        #                 newWord()
-        #         else:
-        #             # Find the first incorrect letter position
-        #             #incorrect_position = spelledWord[]
-        #             # restart_from = randomWord.index(spelledWord[incorrect_position])
-        #             if len(spelledWord) == 0:
-        #                 print("Incorrect order!")
-        #                 #spelledWord = ''
-        #                 gamesound.play_wrong_order()
-        #                 print("Current spelling:", spelledWord)
-        #             else:
-        #                 #spelledWord = randomWord[incorrect_position]
-        #                 print("Incorrect order! Restarting from:", spelledWord)
-        #                 gamesound.play_wrong_order()
-        #     else:
-        #         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
-        #         gamesound.play_wrong_letter()
+            letter = button_letters[pin]
+            time.sleep(0.25)
+            if letter in randomWord:
+                # Check if the letter is in the correct position
+                if letter == randomWord[len(spelledWord)]:
+                    ## The letter is in the word
+                    spelledWord += letter
+                    print("Current spelling:", spelledWord)
+                    if len(spelledWord) != len(randomWord):
+                        ## The letter is in correct position - correct
+                        gamesound.play_happy()
+                        gamesound.play_correct_letter()
+                    # If the full word is spelled correctly
+                    elif len(spelledWord) == len(randomWord):
+                        print("Correct! You spelled the word correctly.")
+                        gamesound.play_happy()
+                        gamesound.play_next_word()
+                        newWord()
+                else:
+                    # Find the first incorrect letter position
+                    #incorrect_position = spelledWord[]
+                    # restart_from = randomWord.index(spelledWord[incorrect_position])
+                    if len(spelledWord) == 0:
+                        print("Incorrect order!")
+                        #spelledWord = ''
+                        gamesound.play_wrong_order()
+                        print("Current spelling:", spelledWord)
+                    else:
+                        #spelledWord = randomWord[incorrect_position]
+                        print("Incorrect order! Restarting from:", spelledWord)
+                        gamesound.play_wrong_order()
+            else:
+                print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+                gamesound.play_wrong_letter()
     
 
         GPIO.setmode(GPIO.BCM)
