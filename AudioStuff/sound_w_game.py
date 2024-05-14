@@ -235,7 +235,6 @@ if __name__ == '__main__':
 
     for letter in randomizedLetters:
                 current_tile += 1
-                print(letter)
                 if current_tile == 1:
                     current_letter = light.letter_arrays[letter]
                     display_letter(current_letter, Color(150, 150,150))
@@ -247,6 +246,31 @@ if __name__ == '__main__':
                     current_letter = light.letter_arrays[letter]
                     current_letter = [x + 200 for x in current_letter]
                     display_letter(current_letter, Color(150, 150,150))
+                elif current_tile == 4:
+                    current_letter = light.letter_arrays[letter]
+                    current_letter = [x + 300 for x in current_letter]
+                    display_letter(current_letter, Color(150, 150,150))
+                elif current_tile == 5:
+                    current_letter = light.letter_arrays[letter]
+                    current_letter = [x + 400 for x in current_letter]
+                    display_letter(current_letter, Color(150, 150,150))
+                elif current_tile == 6:
+                    current_letter = light.letter_arrays[letter]
+                    current_letter = [x + 500 for x in current_letter]
+                    display_letter(current_letter, Color(150, 150,150))
+                elif current_tile == 7:
+                    current_letter = light.letter_arrays[letter]
+                    current_letter = [x + 600 for x in current_letter]
+                    display_letter(current_letter, Color(150, 150,150))
+                elif current_tile == 8:
+                    current_letter = light.letter_arrays[letter]
+                    current_letter = [x + 700 for x in current_letter]
+                    display_letter(current_letter, Color(150, 150,150))
+
+
+
+
+
 
     try:
         while words_remaining:
