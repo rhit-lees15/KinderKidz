@@ -11,21 +11,21 @@ from rpi_ws281x import *
 import argparse
 import RPi.GPIO as GPIO
 
-# LED strip configuration:
-LED_COUNT      = 300      # Number of LED pixels.
-LED_PIN        = 10  # GPIO pin connected to the pixels (18 uses PWM!).
-#LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
-LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
-LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
-LED_BRIGHTNESS = 25     # Set to 0 for darkest and 255 for brightest
-LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
-wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+# # LED strip configuration:
+# LED_COUNT      = 300      # Number of LED pixels.
+# LED_PIN        = 10  # GPIO pin connected to the pixels (18 uses PWM!).
+# #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+# LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+# LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
+# LED_BRIGHTNESS = 25     # Set to 0 for darkest and 255 for brightest
+# LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+# LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+# wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 
-BUTTON_PIN = 7
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-GPIO.input(BUTTON_PIN)
+# BUTTON_PIN = 7
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+# GPIO.input(BUTTON_PIN)
 
 A = [13, 14, 15, 16, 23, 26, 32, 33, 36, 37, 42, 47, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 67, 68, 71, 78, 81, 88]
 B = [13, 14, 15, 16, 17, 22, 27, 32, 37, 42, 43, 44, 45, 56, 52, 57, 62,  67, 72, 77, 82, 83, 84, 85, 86]
