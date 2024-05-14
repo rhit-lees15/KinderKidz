@@ -126,8 +126,8 @@ class GUI(tk.Tk):
         game_sequence.generateRandomLetters()
         game_sequence.randomizeLetters()
         # game_sequence.buttonPress(pin, randomWord)
-        def buttonPress(pin):
-            global spelledWord, randomWord, button_sequence, button_letters
+        def buttonPress(pin, randomWord):
+            global spelledWord, button_sequence, button_letters
             
             spelledWord = ""
 
