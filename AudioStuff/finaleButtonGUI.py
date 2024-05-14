@@ -5,7 +5,7 @@ from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
 # import sound_w_game as game_sequence
-# import game_sound as gamesound
+import game_sound as gamesound
 import time
 import vlc
 
@@ -214,29 +214,43 @@ class GUI(tk.Tk):
         dance_label = tk.Label(dance_display_page, text="Select a Song:", font=("Helvetica", 20), bg="black", fg="white")
         dance_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
 
-        # Create a Listbox
-        songs = ('Song 1', 'Song 2', 'Song 3', 'Song 4')
-        listbox = tk.Listbox(dance_display_page, height=6, selectmode=tk.EXTENDED, bg="black", fg="white", font=("Helvetica", 24))
-        listbox.pack(side=tk.LEFT, padx=0, pady=20, fill=tk.BOTH, expand=True)
 
-        for song in songs:
-            listbox.insert(tk.END, song)
+########################
 
-        # Link a scrollbar to the Listbox
-        scrollbar = ttk.Scrollbar(dance_display_page, orient=tk.VERTICAL, command=listbox.yview)
-        scrollbar.pack(side=tk.LEFT, fill=tk.Y)
-        listbox.config(yscrollcommand=scrollbar.set)
+       # Button for songs
+        audio_button = tk.Button(dance_display_page, text="Correct Choice", font=("Helvetica", 40),
+                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/correct-choice.mp3"))
+        audio_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
 
-        # Function to handle song selection
-        def play_song():
-            selected_song_index = listbox.curselection()
-            if selected_song_index:
-                selected_song = songs[selected_song_index[0]]  # Get the selected song
-                play_selected_song(selected_song)
 
-        # Button to play the selected song
-        play_button = tk.Button(dance_display_page, text="Play", bg="green", font=("Helvetica", 16), command=play_song)
-        play_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
+#####################
+
+
+
+        # # Create a Listbox
+        # songs = ('Song 1', 'Song 2', 'Song 3', 'Song 4')
+        
+        # listbox = tk.Listbox(dance_display_page, height=6, selectmode=tk.EXTENDED, bg="black", fg="white", font=("Helvetica", 24))
+        # listbox.pack(side=tk.LEFT, padx=0, pady=20, fill=tk.BOTH, expand=True)
+
+        # # for song in songs:
+        # #     listbox.insert(tk.END, song)
+
+        # # Link a scrollbar to the Listbox
+        # # scrollbar = ttk.Scrollbar(dance_display_page, orient=tk.VERTICAL, command=listbox.yview)
+        # # scrollbar.pack(side=tk.LEFT, fill=tk.Y)
+        # # listbox.config(yscrollcommand=scrollbar.set)
+
+        # # Function to handle song selection
+        # def play_song():
+        #     selected_song_index = listbox.curselection()
+        #     if selected_song_index:
+        #         selected_song = songs[selected_song_index[0]]  # Get the selected song
+        #         play_selected_song(selected_song)
+
+        # # Button to play the selected song
+        # play_button = tk.Button(dance_display_page, text="Play", bg="green", font=("Helvetica", 16), command=play_song)
+        # play_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         # Exit button
         exit_button = tk.Button(dance_display_page, text="Exit", bg="red", font=("Helvetica", 16),
