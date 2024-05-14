@@ -44,6 +44,12 @@ def randomizeLetters(word, letters):
     random.shuffle(allLetters)
     return ''.join(allLetters)
 
+def display_letter(letter, color):
+    for i in range(len(letter)):
+        current_pixel = letter[i]
+        strip.setPixelColor(current_pixel, color)
+        strip.show()  
+
 # Function to handle button press event
 def buttonPress(pin):
     global spelledWord, randomWord, button_sequence, button_letters
@@ -232,15 +238,15 @@ if __name__ == '__main__':
                 print(letter)
                 if current_tile == 1:
                     current_letter = light.letter_arrays[letter]
-                    light.display_letter(current_letter, Color(150, 150,150))
+                    display_letter(current_letter, Color(150, 150,150))
                 elif current_tile == 2:
                     current_letter = light.letter_arrays[letter]
                     current_letter = [x + 100 for x in current_letter]
-                    light.display_letter(current_letter, Color(150, 150,150))
+                    display_letter(current_letter, Color(150, 150,150))
                 elif current_tile == 3:
                     current_letter = light.letter_arrays[letter]
                     current_letter = [x + 200 for x in current_letter]
-                    light.display_letter(current_letter, Color(150, 150,150))
+                    display_letter(current_letter, Color(150, 150,150))
 
     try:
         while words_remaining:
