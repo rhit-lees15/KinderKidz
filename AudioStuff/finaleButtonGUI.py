@@ -131,11 +131,6 @@ class GUI(tk.Tk):
             random.shuffle(allLetters)
             return ''.join(allLetters)
 
-        GPIO.setmode(GPIO.BCM)
-        for pin in BUTTON_PINS:
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
-
         # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
         # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
         # game_sequence.generateRandomLetters()
@@ -228,6 +223,11 @@ class GUI(tk.Tk):
             
             # Reset spelledWord
             spelledWord = ''
+
+        GPIO.setmode(GPIO.BCM)
+        for pin in BUTTON_PINS:
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
 
         words_remaining = True
 
