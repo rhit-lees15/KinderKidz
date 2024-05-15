@@ -289,6 +289,7 @@ class GUI(tk.Tk):
                 frame.after(1000, update_countdown, duration - 1)
             else:
                 self.create_dance_display_page()
+                # gamesound.play_dance_break()
 
         update_countdown(duration)
 
@@ -311,6 +312,7 @@ class GUI(tk.Tk):
         # root.after((song_duration * 1000), back_to_word_display)
 
     def create_dance_display_page(self):
+        # gamesound.play_dance_break()
         self.hide_current_page()  # Hide current page
         self.current_page = "Dance_display"
         dance_display_page = tk.Frame(self, bg="black")
