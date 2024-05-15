@@ -12,7 +12,7 @@ import finallight as light
 
 # Initialize lights
 # LED strip configuration:
-LED_COUNT      = 300      # Number of LED pixels.
+LED_COUNT      = 800      # Number of LED pixels.
 LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
@@ -56,10 +56,10 @@ def buttonPress(pin):
     
     spelledWord = ""
 
-    print("This is running in sound_w_game NOT GUI")
+    # print("This is running in sound_w_game NOT GUI")
 
     letter = button_letters[pin]
-    time.sleep(0.25)
+    # time.sleep(0.25)
     if letter in randomWord:
         # Check if the letter is in the correct position
         if letter == randomWord[len(spelledWord)]:
@@ -184,7 +184,12 @@ for pin in BUTTON_PINS:
 # Generate a random word
 # wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 # wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
-# wordList = ['ABC', 'LMNO', 'XYZ']
+wordList = ['ABC', 'LMNO', 'XYZ']
+# self.wordList = {
+#             "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+#             "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+#             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+        # }
 
 words_remaining = True
 
