@@ -16,7 +16,7 @@ LED_COUNT      = 800      # Number of LED pixels.
 LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
-LED_BRIGHTNESS = 30     # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 15     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
@@ -54,7 +54,7 @@ def display_letter(letter, color):
 def buttonPress(pin):
     global spelledWord, randomWord, button_sequence, button_letters
     
-    spelledWord = ""
+    # spelledWord = ""
 
     # print("This is running in sound_w_game NOT GUI")
 
@@ -138,8 +138,8 @@ def newWord():
         n += 1
     
     # Get remaining letters
-    # availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
-    availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+    availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
+    # availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
 
     # Generate additional random letters
     randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
