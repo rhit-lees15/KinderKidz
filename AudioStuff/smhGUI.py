@@ -118,14 +118,6 @@ class GUI(tk.Tk):
         self.hide_current_page()  # Hide current page
         self.current_page = "word_display"
 
-        # Generate a new random word from the selected word list
-        randomWord = random.choice(self.word_lists.get(word_list_name))
-
-        GPIO.setmode(GPIO.BCM)
-        for pin in BUTTON_PINS:
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
-
         # Function to generate additional random letters
         def generateRandomLetters(remainingLetters, numLetters):
             return random.sample(remainingLetters, numLetters)
@@ -198,10 +190,32 @@ class GUI(tk.Tk):
             current_letter = [x + addition for x in current_letter]
             display_letter(current_letter, Color(250, 0, 0))
 
+
         # Function to handle button press event
         def buttonPress(pin):
             global spelledWord, randomWord, button_sequence, button_letters
             
+            #-----------------------------THREADING ATTEMPT
+
+            # if button_is_pressed:
+            #     return
+            
+            # button_is_pressed = 1
+            
+            # def threaded_function(arg):
+            #     for i in range(arg):
+            #         print("Button pressed")
+
+            #         time.sleep(1)
+
+            #         button_is_pressed = 0
+            #         print("Button is not pressed")
+            #         #---------------------- THREADING ATTEMPT
+
+            # spelledWord = ""
+
+            # print("This is running in sound_w_game NOT GUI")
+
             letter = button_letters[pin]
             # time.sleep(0.25)
             if letter in randomWord:
@@ -243,14 +257,43 @@ class GUI(tk.Tk):
                 print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
                 gamesound.play_wrong_letter()
 
+        # # Function to handle button press event
+        # def buttonPress(pin):
+        #     global spelledWord, randomWord, button_sequence, button_letters
+            
+        #     letter = button_letters[pin]
+        #     if letter in randomWord:
+        #         spelledWord += letter
+        #         print("Current spelling:", spelledWord)
+                
+        #         # Check if the spelled word matches the next letter in the sequence
+        #         if spelledWord.upper() == randomWord[:len(spelledWord)]:
+        #             if len(spelledWord) == len(randomWord):
+        #                 print("Correct! You spelled the word correctly.")
+        #                 init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
+        #                 newWord()
+        #         else:
+        #             print("Incorrect order! Try again.")
+        #             init_vlc('./AudioStuff/oopsthatsnotrighttryadifferentorder.mp3')
+        #             spelledWord = ''
+        #     else:
+        #         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+        #         init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
+
+        # Function to generate and display a new word
         def newWord():
             global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
-
+            
+        ## NOOR NEW ADDITION 05.09.24
             wordList.remove(randomWord)
             
             if not wordList:
                 print("Congratulations! You've spelled all the words in the list!")
                 return
+            
+            
+
+            ################# END OF ADDITION
 
             # Generate a new word
             n = 0
@@ -277,27 +320,42 @@ class GUI(tk.Tk):
             button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
             
             # Print new word and letters
+            # init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
             print("Let's spell another word.")
             print(f"Spell the word: {randomWord}")
             print("Reallocated letters: " + ' '.join(randomizedLetters))
+            # print("Available letters: " + ' '.join(availableLetters))
             
             # Reset spelledWord
             spelledWord = ''
 
-#############################
+        # # Function to check if button presses match the sequence
+        # def checkSequence():
+        #     global spelledWord, button_sequence
+        #     if len(spelledWord) != len(button_sequence):
+        #         return False
+        #     for i in range(len(spelledWord)):
+        #         if button_sequence[i] != BUTTON_PINS[randomizedLetters.index(spelledWord[i])]:
+        #             return False
+        #     return True
 
-        # GPIO.setmode(GPIO.BCM)
-        # for pin in BUTTON_PINS:
-        #     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        #     GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
-        
+        # Initialize GPIO
+        GPIO.setmode(GPIO.BCM)
+        for pin in BUTTON_PINS:
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=1000)
+
+        # Generate a random word
+        # wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
+        # wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
+        # wordList = ['ABC', 'LMNO', 'XYZ']
         wordDictionary = {
-            "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
-            "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
-            "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-        }
+                    "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+                    "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+                    "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+                }
 
-        wordList = wordDictionary.get(word_list_name)
+        wordList = wordDictionary.get("List 1")
 
         words_remaining = True
 
@@ -367,8 +425,6 @@ class GUI(tk.Tk):
 
             except KeyboardInterrupt:
                 GPIO.cleanup()
-
-#################################
 
         # Display word
         word_display_page = tk.Frame(self, bg="black")
