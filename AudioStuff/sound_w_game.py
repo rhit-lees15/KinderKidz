@@ -266,12 +266,14 @@ for pin in BUTTON_PINS:
 # Generate a random word
 # wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 # wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
-wordList = ['ABC', 'LMNO', 'XYZ']
-# self.wordDictionary = {
-#             "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
-#             "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
-#             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-#         }
+# wordList = ['ABC', 'LMNO', 'XYZ']
+wordDictionary = {
+            "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+            "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+            "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+        }
+
+wordList = wordDictionary.get("List 1")
 
 words_remaining = True
 
