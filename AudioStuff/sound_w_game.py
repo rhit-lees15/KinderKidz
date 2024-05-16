@@ -10,6 +10,8 @@ from rpi_ws281x import *
 import game_sound as gamesound
 import finallight as light
 
+from threading import Thread
+
 # Initialize lights
 # LED strip configuration:
 LED_COUNT      = 800      # Number of LED pixels.
@@ -111,6 +113,23 @@ def wrong_light(letter, tiles_num):
 def buttonPress(pin):
     global spelledWord, randomWord, button_sequence, button_letters
     
+    #-----------------------------THREADING ATTEMPT
+
+    if button_is_pressed:
+        return
+    
+    button_is_pressed = 1
+    
+    def threaded_function(arg):
+        for i in range(arg):
+            print("Button pressed")
+
+            time.sleep(1)
+
+            button_is_pressed = 0
+            print("Button is not pressed")
+            #---------------------- THREADING ATTEMPT
+
     # spelledWord = ""
 
     # print("This is running in sound_w_game NOT GUI")
@@ -248,11 +267,11 @@ for pin in BUTTON_PINS:
 # wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 # wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
 wordList = ['ABC', 'LMNO', 'XYZ']
-# self.wordList = {
+# self.wordDictionary = {
 #             "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
 #             "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
 #             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-        # }
+#         }
 
 words_remaining = True
 
@@ -294,6 +313,13 @@ if __name__ == '__main__':
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
+
+    #-------------------------------------THREADING ATTEMPT
+    thread = Tread(target = threaded_function, args = (10, ))
+    thread.start()
+    tread.join()
+    print("Thread finished.....exiting")
+    #--------------------------------------------THREADING
 
     print("Welcome to the Word Spelling Game!")
     gamesound.play_intro()
