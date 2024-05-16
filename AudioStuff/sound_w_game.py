@@ -12,11 +12,11 @@ import finallight as light
 
 # Initialize lights
 # LED strip configuration:
-LED_COUNT      = 300      # Number of LED pixels.
-LED_PIN        = 10  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+LED_COUNT      = 800      # Number of LED pixels.
+LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
-LED_BRIGHTNESS = 30     # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 15     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
@@ -27,12 +27,12 @@ BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
 # Function to generate a random word
 # def generateRandomWord(wordList):
-#     # # Remove the word after chosen
-#     # word = random.choice(wordList)
-#     # for word in wordList:
-#     #     wordList.remove(word)
-#     # return word
-#     return random.choice(wordList)
+    # # Remove the word after chosen
+    # word = random.choice(wordList)
+    # for word in wordList:
+    #     wordList.remove(word)
+    # return word
+    # return random.choice(wordList)
 
 # Function to generate additional random letters
 def generateRandomLetters(remainingLetters, numLetters):
@@ -62,8 +62,12 @@ def correct_light(tiles_num):
 def buttonPress(pin):
     global spelledWord, randomWord, button_sequence, button_letters
     
+    # spelledWord = ""
+
+    # print("This is running in sound_w_game NOT GUI")
+
     letter = button_letters[pin]
-    time.sleep(0.25)
+    # time.sleep(0.25)
     if letter in randomWord:
         # Check if the letter is in the correct position
         if letter == randomWord[len(spelledWord)]:
@@ -97,7 +101,6 @@ def buttonPress(pin):
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
         gamesound.play_wrong_letter()
-
 
 # # Function to handle button press event
 # def buttonPress(pin):
@@ -145,7 +148,8 @@ def newWord():
     
     # Get remaining letters
     availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
-    
+    # availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+
     # Generate additional random letters
     randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
     
@@ -184,12 +188,17 @@ def newWord():
 GPIO.setmode(GPIO.BCM)
 for pin in BUTTON_PINS:
     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=3000)
+    GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=1000)
 
 # Generate a random word
 # wordList = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
 # wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
 wordList = ['ABC', 'LMNO', 'XYZ']
+# self.wordList = {
+#             "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+#             "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+#             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+        # }
 
 words_remaining = True
 
