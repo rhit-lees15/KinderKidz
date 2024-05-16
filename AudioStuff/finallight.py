@@ -71,6 +71,12 @@ letter_arrays = {'A': A, 'B': B, 'C': C, 'D': D, 'E': E, 'F': F, 'G': G, 'H': H,
 #         strip.setPixelColor(current_pixel, color)
 #         strip.show()  
 
+# def correct(tiles_num):
+#     for i in range(len(letter)):
+#         current_pixel = letter[i]
+#         strip.setPixelColor(current_pixel, Color(0,250,0))
+#         strip.show()  
+
 
 # Main program logic follows:
 # if __name__ == '__main__':

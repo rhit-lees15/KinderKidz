@@ -50,6 +50,14 @@ def display_letter(letter, color):
         strip.setPixelColor(current_pixel, color)
         strip.show()  
 
+
+def correct_light(tiles_num):
+    addition = (tiles_num - 1) * 100
+    current_letter = [i for i in range(100)]
+    current_letter = [x + addition for x in current_letter]
+    display_letter(current_letter, Color(0, 250, 0))
+
+
 # Function to handle button press event
 def buttonPress(pin):
     global spelledWord, randomWord, button_sequence, button_letters
@@ -64,6 +72,7 @@ def buttonPress(pin):
             print("Current spelling:", spelledWord)
             if len(spelledWord) != len(randomWord):
                 ## The letter is in correct position - correct
+                #correct_light(pin)
                 gamesound.play_happy()
                 gamesound.play_correct_letter()
             # If the full word is spelled correctly
