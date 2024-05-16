@@ -115,20 +115,20 @@ def buttonPress(pin):
     
     #-----------------------------THREADING ATTEMPT
 
-    if button_is_pressed:
-        return
+    # if button_is_pressed:
+    #     return
     
-    button_is_pressed = 1
+    # button_is_pressed = 1
     
-    def threaded_function(arg):
-        for i in range(arg):
-            print("Button pressed")
+    # def threaded_function(arg):
+    #     for i in range(arg):
+    #         print("Button pressed")
 
-            time.sleep(1)
+    #         time.sleep(1)
 
-            button_is_pressed = 0
-            print("Button is not pressed")
-            #---------------------- THREADING ATTEMPT
+    #         button_is_pressed = 0
+    #         print("Button is not pressed")
+    #         #---------------------- THREADING ATTEMPT
 
     # spelledWord = ""
 
@@ -314,12 +314,12 @@ if __name__ == '__main__':
     strip.begin()
 
 
-    #-------------------------------------THREADING ATTEMPT
-    thread = Tread(target = threaded_function, args = (10, ))
-    thread.start()
-    tread.join()
-    print("Thread finished.....exiting")
-    #--------------------------------------------THREADING
+    # #-------------------------------------THREADING ATTEMPT
+    # thread = Tread(target = threaded_function, args = (10, ))
+    # thread.start()
+    # tread.join()
+    # print("Thread finished.....exiting")
+    # #--------------------------------------------THREADING
 
     print("Welcome to the Word Spelling Game!")
     gamesound.play_intro()
