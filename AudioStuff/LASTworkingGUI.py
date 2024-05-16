@@ -318,6 +318,8 @@ class GUI(tk.Tk):
         dance_display_page = tk.Frame(self, bg="black")
         dance_display_page.pack(fill=tk.BOTH, expand=True)
 
+        gamesound.play_dance_break()
+
         # Label for word list selection -- this does not show up, and unsure as to why
         dance_label = tk.Label(dance_display_page, text="Select a Song:", font=("Helvetica", 20), bg="black", fg="white")
         dance_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
