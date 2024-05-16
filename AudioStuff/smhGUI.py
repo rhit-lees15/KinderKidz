@@ -121,6 +121,11 @@ class GUI(tk.Tk):
         # Generate a new random word from the selected word list
         randomWord = random.choice(self.word_lists.get(word_list_name))
 
+        GPIO.setmode(GPIO.BCM)
+        for pin in BUTTON_PINS:
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
+
         # Function to generate additional random letters
         def generateRandomLetters(remainingLetters, numLetters):
             return random.sample(remainingLetters, numLetters)
@@ -281,10 +286,10 @@ class GUI(tk.Tk):
 
 #############################
 
-        GPIO.setmode(GPIO.BCM)
-        for pin in BUTTON_PINS:
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
+        # GPIO.setmode(GPIO.BCM)
+        # for pin in BUTTON_PINS:
+        #     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        #     GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, randomWord), bouncetime=3000)
         
         wordDictionary = {
             "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
