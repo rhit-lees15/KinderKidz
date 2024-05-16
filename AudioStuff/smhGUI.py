@@ -10,6 +10,7 @@ import string
 import RPi.GPIO as GPIO 
 from pygame import Color
 from rpi_ws281x import *
+import finallight as light
 
 BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
@@ -19,6 +20,16 @@ BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
 # time per lesson (3 min = 180)
 duration = 30
+
+# Initialize lights
+# LED strip configuration:
+LED_COUNT      = 800      # Number of LED pixels.
+LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
+LED_BRIGHTNESS = 15     # Set to 0 for darkest and 255 for brightest
+LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -108,7 +119,7 @@ class GUI(tk.Tk):
         self.current_page = "word_display"
 
         # Generate a new random word from the selected word list
-        # randomWord = random.choice(self.word_lists.get(word_list_name))
+        randomWord = random.choice(self.word_lists.get(word_list_name))
 
         # Function to generate additional random letters
         def generateRandomLetters(remainingLetters, numLetters):

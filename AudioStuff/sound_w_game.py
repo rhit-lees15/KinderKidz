@@ -10,7 +10,7 @@ from rpi_ws281x import *
 import game_sound as gamesound
 import finallight as light
 
-from threading import Thread
+# from threading import Thread
 
 # Initialize lights
 # LED strip configuration:
