@@ -48,14 +48,63 @@ def display_letter(letter, color):
     for i in range(len(letter)):
         current_pixel = letter[i]
         strip.setPixelColor(current_pixel, color)
-        strip.show()  
+        strip.show() 
 
+def turn_off():
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
 
-def correct_light(tiles_num):
+def initialize_letter(randomizedLetters):
+    current_tile = 0
+
+    for letter in randomizedLetters:
+        current_tile += 1
+        if current_tile == 1:
+            current_letter = light.letter_arrays[letter]
+            display_letter(current_letter, Color(150, 150,150))
+        elif current_tile == 2:
+            current_letter = light.letter_arrays[letter]
+            current_letter = [x + 100 for x in current_letter]
+            display_letter(current_letter, Color(150, 150,150))
+        elif current_tile == 3:
+            current_letter = light.letter_arrays[letter]
+            current_letter = [x + 200 for x in current_letter]
+            display_letter(current_letter, Color(150, 150,150))
+        elif current_tile == 4:
+            current_letter = light.letter_arrays[letter]
+            current_letter = [x + 300 for x in current_letter]
+            display_letter(current_letter, Color(150, 150,150))
+        elif current_tile == 5:
+            current_letter = light.letter_arrays[letter]
+            current_letter = [x + 400 for x in current_letter]
+            display_letter(current_letter, Color(150, 150,150))
+        elif current_tile == 6:
+            current_letter = light.letter_arrays[letter]
+            current_letter = [x + 500 for x in current_letter]
+            display_letter(current_letter, Color(150, 150,150))
+        elif current_tile == 7:
+            current_letter = light.letter_arrays[letter]
+            current_letter = [x + 600 for x in current_letter]
+            display_letter(current_letter, Color(150, 150,150))
+        elif current_tile == 8:
+            current_letter = light.letter_arrays[letter]
+            current_letter = [x + 700 for x in current_letter]
+            display_letter(current_letter, Color(150, 150,150)) 
+
+def correct_light(letter, tiles_num):
+    # might have to map in number to tiles_num by finding which index the pin is located at
     addition = (tiles_num - 1) * 100
-    current_letter = [i for i in range(100)]
+    current_letter = light.letter_arrays[letter]
     current_letter = [x + addition for x in current_letter]
-    display_letter(current_letter, Color(0, 250, 0))
+    display_letter(current_letter, Color(150, 150,150))
+
+# letters currently do not turn red after getting wrong - next quarter
+def wrong_light(letter, tiles_num):
+    addition = (tiles_num - 1) * 100
+    current_letter = light.letter_arrays[letter]
+    current_letter = [x + addition for x in current_letter]
+    display_letter(current_letter, Color(250, 0, 0))
 
 
 # Function to handle button press event
@@ -77,14 +126,19 @@ def buttonPress(pin):
             if len(spelledWord) != len(randomWord):
                 ## The letter is in correct position - correct
                 #correct_light(pin)
+                correct_light(letter, pin)
                 gamesound.play_happy()
                 gamesound.play_correct_letter()
             # If the full word is spelled correctly
             elif len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
+                correct_light(letter, pin)
                 gamesound.play_happy()
+                turn_off()
                 gamesound.play_next_word()
                 newWord()
+                initialize_letter(randomWord)
+
         else:
             # Find the first incorrect letter position
             #incorrect_position = spelledWord[]
@@ -249,46 +303,7 @@ if __name__ == '__main__':
 
     spelledWord = ''
 
-    current_tile = 0
-
-    for letter in randomizedLetters:
-                current_tile += 1
-                if current_tile == 1:
-                    current_letter = light.letter_arrays[letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_tile == 2:
-                    current_letter = light.letter_arrays[letter]
-                    current_letter = [x + 100 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_tile == 3:
-                    current_letter = light.letter_arrays[letter]
-                    current_letter = [x + 200 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_tile == 4:
-                    current_letter = light.letter_arrays[letter]
-                    current_letter = [x + 300 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_tile == 5:
-                    current_letter = light.letter_arrays[letter]
-                    current_letter = [x + 400 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_tile == 6:
-                    current_letter = light.letter_arrays[letter]
-                    current_letter = [x + 500 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_tile == 7:
-                    current_letter = light.letter_arrays[letter]
-                    current_letter = [x + 600 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
-                elif current_tile == 8:
-                    current_letter = light.letter_arrays[letter]
-                    current_letter = [x + 700 for x in current_letter]
-                    display_letter(current_letter, Color(150, 150,150))
-
-
-
-
-
+    initialize_letter(randomizedLetters)
 
     try:
         while words_remaining:
