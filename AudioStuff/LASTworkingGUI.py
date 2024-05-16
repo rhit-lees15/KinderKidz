@@ -320,35 +320,40 @@ class GUI(tk.Tk):
         dance_display_page = tk.Frame(self, bg="black")
         dance_display_page.pack(fill=tk.BOTH, expand=True)
 
-        gamesound.play_dance_break()
+        # gamesound.play_dance_break()
 
         # Label for word list selection -- this does not show up, and unsure as to why
         dance_label = tk.Label(dance_display_page, text="Select a Song:", font=("Helvetica", 20), bg="black", fg="white")
         dance_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
 
-
+        gamesound.play_dance_break()
 ########################
 
        # Button for songs
         audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
-                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"))
+                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"), 
+                                    command=lambda: self.create_dance_image_page)
         audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
         audio_button_2 = tk.Button(dance_display_page, text="Twinkle, Twinkle", font=("Helvetica", 20),
-                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"))
+                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"), 
+                                    command=lambda: self.create_dance_image_page)
         audio_button_2.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
         audio_button_3 = tk.Button(dance_display_page, text="My Year - ZOMBIES", font=("Helvetica", 20),
-                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"))
+                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"), 
+                                    command=lambda: self.create_dance_image_page)
         audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
 
         audio_button_4 = tk.Button(dance_display_page, text="If You're Happy and You Know It", font=("Helvetica", 20),
-                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"))
-        audio_button_4.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
+                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"), 
+                                    command=lambda: self.create_dance_image_page)
+        audio_button_4.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         audio_button_5 = tk.Button(dance_display_page, text="Body Bop Bop", font=("Helvetica", 20),
-                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"))
-        audio_button_5.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
+                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"), 
+                                    command=lambda: self.create_dance_image_page)
+        audio_button_5.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
 
 
 #####################
@@ -386,6 +391,31 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["dance_display"] = dance_display_page  # Store the data
+
+################# IMAGE ATTEMPT
+    def create_dance_image_page(self):
+        self.current_page = "dance image"
+        image_page = tk.Frame(self, bg = 'black')
+        image_page.pack(fill=tk.BOTH, expand=True)
+
+        # Central Picture 
+        image_path_2 = "./Images/COW.PNG" # ./Images/name.type
+        image_2 = self.load_image(image_path_2)
+        picture_label_2 = tk.Label(image_page, image=image_2, borderwidth=0)
+        picture_label_2.image = image_2
+        picture_label_2.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+        # Start button
+        start_button = tk.Button(image_page, text="Start", bg="green", font=("Helvetica", 40))
+        start_button.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
+
+        # Exit button
+        exit_button = tk.Button(image_page, text="Exit", bg="red", font=("Helvetica", 20))
+        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+
+        self.pages["start"] = image_page  # Store the start page
+
+################### IMAGE ADD
 
     def hide_current_page(self):
         if self.current_page in self.pages:
