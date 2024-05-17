@@ -1,3 +1,4 @@
+
 import argparse
 import RPi.GPIO as GPIO 
 import vlc
@@ -21,7 +22,7 @@ LED_BRIGHTNESS = 15     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
-    
+spelledWord = ""
 
 # GPIO Pins for buttons
 BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
@@ -45,61 +46,61 @@ def randomizeLetters(word, letters):
     random.shuffle(allLetters)
     return ''.join(allLetters)
 
-def display_letter(letter, color):
+def display_letter(letter, color, current_strip):
     for i in range(len(letter)):
         current_pixel = letter[i]
-        strip.setPixelColor(current_pixel, color)
-        strip.show() 
+        current_strip.setPixelColor(current_pixel, color)
+        current_strip.show() 
 
-def turn_off():
-    for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(0, 0, 0))
-    strip.show()
+def turn_off(current_strip):
+    for i in range(current_strip.numPixels()):
+        current_strip.setPixelColor(i, Color(0, 0, 0))
+    current_strip.show()
 
-def initialize_letter(randomizedLetters):
+def initialize_letter(randomizedLetters, current_strip):
     current_tile = 0
 
     for letter in randomizedLetters:
         current_tile += 1
         if current_tile == 1:
             current_letter = light.letter_arrays[letter]
-            display_letter(current_letter, Color(150, 150,150))
+            display_letter(current_letter, Color(150, 150,150), current_strip)
         elif current_tile == 2:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 100 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150))
+            display_letter(current_letter, Color(150, 150,150), current_strip)
         elif current_tile == 3:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 200 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150))
+            display_letter(current_letter, Color(150, 150,150), current_strip)
         elif current_tile == 4:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 300 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150))
+            display_letter(current_letter, Color(150, 150,150), current_strip)
         elif current_tile == 5:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 400 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150))
+            display_letter(current_letter, Color(150, 150,150), current_strip)
         elif current_tile == 6:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 500 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150))
+            display_letter(current_letter, Color(150, 150,150), current_strip)
         elif current_tile == 7:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 600 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150))
+            display_letter(current_letter, Color(150, 150,150), current_strip)
         elif current_tile == 8:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 700 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150)) 
+            display_letter(current_letter, Color(150, 150,150), current_strip) 
 
-def correct_light(letter, pin):
+def correct_light(letter, pin, current_strip):
     # might have to map in number to tiles_num by finding which index the pin is located at
     tiles_num = BUTTON_PINS.index(pin)
     addition = tiles_num * 100
     current_letter = light.letter_arrays[letter]
     current_letter = [x + addition for x in current_letter]
-    display_letter(current_letter, Color(0, 250,0))
+    display_letter(current_letter, Color(0, 250,0), current_strip)
 
 # letters currently do not turn red after getting wrong - next quarter
 def wrong_light(letter, tiles_num):
@@ -343,5 +344,3 @@ if __name__ == '__main__':
 
     except KeyboardInterrupt:
         GPIO.cleanup()
-
-
