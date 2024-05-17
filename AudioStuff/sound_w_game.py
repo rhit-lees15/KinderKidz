@@ -94,12 +94,13 @@ def initialize_letter(randomizedLetters):
             current_letter = [x + 700 for x in current_letter]
             display_letter(current_letter, Color(150, 150,150)) 
 
-def correct_light(letter, tiles_num):
+def correct_light(letter, pin):
     # might have to map in number to tiles_num by finding which index the pin is located at
-    addition = (tiles_num - 1) * 100
+    tiles_num = BUTTON_PINS.index(pin)
+    addition = tiles_num * 100
     current_letter = light.letter_arrays[letter]
     current_letter = [x + addition for x in current_letter]
-    display_letter(current_letter, Color(150, 150,150))
+    display_letter(current_letter, Color(0, 250,0))
 
 # letters currently do not turn red after getting wrong - next quarter
 def wrong_light(letter, tiles_num):
@@ -111,7 +112,7 @@ def wrong_light(letter, tiles_num):
 
 # Function to handle button press event
 def buttonPress(pin):
-    global spelledWord, randomWord, button_sequence, button_letters
+    global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
     
     #-----------------------------THREADING ATTEMPT
 
@@ -156,7 +157,7 @@ def buttonPress(pin):
                 turn_off()
                 gamesound.play_next_word()
                 newWord()
-                initialize_letter(randomWord)
+                initialize_letter(randomizedLetters)
 
         else:
             # Find the first incorrect letter position
