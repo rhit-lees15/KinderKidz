@@ -116,7 +116,7 @@ class GUI(tk.Tk):
         print('Before ButtonPress')
 
         # Generate a new random word from the selected word list
-        randomWord = random.choice(self.word_lists[word_list_name])
+        randomWord = random.choice(self.word_lists.get(word_list_name))
 
 #############################
 

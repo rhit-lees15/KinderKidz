@@ -331,23 +331,28 @@ class GUI(tk.Tk):
 
        # Button for songs
         audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
-                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"))
+                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3") 
+                                    & self.create_dance_image_page)
         audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
         audio_button_2 = tk.Button(dance_display_page, text="Twinkle, Twinkle", font=("Helvetica", 20),
-                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"))
+                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3")
+                                    & self.create_dance_image_page)
         audio_button_2.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
         audio_button_3 = tk.Button(dance_display_page, text="My Year - ZOMBIES", font=("Helvetica", 20),
-                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"))
+                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3")
+                                    & self.create_dance_image_page)
         audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
 
         audio_button_4 = tk.Button(dance_display_page, text="If You're Happy and You Know It", font=("Helvetica", 20),
-                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"))
+                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3")
+                                    & self.create_dance_image_page)
         audio_button_4.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         audio_button_5 = tk.Button(dance_display_page, text="Body Bop Bop", font=("Helvetica", 20),
-                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"))
+                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3") 
+                                    & self.create_dance_image_page)
         audio_button_5.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
 
 
@@ -381,9 +386,9 @@ class GUI(tk.Tk):
         # play_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         # Exit button
-        restart_button = tk.Button(dance_display_page, text="List Selection", bg="green", font=("Helvetica", 16),
-                                command=self.create_list_selection_page)
-        restart_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+        exit_button = tk.Button(dance_display_page, text="Exit", bg="red", font=("Helvetica", 16),
+                                command=self.exit_program)
+        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["dance_display"] = dance_display_page  # Store the data
 
