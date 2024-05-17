@@ -24,6 +24,7 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 # GPIO Pins for buttons
 BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
+#fdfddso
 
 # Function to generate a random word
 def generateRandomWord(wordList):
