@@ -22,8 +22,6 @@ LED_BRIGHTNESS = 15     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
-spelledWord = ""
-
 # GPIO Pins for buttons
 BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
@@ -200,7 +198,8 @@ def buttonPress(pin):
 #         init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
 
 # Function to generate and display a new word
-def newWord(selected_word_list: list):
+# def newWord(selected_word_list: list):
+def newWord():
     global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
     
 ## NOOR NEW ADDITION 05.09.24
