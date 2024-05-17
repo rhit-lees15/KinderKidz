@@ -90,6 +90,14 @@ def correct_light(letter, pin):
     current_letter = [x + addition for x in current_letter]
     display_letter(current_letter, Color(0, 250,0))
 
+def wrong_light(letter, pin):
+    # might have to map in number to tiles_num by finding which index the pin is located at
+    tiles_num = BUTTON_PINS.index(pin)
+    addition = tiles_num * 100
+    current_letter = light.letter_arrays[letter]
+    current_letter = [x + addition for x in current_letter]
+    display_letter(current_letter, Color(250, 0,0))
+
 # letters currently do not turn red after getting wrong - next quarter
 
 # Function to handle button press event
@@ -152,6 +160,7 @@ def buttonPress(pin):
                 gamesound.play_wrong_order()
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+        wrong_light(letter, pin)
         gamesound.play_wrong_letter()
 # # Function to handle button press event
 # def buttonPress(pin):
