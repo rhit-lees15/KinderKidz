@@ -130,14 +130,14 @@ class GUI(tk.Tk):
         GPIO.setmode(GPIO.BCM)
         for pin in BUTTON_PINS:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, self.randomWord), bouncetime=3000)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, self.randomWord, self.spelled_word), bouncetime=3000)
 
         # randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(randomWord))
         # randomizedLetters = game_sequence.randomizeLetters(randomWord, randomLetters)
         # game_sequence.generateRandomLetters()
         # game_sequence.randomizeLetters()
         # game_sequence.buttonPress(pin, randomWord)
-        def buttonPress(self, pin, randomWord):
+        def buttonPress(self, pin, randomWord, spelled_word):
             global button_sequence, button_letters
             
 
@@ -145,16 +145,16 @@ class GUI(tk.Tk):
             time.sleep(0.25)
             if letter in randomWord:
                 # Check if the letter is in the correct position
-                if letter == randomWord[len(self.spelled_word)]:
+                if letter == randomWord[len(spelled_word)]:
                     ## The letter is in the word
                     self.spelled_word += letter
                     print("Current spelling:", self.spelled_word)
-                    if len(self.spelled_word) != len(randomWord):
+                    if len(spelled_word) != len(randomWord):
                         ## The letter is in correct position - correct
                         gamesound.play_happy()
                         gamesound.play_correct_letter()
                     # If the full word is spelled correctly
-                    elif len(self.spelled_word) == len(randomWord):
+                    elif len(spelled_word) == len(randomWord):
                         print("Correct! You spelled the word correctly.")
                         gamesound.play_happy()
                         gamesound.play_next_word()
