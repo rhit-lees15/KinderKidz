@@ -1,9 +1,11 @@
+import argparse
 import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
 import sound_w_gamecopy as game_sequence
 import game_sound as gamesound
+import finallight as light
 import time
 import vlc
 import string
@@ -12,6 +14,17 @@ from pygame import Color
 from rpi_ws281x import *
 
 BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
+
+# Initialize lights
+# LED strip configuration:
+LED_COUNT      = 800      # Number of LED pixels.
+LED_PIN        = 18  # GPIO pin connected to the pixels (18 uses PWM!).                                                                                                         PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
+LED_BRIGHTNESS = 15     # Set to 0 for darkest and 255 for brightest
+LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+
 
 # import pygame.mixer
 
@@ -123,6 +136,8 @@ class GUI(tk.Tk):
         # Generate a new random word from the selected word list
         self.selected_word_list = self.word_lists.get(word_list_name)
         self.my_new_word()
+        game_sequence.initialize_letter(randomizedLetters, strip)
+
         
 
         # randomWord = random.choice(self.word_lists[word_list_name])
@@ -139,8 +154,10 @@ class GUI(tk.Tk):
         # game_sequence.generateRandomLetters()
         # game_sequence.randomizeLetters()
         # game_sequence.buttonPress(pin, randomWord)
+
+            
         def buttonPress(self, pin, randomWord, spelled_word):
-            global button_sequence, button_letters
+            global button_sequence, button_letters, randomizedLetters
             
 
             letter = button_letters[pin]
@@ -153,14 +170,18 @@ class GUI(tk.Tk):
                     print("Current spelling:", self.spelled_word)
                     if len(spelled_word) != len(randomWord):
                         ## The letter is in correct position - correct
+                        game_sequence.correct_light(letter, pin, strip)
                         gamesound.play_happy()
                         gamesound.play_correct_letter()
                     # If the full word is spelled correctly
                     elif len(spelled_word) == len(randomWord):
                         print("Correct! You spelled the word correctly.")
+                        game_sequence.correct_light(letter, pin, strip)
                         gamesound.play_happy()
+                        game_sequence.turn_off(strip)
                         gamesound.play_next_word()
                         game_sequence.newWord()
+                        game_sequence.initialize_letter(randomizedLetters, strip)
                 else:
                     # Find the first incorrect letter position
                     #incorrect_position = spelledWord[]
@@ -177,6 +198,7 @@ class GUI(tk.Tk):
             else:
                 print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
                 gamesound.play_wrong_letter()
+    
 
 
     def my_new_word(self):
@@ -433,5 +455,16 @@ class GUI(tk.Tk):
             self.destroy()
 
 if __name__ == "__main__":
+        # Initialization of lights    
+    # Process arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    args = parser.parse_args()
+
+    # Create NeoPixel object with appropriate configuration.
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    # Intialize the library (must be called once before other functions).
+    
+    strip.begin()
     app = GUI()   
     app.mainloop()
