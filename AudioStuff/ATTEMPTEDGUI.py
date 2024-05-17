@@ -107,22 +107,22 @@ def wrong_light(letter, tiles_num):
 
 # Function to handle button press event
 def buttonPress(pin):
-    global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
+    global spelled_word, randomWord, randomizedLetters, button_sequence, button_letters
 
     letter = button_letters[pin]
     if letter in randomWord:
         # Check if the letter is in the correct position
-        if letter == randomWord[len(spelledWord)]:
+        if letter == randomWord[len(spelled_word)]:
             ## The letter is in the word
-            spelledWord += letter
-            print("Current spelling:", spelledWord)
-            if len(spelledWord) != len(randomWord):
+            spelled_word += letter
+            print("Current spelling:", spelled_word)
+            if len(spelled_word) != len(randomWord):
                 ## The letter is in correct position - correct
                 correct_light(letter, pin)
                 gamesound.play_happy()
                 gamesound.play_correct_letter()
             # If the full word is spelled correctly
-            elif len(spelledWord) == len(randomWord):
+            elif len(spelled_word) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
                 correct_light(letter, pin)
                 gamesound.play_happy()
@@ -133,14 +133,14 @@ def buttonPress(pin):
 
         else:
             # Find the first incorrect letter position
-            if len(spelledWord) == 0:
+            if len(spelled_word) == 0:
                 print("Incorrect order!")
-                #spelledWord = ''
+                #spelled_word = ''
                 gamesound.play_wrong_order()
-                print("Current spelling:", spelledWord)
+                print("Current spelling:", spelled_word)
             else:
-                #spelledWord = randomWord[incorrect_position]
-                print("Incorrect order! Restarting from:", spelledWord)
+                #spelled_word = randomWord[incorrect_position]
+                print("Incorrect order! Restarting from:", spelled_word)
                 gamesound.play_wrong_order()
     else:
         print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
@@ -148,7 +148,7 @@ def buttonPress(pin):
 
 # Function to generate and display a new word
 def newWord():
-    global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
+    global spelled_word, randomWord, randomizedLetters, button_sequence, button_letters
     
     wordList.remove(randomWord)
     
@@ -163,7 +163,7 @@ def newWord():
         n += 1
     
     # Get remaining letters
-    availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
+    availableLetters = list(set(string.ascii_uppercase) - set(spelled_word) - set(randomWord))
 
     # Generate additional random letters
     randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
@@ -184,8 +184,8 @@ def newWord():
     print(f"Spell the word: {randomWord}")
     print("Reallocated letters: " + ' '.join(randomizedLetters))
     
-    # Reset spelledWord
-    spelledWord = ''
+    # Reset spelled_word
+    spelled_word = ''
 
 # Initialize GPIO
 # GPIO.setmode(GPIO.BCM)
@@ -194,13 +194,13 @@ def newWord():
 #     GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=1000)
 
 # Generate a random word
-# # wordDictionary = {
-# #             "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
-# #             "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
-# #             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-# #         }
+wordDictionary = {
+            "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+            "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+            "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+        }
 
-# # wordList = wordDictionary.get(word_list_name)
+wordList = wordDictionary.get(word_list_name)
 
 # words_remaining = True
 
@@ -245,7 +245,7 @@ class GUI(tk.Tk):
             "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
         }
-        self.spelled_word = ""
+        spelled_word = ""
         self.create_start_page()
 
     def create_start_page(self):
@@ -281,7 +281,7 @@ class GUI(tk.Tk):
         
         gamesound.play_intro()
 
-        # spelledWord = ''
+        # spelled_word = ''
 
         self.current_page = "list_selection"
         list_selection_page = tk.Frame(self, bg="black")
@@ -329,7 +329,7 @@ class GUI(tk.Tk):
         GPIO.setmode(GPIO.BCM)
         for pin in BUTTON_PINS:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, self.randomWord, self.spelled_word), bouncetime=3000)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin, self.randomWord, spelled_word), bouncetime=3000)
 
         def buttonPress(self, pin, randomWord, spelled_word):
             global button_sequence, button_letters
@@ -340,8 +340,8 @@ class GUI(tk.Tk):
                 # Check if the letter is in the correct position
                 if letter == randomWord[len(spelled_word)]:
                     ## The letter is in the word
-                    self.spelled_word += letter
-                    print("Current spelling:", self.spelled_word)
+                    spelled_word += letter
+                    print("Current spelling:", spelled_word)
                     if len(spelled_word) != len(randomWord):
                         ## The letter is in correct position - correct
                         gamesound.play_happy()
@@ -354,14 +354,14 @@ class GUI(tk.Tk):
                         game_sequence.newWord()
                 else:
                     # Find the first incorrect letter position
-                    if len(self.spelled_word) == 0:
+                    if len(spelled_word) == 0:
                         print("Incorrect order!")
-                        #spelledWord = ''
+                        #spelled_word = ''
                         gamesound.play_wrong_order()
-                        print("Current spelling:", self.spelled_word)
+                        print("Current spelling:", spelled_word)
                     else:
-                        #spelledWord = randomWord[incorrect_position]
-                        print("Incorrect order! Restarting from:", self.spelled_word)
+                        #spelled_word = randomWord[incorrect_position]
+                        print("Incorrect order! Restarting from:", spelled_word)
                         gamesound.play_wrong_order()
             else:
                 print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
@@ -563,7 +563,7 @@ if __name__ == '__main__':
     print(f"Spell the word: {randomWord}")
     print("Reallocated letters: " + ' '.join(randomizedLetters))
 
-    spelledWord = ''
+    spelled_word = ''
 
     initialize_letter(randomizedLetters)
 
