@@ -305,10 +305,13 @@ if __name__ == '__main__':
     try:
         while words_remaining:
             if not wordList:
-                turn_off()
                 words_remaining = False
                 
             time.sleep(0.25)
+        else:
+             turn_off()
+
             
     except KeyboardInterrupt:
+        turn_off()
         GPIO.cleanup()
