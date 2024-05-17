@@ -10,6 +10,9 @@ import string
 import RPi.GPIO as GPIO 
 from pygame import Color
 from rpi_ws281x import *
+# two new lines added here one for parse another fore light
+import argparse
+import finallight as light
 
 BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
@@ -19,8 +22,9 @@ BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
 # time per lesson (3 min = 180)
 duration = 30
-
+# Class gui begin here
 class GUI(tk.Tk):
+    # construction starts here-------------------------------------------------------------
     def __init__(self):
         super().__init__()
         self.title("Interactive GUI")
@@ -30,14 +34,21 @@ class GUI(tk.Tk):
         self.pages = {}  # Dictionary to store pages
 
         # Define your word lists
-        self.word_lists = {
-            "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
-            "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
-            "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-        }
+        # self.word_lists = {
+        #     "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+        #     "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+        #     "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+        # }
+        # insted of above we can also:
+        self.word_lists = [
+            ['MY', 'THIS', 'A', 'IS', 'HOME'],
+             ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+           ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+        ]
 
         self.create_start_page()
-
+    # construction ended here---------------------------------------------------------------
+    # this is a start page -----------------------------------------------------------------
     def create_start_page(self):
         self.current_page = "start"
         start_page = tk.Frame(self, bg = 'black')
@@ -61,11 +72,13 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["start"] = start_page  # Store the start page
-
+    # ---------------------------------------------------------------------------------------
+    # to load image function-----------------------------------------------------------------
     def load_image(self, path):
         image = tk.PhotoImage(file=path)
         return image
-
+    # ---------------------------------------------------------------------------------------
+    # Screen chooses that list 1,2,3---------------------------------------------------------
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
         
@@ -82,18 +95,18 @@ class GUI(tk.Tk):
         list_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
 
         # Button to select first word list
-        first_list_button = tk.Button(list_selection_page, text="List 1", font=("Helvetica", 40),
-                                    bg="blue", fg="white", command=lambda: self.create_word_display_page("List 1"))
+        first_list_button = tk.Button(list_selection_page, text=self.word_lists[0], font=("Helvetica", 40),
+                                    bg="blue", fg="white", command=lambda: self.create_word_display_page(0))
         first_list_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
 
         # Button to select second word list
-        second_list_button = tk.Button(list_selection_page, text="List 2", font=("Helvetica", 40),
-                                    bg="green", fg="white", command=lambda: self.create_word_display_page("List 2"))
+        second_list_button = tk.Button(list_selection_page, text=self.word_lists[1], font=("Helvetica", 40),
+                                    bg="green", fg="white", command=lambda: self.create_word_display_page(1))
         second_list_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Button to select third word list
-        third_list_button = tk.Button(list_selection_page, text="List 3", font=("Helvetica", 40),
-                                    bg="red", fg="white", command=lambda: self.create_word_display_page("List 3"))
+        third_list_button = tk.Button(list_selection_page, text=self.word_lists[3], font=("Helvetica", 40),
+                                    bg="red", fg="white", command=lambda: self.create_word_display_page(2))
         third_list_button.place(relx=0.8, rely=0.5, anchor=tk.CENTER)
 
 
@@ -103,8 +116,9 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
         self.pages["list_selection"] = list_selection_page  # Store the time selection page
-
-    def create_word_display_page(self, word_list_name):
+    # ends here -----------------------------------------------------------------------------------------------------
+    # display words screen is here ----------------------------------------------------------------------------------
+    def create_word_display_page(self, list_index):
         self.hide_current_page()  # Hide current page
         self.current_page = "word_display"
         
@@ -117,10 +131,9 @@ class GUI(tk.Tk):
         print('Before ButtonPress')
 
         # Generate a new random word from the selected word list
-        randomWord = random.choice(self.word_lists.get(word_list_name))
+        randomWord = random.choice(self.word_lists[list_index])
 
         # randomWord = random.choice(self.word_lists[word_list_name])
-
 #############################
 
         GPIO.setmode(GPIO.BCM)
@@ -238,7 +251,8 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["word_display"] = word_display_page  # Store the word display page
-    
+    # ends here-------------------------------------------------------------------------------------------
+    # HERE DUPLICATED METHOD BUT HAS DIFFEREN SCRIPT
     def create_word_display_page(self, word_list_name):
         self.hide_current_page()  # Hide current page
         self.current_page = "word_display"
@@ -276,7 +290,8 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["word_display"] = word_display_page  # Store the word display page
-
+    # DUPLICATED WORD IS ENDED HERE --------------------------------------------------------------------------
+    # TIMER OF THE TOP LEVEL
     def create_countdown(self, frame, duration):
         countdown_label = tk.Label(frame, font=("Helvetica", 16))
         countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
@@ -294,7 +309,7 @@ class GUI(tk.Tk):
                 # gamesound.play_dance_break()
 
         update_countdown(duration)
-
+    # ENDS HERE-------------------------------------------------------------
     # Function to switch back to word display after the song finishes
     def back_to_word_display(word_list_name):
         # Destroy the dance display page
@@ -312,7 +327,7 @@ class GUI(tk.Tk):
         # # Calculate the duration of the song and call a function to switch back to word display after the duration
         # song_duration = pygame.mixer.Sound(selected_song).get_length()
         # root.after((song_duration * 1000), back_to_word_display)
-
+    # ends here-----------------------------------------------------------------------------
     def create_dance_display_page(self):
         # gamesound.play_dance_break()
         self.hide_current_page()  # Hide current page
@@ -331,28 +346,23 @@ class GUI(tk.Tk):
 
        # Button for songs
         audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
-                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3") 
-                                    & self.create_dance_image_page)
+                                    bg="blue", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"))
         audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
         audio_button_2 = tk.Button(dance_display_page, text="Twinkle, Twinkle", font=("Helvetica", 20),
-                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3")
-                                    & self.create_dance_image_page)
+                                    bg="red", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"))
         audio_button_2.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
         audio_button_3 = tk.Button(dance_display_page, text="My Year - ZOMBIES", font=("Helvetica", 20),
-                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3")
-                                    & self.create_dance_image_page)
+                                    bg="orange", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"))
         audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
 
         audio_button_4 = tk.Button(dance_display_page, text="If You're Happy and You Know It", font=("Helvetica", 20),
-                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3")
-                                    & self.create_dance_image_page)
+                                    bg="purple", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"))
         audio_button_4.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         audio_button_5 = tk.Button(dance_display_page, text="Body Bop Bop", font=("Helvetica", 20),
-                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3") 
-                                    & self.create_dance_image_page)
+                                    bg="green", fg="white", command=lambda: gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"))
         audio_button_5.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
 
 
@@ -386,12 +396,12 @@ class GUI(tk.Tk):
         # play_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         # Exit button
-        exit_button = tk.Button(dance_display_page, text="Exit", bg="red", font=("Helvetica", 16),
-                                command=self.exit_program)
-        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+        restart_button = tk.Button(dance_display_page, text="List Selection", bg="green", font=("Helvetica", 16),
+                                command=self.create_list_selection_page)
+        restart_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["dance_display"] = dance_display_page  # Store the data
-
+    # ends here----------------------------------------------------------------------------------------------------------------------
 ################# IMAGE ATTEMPT
     def create_dance_image_page(self):
         self.current_page = "dance image"
