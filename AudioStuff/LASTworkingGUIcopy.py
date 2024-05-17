@@ -18,7 +18,7 @@ BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 # pygame.mixer.init()
 
 # time per lesson (3 min = 180)
-duration = 30
+duration = 5
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -69,6 +69,7 @@ class GUI(tk.Tk):
 
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
+        self.hide_dance_display_page()
         gamesound.play_intro()
         gamesound.play_choose_list()
 
