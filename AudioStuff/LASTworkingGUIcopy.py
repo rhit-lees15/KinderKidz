@@ -175,7 +175,7 @@ class GUI(tk.Tk):
             for idx, pin in enumerate(game_sequence.BUTTON_PINS):
                 self.button_letters[pin] = randomizedLetters[idx]
             
-            game_sequence.initialize_letter(randomizedLetters, strip)
+            # game_sequence.initialize_letter(randomizedLetters, strip)
 
 
             # Set button sequence for the initial word
@@ -264,6 +264,8 @@ class GUI(tk.Tk):
         # word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
         
         randomWord = random.choice(self.word_lists[word_list_name])
+        game_sequence.initialize_letter(randomizedLetters, strip)
+
 
         # Display word
         word_display_page = tk.Frame(self, bg = "black")

@@ -22,18 +22,19 @@ LED_BRIGHTNESS = 15     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
+    
+
 # GPIO Pins for buttons
 BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
-#fdfddso
 
 # Function to generate a random word
-def generateRandomWord(wordList):
-    # Remove the word after chosen
-    word = random.choice(wordList)
-    for word in wordList:
-        wordList.remove(word)
+# def generateRandomWord(wordList):
+    # # Remove the word after chosen
+    # word = random.choice(wordList)
+    # for word in wordList:
+    #     wordList.remove(word)
     # return word
-    return random.choice(wordList)
+    # return random.choice(wordList)
 
 # Function to generate additional random letters
 def generateRandomLetters(remainingLetters, numLetters):
@@ -45,61 +46,61 @@ def randomizeLetters(word, letters):
     random.shuffle(allLetters)
     return ''.join(allLetters)
 
-def display_letter(letter, color, current_strip):
+def display_letter(letter, color):
     for i in range(len(letter)):
         current_pixel = letter[i]
-        current_strip.setPixelColor(current_pixel, color)
-        current_strip.show() 
+        strip.setPixelColor(current_pixel, color)
+        strip.show() 
 
-def turn_off(current_strip):
-    for i in range(current_strip.numPixels()):
-        current_strip.setPixelColor(i, Color(0, 0, 0))
-    current_strip.show()
+def turn_off():
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
 
-def initialize_letter(randomizedLetters, current_strip):
+def initialize_letter(randomizedLetters):
     current_tile = 0
 
     for letter in randomizedLetters:
         current_tile += 1
         if current_tile == 1:
             current_letter = light.letter_arrays[letter]
-            display_letter(current_letter, Color(150, 150,150), current_strip)
+            display_letter(current_letter, Color(150, 150,150))
         elif current_tile == 2:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 100 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150), current_strip)
+            display_letter(current_letter, Color(150, 150,150))
         elif current_tile == 3:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 200 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150), current_strip)
+            display_letter(current_letter, Color(150, 150,150))
         elif current_tile == 4:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 300 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150), current_strip)
+            display_letter(current_letter, Color(150, 150,150))
         elif current_tile == 5:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 400 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150), current_strip)
+            display_letter(current_letter, Color(150, 150,150))
         elif current_tile == 6:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 500 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150), current_strip)
+            display_letter(current_letter, Color(150, 150,150))
         elif current_tile == 7:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 600 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150), current_strip)
+            display_letter(current_letter, Color(150, 150,150))
         elif current_tile == 8:
             current_letter = light.letter_arrays[letter]
             current_letter = [x + 700 for x in current_letter]
-            display_letter(current_letter, Color(150, 150,150), current_strip) 
+            display_letter(current_letter, Color(150, 150,150)) 
 
-def correct_light(letter, pin, current_strip):
+def correct_light(letter, pin):
     # might have to map in number to tiles_num by finding which index the pin is located at
     tiles_num = BUTTON_PINS.index(pin)
     addition = tiles_num * 100
     current_letter = light.letter_arrays[letter]
     current_letter = [x + addition for x in current_letter]
-    display_letter(current_letter, Color(0, 250,0), current_strip)
+    display_letter(current_letter, Color(0, 250,0))
 
 # letters currently do not turn red after getting wrong - next quarter
 def wrong_light(letter, tiles_num):
@@ -145,18 +146,18 @@ def buttonPress(pin):
             if len(spelledWord) != len(randomWord):
                 ## The letter is in correct position - correct
                 #correct_light(pin)
-                correct_light(letter, pin, strip)
+                correct_light(letter, pin)
                 gamesound.play_happy()
                 gamesound.play_correct_letter()
             # If the full word is spelled correctly
             elif len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
-                correct_light(letter, pin, strip)
+                correct_light(letter, pin)
                 gamesound.play_happy()
-                turn_off(strip)
+                turn_off()
                 gamesound.play_next_word()
                 newWord()
-                initialize_letter(randomizedLetters, strip)
+                initialize_letter(randomizedLetters)
 
         else:
             # Find the first incorrect letter position
@@ -199,8 +200,7 @@ def buttonPress(pin):
 #         init_vlc('./AudioStuff/nopethatletterisntpartoftheword.mp3')
 
 # Function to generate and display a new word
-# def newWord(selected_word_list: list):
-def newWord():
+def newWord(selected_word_list: list):
     global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
     
 ## NOOR NEW ADDITION 05.09.24
@@ -279,7 +279,7 @@ wordList = wordDictionary.get("List 1")
 words_remaining = True
 
 random.shuffle(wordList)
-randomWord = generateRandomWord(wordList)
+# randomWord = generateRandomWord(wordList)
 n = 0
 while n <= len(wordList) - 1:
     randomWord = wordList[n]
@@ -332,7 +332,7 @@ if __name__ == '__main__':
 
     spelledWord = ''
 
-    initialize_letter(randomizedLetters, strip)
+    initialize_letter(randomizedLetters)
 
     try:
         while words_remaining:
