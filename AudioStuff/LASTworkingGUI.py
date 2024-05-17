@@ -62,6 +62,8 @@ class GUI(tk.Tk):
 
         self.pages["start"] = start_page  # Store the start page
 
+        gamesound.play_choose_list()
+
     def load_image(self, path):
         image = tk.PhotoImage(file=path)
         return image
