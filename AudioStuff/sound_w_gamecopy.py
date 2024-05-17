@@ -141,7 +141,7 @@ def buttonPress(pin):
         if letter == randomWord[len(spelledWord)]:
             ## The letter is in the word
             spelledWord += letter
-            print("Current spelling:", spelledWord)
+            # print("Current spelling:", spelledWord)
             if len(spelledWord) != len(randomWord):
                 ## The letter is in correct position - correct
                 #correct_light(pin)
@@ -163,16 +163,16 @@ def buttonPress(pin):
             #incorrect_position = spelledWord[]
             # restart_from = randomWord.index(spelledWord[incorrect_position])
             if len(spelledWord) == 0:
-                print("Incorrect order!")
+                # print("Incorrect order!")
                 #spelledWord = ''
                 gamesound.play_wrong_order()
-                print("Current spelling:", spelledWord)
+                # print("Current spelling:", spelledWord)
             else:
                 #spelledWord = randomWord[incorrect_position]
-                print("Incorrect order! Restarting from:", spelledWord)
+                # print("Incorrect order! Restarting from:", spelledWord)
                 gamesound.play_wrong_order()
     else:
-        print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+        # print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
         gamesound.play_wrong_letter()
 
 # # Function to handle button press event
@@ -242,7 +242,7 @@ def newWord():
     # init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
     print("Let's spell another word.")
     print(f"Spell the word: {randomWord}")
-    print("Reallocated letters: " + ' '.join(randomizedLetters))
+    # print("Reallocated letters: " + ' '.join(randomizedLetters))
     # print("Available letters: " + ' '.join(availableLetters))
     
     # Reset spelledWord
@@ -327,7 +327,7 @@ if __name__ == '__main__':
     print("Welcome to the Word Spelling Game!")
     gamesound.play_intro()
     print(f"Spell the word: {randomWord}")
-    print("Reallocated letters: " + ' '.join(randomizedLetters))
+    # print("Reallocated letters: " + ' '.join(randomizedLetters))
     # print("Available letters: " + ' '.join(availableLetters))
 
     spelledWord = ''
