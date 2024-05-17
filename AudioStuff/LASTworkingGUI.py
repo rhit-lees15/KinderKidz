@@ -105,6 +105,7 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
         self.pages["list_selection"] = list_selection_page  # Store the time selection page
+        
 
     def create_word_display_page(self, word_list_name):
         self.hide_current_page()  # Hide current page

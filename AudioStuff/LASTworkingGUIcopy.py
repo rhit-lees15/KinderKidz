@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-import sound_w_gamecopy as game_sequence
+import sound_w_game as game_sequence
 import game_sound as gamesound
 import time
 import vlc
@@ -76,6 +76,8 @@ class GUI(tk.Tk):
         self.current_page = "list_selection"
         list_selection_page = tk.Frame(self, bg="black")
         list_selection_page.pack(fill=tk.BOTH, expand=True)
+
+        gamesound.play_choose_list()
 
         # Label for word list selection
         list_label = tk.Label(list_selection_page, text="Select a Word List:", font=("Helvetica", 20), bg="black", fg="white")
