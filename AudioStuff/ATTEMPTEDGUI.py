@@ -80,7 +80,7 @@ class GUI(tk.Tk):
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
         #trial 
-        self.hide_dance_display_page()
+        # self.hide_dance_display_page()
         gamesound.play_intro()
         gamesound.play_choose_list()
 
