@@ -31,8 +31,8 @@ def generateRandomWord(wordList):
     word = random.choice(wordList)
     for word in wordList:
         wordList.remove(word)
-    return word
-    # return random.choice(wordList)
+    # return word
+    return random.choice(wordList)
 
 # Function to generate additional random letters
 def generateRandomLetters(remainingLetters, numLetters):
