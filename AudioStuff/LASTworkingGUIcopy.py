@@ -160,9 +160,7 @@ class GUI(tk.Tk):
                         print("Correct! You spelled the word correctly.")
                         gamesound.play_happy()
                         gamesound.play_next_word()
-                        # game_sequence.newWord()
-                        my_new_word()
-                    
+                        game_sequence.newWord()
                 else:
                     # Find the first incorrect letter position
                     #incorrect_position = spelledWord[]
@@ -181,58 +179,50 @@ class GUI(tk.Tk):
                 gamesound.play_wrong_letter()
 
 
-        def my_new_word(self):
-            self.words_remaining = True
-            self.randomWord = random.choice(self.selected_word_list)
-            #random.shuffle(self.selected_word_list)
-            # randomWord = generateRandomWord(wordList)
-            # n = 0
-            # while n <= len(self.selected_word_list) - 1:
-            #     randomWord = self.selected_word_list[n]
-            #     n += 1
+    def my_new_word(self):
+        self.words_remaining = True
+        self.randomWord = random.choice(self.selected_word_list)
+        #random.shuffle(self.selected_word_list)
+        # randomWord = generateRandomWord(wordList)
+        # n = 0
+        # while n <= len(self.selected_word_list) - 1:
+        #     randomWord = self.selected_word_list[n]
+        #     n += 1
 
-            # Get remaining letters
-            availableLetters = list(set(string.ascii_uppercase) - set(self.randomWord))
+        # Get remaining letters
+        availableLetters = list(set(string.ascii_uppercase) - set(self.randomWord))
 
-            # Generate additional random letters
-            randomLetters = generateRandomLetters(availableLetters, 8 - len(self.randomWord))
+        # Generate additional random letters
+        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(self.randomWord))
 
-            # Combine the random word and random letters into a single string and shuffle them
-            randomizedLetters = randomizeLetters(self.randomWord, randomLetters)
+        # Combine the random word and random letters into a single string and shuffle them
+        randomizedLetters = game_sequence.randomizeLetters(self.randomWord, randomLetters)
 
-            # Map each letter to a button
-            
-            for idx, pin in enumerate(BUTTON_PINS):
-                self.button_letters[pin] = randomizedLetters[idx]
+        # Map each letter to a button
+        
+        for idx, pin in enumerate(game_sequence.BUTTON_PINS):
+            self.button_letters[pin] = randomizedLetters[idx]
 
-            # Set button sequence for the initial word
-            self.button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in self.randomWord]
+        # Set button sequence for the initial word
+        self.button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in self.randomWord]
 
-        def generateRandomLetters(remainingLetters, numLetters):
-            return random.sample(remainingLetters, numLetters)
-
-        # Function to add all letters to one string and shuffle them
-        def randomizeLetters(word, letters):
-            allLetters = list(word + ''.join(letters))
-            random.shuffle(allLetters)
-            return ''.join(allLetters)
-        # # spelledWord = ''
+    # # spelledWord = ''
 
 
-        # if __name__ == '__main__':
-        #     gamesound.play_intro()
-        #     spelledWord = ''
+    # if __name__ == '__main__':
+    #     gamesound.play_intro()
+    #     spelledWord = ''
 
 
-            try:
-                while words_remaining:
-                    if not self.word_list_name:
-                        words_remaining = False
-                    
-                    time.sleep(0.25)
+        try:
+            while words_remaining:
+                if not self.word_list_name:
+                    words_remaining = False
+                  
+                time.sleep(0.25)
 
-            except KeyboardInterrupt:
-                GPIO.cleanup()
+        except KeyboardInterrupt:
+            GPIO.cleanup()
 
 #################################
 
