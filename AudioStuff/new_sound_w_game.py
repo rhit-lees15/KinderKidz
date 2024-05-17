@@ -220,6 +220,9 @@ def newWord():
     
     # Reset spelledWord
     spelledWord = ''
+
+# --------------------------END OF DEFINITIONS ---------- START OF ACTUAL CALLING
+
 # # Function to check if button presses match the sequence
 # def checkSequence():
 #     global spelledWord, button_sequence
@@ -263,6 +266,9 @@ for idx, pin in enumerate(BUTTON_PINS):
     button_letters[pin] = randomizedLetters[idx]
 # Set button sequence for the initial word
 button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+
+
+
 if __name__ == '__main__':
     #####* Start the game
     # Initialization of lights    
