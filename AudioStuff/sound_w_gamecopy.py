@@ -26,12 +26,12 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 
 # Function to generate a random word
-# def generateRandomWord(wordList):
-    # # Remove the word after chosen
-    # word = random.choice(wordList)
-    # for word in wordList:
-    #     wordList.remove(word)
-    # return word
+def generateRandomWord(wordList):
+    # Remove the word after chosen
+    word = random.choice(wordList)
+    for word in wordList:
+        wordList.remove(word)
+    return word
     # return random.choice(wordList)
 
 # Function to generate additional random letters
@@ -144,18 +144,18 @@ def buttonPress(pin):
             if len(spelledWord) != len(randomWord):
                 ## The letter is in correct position - correct
                 #correct_light(pin)
-                correct_light(letter, pin)
+                correct_light(letter, pin, strip)
                 gamesound.play_happy()
                 gamesound.play_correct_letter()
             # If the full word is spelled correctly
             elif len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
-                correct_light(letter, pin)
+                correct_light(letter, pin, strip)
                 gamesound.play_happy()
-                turn_off()
+                turn_off(strip)
                 gamesound.play_next_word()
                 newWord()
-                initialize_letter(randomizedLetters)
+                initialize_letter(randomizedLetters, strip)
 
         else:
             # Find the first incorrect letter position
@@ -278,7 +278,7 @@ wordList = wordDictionary.get("List 1")
 words_remaining = True
 
 random.shuffle(wordList)
-# randomWord = generateRandomWord(wordList)
+randomWord = generateRandomWord(wordList)
 n = 0
 while n <= len(wordList) - 1:
     randomWord = wordList[n]
@@ -331,7 +331,7 @@ if __name__ == '__main__':
 
     spelledWord = ''
 
-    initialize_letter(randomizedLetters)
+    initialize_letter(randomizedLetters, strip)
 
     try:
         while words_remaining:
