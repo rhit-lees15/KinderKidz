@@ -188,45 +188,45 @@ def newWord():
     spelledWord = ''
 
 # Initialize GPIO
-GPIO.setmode(GPIO.BCM)
-for pin in BUTTON_PINS:
-    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=1000)
+# GPIO.setmode(GPIO.BCM)
+# for pin in BUTTON_PINS:
+#     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#     GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=1000)
 
 # Generate a random word
-wordDictionary = {
-            "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
-            "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
-            "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-        }
+# # wordDictionary = {
+# #             "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+# #             "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+# #             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+# #         }
 
-wordList = wordDictionary.get(word_list_name)
+# # wordList = wordDictionary.get(word_list_name)
 
-words_remaining = True
+# words_remaining = True
 
-random.shuffle(wordList)
-# randomWord = generateRandomWord(wordList)
-n = 0
-while n <= len(wordList) - 1:
-    randomWord = wordList[n]
-    n += 1
+# random.shuffle(wordList)
+# # randomWord = generateRandomWord(wordList)
+# n = 0
+# while n <= len(wordList) - 1:
+#     randomWord = wordList[n]
+#     n += 1
 
-# Get remaining letters
-availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+# # Get remaining letters
+# availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
 
-# Generate additional random letters
-randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+# # Generate additional random letters
+# randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
 
-# Combine the random word and random letters into a single string and shuffle them
-randomizedLetters = randomizeLetters(randomWord, randomLetters)
+# # Combine the random word and random letters into a single string and shuffle them
+# randomizedLetters = randomizeLetters(randomWord, randomLetters)
 
-# Map each letter to a button
-button_letters = {}
-for idx, pin in enumerate(BUTTON_PINS):
-    button_letters[pin] = randomizedLetters[idx]
+# # Map each letter to a button
+# button_letters = {}
+# for idx, pin in enumerate(BUTTON_PINS):
+#     button_letters[pin] = randomizedLetters[idx]
 
-# Set button sequence for the initial word
-button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+# # Set button sequence for the initial word
+# button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
 
 #--------------------------------------------------------------------
 
