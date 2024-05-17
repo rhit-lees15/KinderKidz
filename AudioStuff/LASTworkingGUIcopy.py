@@ -224,7 +224,6 @@ class GUI(tk.Tk):
             
             for idx, pin in enumerate(game_sequence.BUTTON_PINS):
                 self.button_letters[pin] = randomizedLetters[idx]
-            
             game_sequence.initialize_letter(randomizedLetters, strip)
 
 
