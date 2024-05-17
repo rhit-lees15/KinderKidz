@@ -136,8 +136,6 @@ class GUI(tk.Tk):
         # Generate a new random word from the selected word list
         self.selected_word_list = self.word_lists.get(word_list_name)
         self.my_new_word()
-        game_sequence.initialize_letter(randomizedLetters, strip)
-
         
 
         # randomWord = random.choice(self.word_lists[word_list_name])
@@ -201,50 +199,55 @@ class GUI(tk.Tk):
     
 
 
-    def my_new_word(self):
-        self.words_remaining = True
-        self.randomWord = random.choice(self.selected_word_list)
-        #random.shuffle(self.selected_word_list)
-        # randomWord = generateRandomWord(wordList)
-        # n = 0
-        # while n <= len(self.selected_word_list) - 1:
-        #     randomWord = self.selected_word_list[n]
-        #     n += 1
+        def my_new_word(self):
+            print("!!!!!!!!!!!!!!")
 
-        # Get remaining letters
-        availableLetters = list(set(string.ascii_uppercase) - set(self.randomWord))
+            self.words_remaining = True
+            self.randomWord = random.choice(self.selected_word_list)
+            #random.shuffle(self.selected_word_list)
+            # randomWord = generateRandomWord(wordList)
+            # n = 0
+            # while n <= len(self.selected_word_list) - 1:
+            #     randomWord = self.selected_word_list[n]
+            #     n += 1
 
-        # Generate additional random letters
-        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(self.randomWord))
+            # Get remaining letters
+            availableLetters = list(set(string.ascii_uppercase) - set(self.randomWord))
 
-        # Combine the random word and random letters into a single string and shuffle them
-        randomizedLetters = game_sequence.randomizeLetters(self.randomWord, randomLetters)
+            # Generate additional random letters
+            randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(self.randomWord))
 
-        # Map each letter to a button
-        
-        for idx, pin in enumerate(game_sequence.BUTTON_PINS):
-            self.button_letters[pin] = randomizedLetters[idx]
+            # Combine the random word and random letters into a single string and shuffle them
+            randomizedLetters = game_sequence.randomizeLetters(self.randomWord, randomLetters)
 
-        # Set button sequence for the initial word
-        self.button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in self.randomWord]
-
-    # # spelledWord = ''
-
-
-    # if __name__ == '__main__':
-    #     gamesound.play_intro()
-    #     spelledWord = ''
+            # Map each letter to a button
+            
+            for idx, pin in enumerate(game_sequence.BUTTON_PINS):
+                self.button_letters[pin] = randomizedLetters[idx]
+            
+            game_sequence.initialize_letter(randomizedLetters, strip)
 
 
-        try:
-            while words_remaining:
-                if not self.word_list_name:
-                    words_remaining = False
-                  
-                time.sleep(0.25)
+            # Set button sequence for the initial word
+            self.button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in self.randomWord]
 
-        except KeyboardInterrupt:
-            GPIO.cleanup()
+        # # spelledWord = ''
+
+
+        # if __name__ == '__main__':
+        #     gamesound.play_intro()
+        #     spelledWord = ''
+
+
+            try:
+                while words_remaining:
+                    if not self.word_list_name:
+                        words_remaining = False
+                    
+                    time.sleep(0.25)
+
+            except KeyboardInterrupt:
+                GPIO.cleanup()
 
 #################################
 
