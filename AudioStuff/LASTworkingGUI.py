@@ -55,7 +55,8 @@ class GUI(tk.Tk):
                                  command=self.create_list_selection_page)
         start_button.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
 
-        # Exit button
+        # Exit button                                     
+        
         exit_button = tk.Button(start_page, text="Exit", bg="red", font=("Helvetica", 20),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)

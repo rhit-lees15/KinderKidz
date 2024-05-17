@@ -69,7 +69,7 @@ class GUI(tk.Tk):
 
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
-        self.hide_dance_display_page()
+        # self.hide_dance_display_page()
         gamesound.play_intro()
         gamesound.play_choose_list()
 
@@ -387,9 +387,15 @@ class GUI(tk.Tk):
         # play_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         # Exit button
-        restart_button = tk.Button(dance_display_page, text="List Selection", bg="green", font=("Helvetica", 16),
-                                command=self.create_list_selection_page)
-        restart_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+        exit_button = tk.Button(dance_display_page, text="Exit", bg="red", font=("Helvetica", 16),
+                                command=self.exit_program)
+        exit_button.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
+
+
+        # # Restart button - doesn't work
+        # restart_button = tk.Button(dance_display_page, text="List Selection", bg="green", font=("Helvetica", 16),
+        #                         command=self.create_list_selection_page)
+        # restart_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["dance_display"] = dance_display_page  # Store the data
 
