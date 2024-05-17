@@ -62,8 +62,6 @@ class GUI(tk.Tk):
 
         self.pages["start"] = start_page  # Store the start page
 
-        gamesound.play_choose_list()
-
     def load_image(self, path):
         image = tk.PhotoImage(file=path)
         return image
@@ -78,6 +76,8 @@ class GUI(tk.Tk):
         self.current_page = "list_selection"
         list_selection_page = tk.Frame(self, bg="black")
         list_selection_page.pack(fill=tk.BOTH, expand=True)
+
+        gamesound.play_choose_list()
 
         # Label for word list selection
         list_label = tk.Label(list_selection_page, text="Select a Word List:", font=("Helvetica", 20), bg="black", fg="white")
