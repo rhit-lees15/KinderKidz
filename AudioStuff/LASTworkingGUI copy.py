@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-import sound_w_game as game_sequence
+import sound_w_gamecopy as game_sequence
 import game_sound as gamesound
 import time
 import vlc
