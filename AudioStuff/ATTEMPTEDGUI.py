@@ -200,7 +200,7 @@ wordDictionary = {
             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
         }
 
-wordList = wordDictionary.get(word_list_name)
+# wordList = wordDictionary.get(word_list_name)
 
 # words_remaining = True
 
