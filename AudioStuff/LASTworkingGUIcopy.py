@@ -18,7 +18,7 @@ BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
 # pygame.mixer.init()
 
 # time per lesson (3 min = 180)
-duration = 5
+duration = 60
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -160,7 +160,9 @@ class GUI(tk.Tk):
                         print("Correct! You spelled the word correctly.")
                         gamesound.play_happy()
                         gamesound.play_next_word()
-                        game_sequence.newWord()
+                        # game_sequence.newWord()
+                        my_new_word()
+                    
                 else:
                     # Find the first incorrect letter position
                     #incorrect_position = spelledWord[]
@@ -179,50 +181,50 @@ class GUI(tk.Tk):
                 gamesound.play_wrong_letter()
 
 
-    def my_new_word(self):
-        self.words_remaining = True
-        self.randomWord = random.choice(self.selected_word_list)
-        #random.shuffle(self.selected_word_list)
-        # randomWord = generateRandomWord(wordList)
-        # n = 0
-        # while n <= len(self.selected_word_list) - 1:
-        #     randomWord = self.selected_word_list[n]
-        #     n += 1
+        def my_new_word(self):
+            self.words_remaining = True
+            self.randomWord = random.choice(self.selected_word_list)
+            #random.shuffle(self.selected_word_list)
+            # randomWord = generateRandomWord(wordList)
+            # n = 0
+            # while n <= len(self.selected_word_list) - 1:
+            #     randomWord = self.selected_word_list[n]
+            #     n += 1
 
-        # Get remaining letters
-        availableLetters = list(set(string.ascii_uppercase) - set(self.randomWord))
+            # Get remaining letters
+            availableLetters = list(set(string.ascii_uppercase) - set(self.randomWord))
 
-        # Generate additional random letters
-        randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(self.randomWord))
+            # Generate additional random letters
+            randomLetters = game_sequence.generateRandomLetters(availableLetters, 8 - len(self.randomWord))
 
-        # Combine the random word and random letters into a single string and shuffle them
-        randomizedLetters = game_sequence.randomizeLetters(self.randomWord, randomLetters)
+            # Combine the random word and random letters into a single string and shuffle them
+            randomizedLetters = game_sequence.randomizeLetters(self.randomWord, randomLetters)
 
-        # Map each letter to a button
-        
-        for idx, pin in enumerate(game_sequence.BUTTON_PINS):
-            self.button_letters[pin] = randomizedLetters[idx]
+            # Map each letter to a button
+            
+            for idx, pin in enumerate(game_sequence.BUTTON_PINS):
+                self.button_letters[pin] = randomizedLetters[idx]
 
-        # Set button sequence for the initial word
-        self.button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in self.randomWord]
+            # Set button sequence for the initial word
+            self.button_sequence = [game_sequence.BUTTON_PINS[randomizedLetters.index(letter)] for letter in self.randomWord]
 
-    # # spelledWord = ''
-
-
-    # if __name__ == '__main__':
-    #     gamesound.play_intro()
-    #     spelledWord = ''
+        # # spelledWord = ''
 
 
-        try:
-            while words_remaining:
-                if not self.word_list_name:
-                    words_remaining = False
-                  
-                time.sleep(0.25)
+        # if __name__ == '__main__':
+        #     gamesound.play_intro()
+        #     spelledWord = ''
 
-        except KeyboardInterrupt:
-            GPIO.cleanup()
+
+            try:
+                while words_remaining:
+                    if not self.word_list_name:
+                        words_remaining = False
+                    
+                    time.sleep(0.25)
+
+            except KeyboardInterrupt:
+                GPIO.cleanup()
 
 #################################
 
