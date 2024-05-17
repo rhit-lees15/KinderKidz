@@ -305,8 +305,8 @@ if __name__ == '__main__':
     try:
         while words_remaining:
             if not wordList:
-                words_remaining = False
                 turn_off()
+                words_remaining = False
                 
             time.sleep(0.25)
             
