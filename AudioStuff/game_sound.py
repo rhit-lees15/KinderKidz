@@ -18,6 +18,7 @@ wrong_order_sounds = ['./AudioStuff/soclosetrytofindadifferentletter.mp3','./Aud
 wrong_letter_sounds = ['./AudioStuff/almostthatletterisntpartoftheword.mp3','./AudioStuff/oopsthatletterisntpartofthewordtryadifferentone.mp3','./AudioStuff/soclosetryadifferentletter.mp3','./AudioStuff/oopsthatsnottherightlettertryadifferentone.mp3'] 
 happy_sounds = ['./AudioStuff/90s-game-ui.mp3','./AudioStuff/copper-bell-ding-4.mp3','./AudioStuff/correct-choice.mp3','./AudioStuff/cute-level-up-1.mp3','./AudioStuff/cute-level-up-2.mp3','./AudioStuff/cute-level-up-3.mp3','./AudioStuff/game-bonus.mp3','./AudioStuff/level-up.mp3','./AudioStuff/level-up-2.mp3','./AudioStuff/YayKidsCrowd.mp3','./AudioStuff/bonus-points.mp3']
 dance_break_sounds = ['./AudioStuff/hicarmineletstakeabreakchoosethesongyouwannadanceto.mp3','./AudioStuff/goodjobatspellingcarmineletstakeabreakanddance.mp3','./AudioStuff/okaycarminetimeforabreakletsdance.mp3'] 
+choose_list_sounds = ['./AudioStuff/choosethelistofwordsthatyouwouldliketospell.mp3','./AudioStuff/itstimetochoosealistofwordstospell.mp3']
 
 def play_happy():
     init_vlc(random.choice(happy_sounds))
@@ -40,6 +41,8 @@ def play_wrong_letter():
 def play_dance_break():
     init_vlc(random.choice(dance_break_sounds))
 
+def play_choose_list():
+    init_vlc(random.choice(choose_list_sounds))
 
 # # intro sounds
 # ./AudioStuff/hicarmineletsspellsomewordstoday.mp3
