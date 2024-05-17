@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
-import sound_w_gamecopy as game_sequence
+import sound_w_game as game_sequence
 import game_sound as gamesound
 import time
 import vlc
@@ -55,6 +55,7 @@ class GUI(tk.Tk):
                                  command=self.create_list_selection_page)
         start_button.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
 
+
         # Exit button
         exit_button = tk.Button(start_page, text="Exit", bg="red", font=("Helvetica", 20),
                                 command=self.exit_program)
@@ -68,7 +69,6 @@ class GUI(tk.Tk):
 
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
-        
         gamesound.play_intro()
 
         # spelledWord = ''
@@ -82,6 +82,7 @@ class GUI(tk.Tk):
         # Label for word list selection
         list_label = tk.Label(list_selection_page, text="Select a Word List:", font=("Helvetica", 20), bg="black", fg="white")
         list_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+
 
         # Button to select first word list
         first_list_button = tk.Button(list_selection_page, text="List 1", font=("Helvetica", 40),
@@ -105,6 +106,7 @@ class GUI(tk.Tk):
         exit_button.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
         self.pages["list_selection"] = list_selection_page  # Store the time selection page
+
 
     def create_word_display_page(self, word_list_name):
         self.hide_current_page()  # Hide current page
@@ -243,22 +245,22 @@ class GUI(tk.Tk):
 
         self.pages["word_display"] = word_display_page  # Store the word display page
     
-    def create_word_display_page(self, word_list_name):
-        self.hide_current_page()  # Hide current page
-        self.current_page = "word_display"
+    # def create_word_display_page(self, word_list_name):
+    #     self.hide_current_page()  # Hide current page
+    #     self.current_page = "word_display"
 
         # Random word generator -- used for initial testing
         # word_list = ['CAT', 'DOG', 'CAR', 'BAG', 'HAT', 'LEG', 'ONE', 'MAT']
         
-        randomWord = random.choice(self.word_lists[word_list_name])
+        # randomWord = random.choice(self.word_lists[word_list_name])
 
-        # Display word
-        word_display_page = tk.Frame(self, bg = "black")
-        word_display_page.pack(fill=tk.BOTH, expand=True)
+        # # Display word
+        # word_display_page = tk.Frame(self, bg = "black")
+        # word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48),
-                             bg = "black", fg = "white")
-        word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        # word_text = tk.Label(word_display_page, text=randomWord, font=("Helvetica", 48),
+        #                      bg = "black", fg = "white")
+        # word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
 
         ## This is too much of a distraction, so we removed it
