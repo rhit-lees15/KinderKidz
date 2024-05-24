@@ -120,6 +120,7 @@ def buttonPress(pin):
     #         #---------------------- THREADING ATTEMPT
     # spelledWord = ""
     # print("This is running in sound_w_game NOT GUI")
+    
     letter = button_letters[pin]
     # time.sleep(0.25)
     if letter in randomWord:
@@ -251,7 +252,7 @@ for pin in BUTTON_PINS:
 # wordList = ['MY', 'THIS', 'A', 'IS', 'HOME']
 # wordList = ['ABC', 'LMNO', 'XYZ']
 wordDictionary = {
-            "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+            "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME', 'THE', 'IN', 'CITY', 'BY', 'OCEAN', 'ON', 'NOT', 'FARM', 'LIKE', 'I'],
             "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
             "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
         }
