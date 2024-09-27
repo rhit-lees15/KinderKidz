@@ -11,17 +11,6 @@ if __name__ == '__main__':
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     # Intialize the library (must be called once before other functions).
     strip.begin()
-    # #-------------------------------------THREADING ATTEMPT
-    # thread = Tread(target = threaded_function, args = (10, ))
-    # thread.start()
-    # tread.join()
-    # print("Thread finished.....exiting")
-    # #--------------------------------------------THREADING
-
-    ### TODO: game.py
-    print("Welcome to the Word Spelling Game!")
-    gamesound.play_intro()
-    print(f"Spell the word: {randomWord}")
 
     initialize_letter(randomizedLetters)
     try:

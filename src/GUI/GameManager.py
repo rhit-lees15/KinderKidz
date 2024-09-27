@@ -1,3 +1,7 @@
+# game_sound needs to be removed and replaced with new location, or create a new function in 
+# specified file to play when necessary
+
+
 import random
 import time
 
@@ -31,11 +35,11 @@ class Game:
     update_countdown(duration)
     
     # Function to create a list of additional letters to include, dependent on the length of the word
-    def generateRandomLetters(remainingLetters, numLetters):
+    def gen_random_letters(remainingLetters, numLetters):
         return random.sample(remainingLetters, numLetters)
     
     # Function to add all letters to one string and shuffle them
-    def randomizeLetters(word, letters):
+    def randomize_Letters(word, letters):
         allLetters = list(word + ''.join(letters))
         random.shuffle(allLetters)
         return ''.join(allLetters)
@@ -97,8 +101,6 @@ class Game:
         print("Congratulations! You've spelled all the words in the list!")
         return
     
-    
-    ################# END OF ADDITION
     # Generate a new word
     n = 0
     while n <= len(wordList) - 1:
@@ -109,10 +111,10 @@ class Game:
     availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
     # availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
     # Generate additional random letters
-    randomLetters = generateRandomLetters(availableLetters, 8 - len(randomWord))
+    randomLetters = gen_random_letters(availableLetters, 8 - len(randomWord))
     
     # Combine the random word and random letters into a single string and shuffle them
-    randomizedLetters = randomizeLetters(randomWord, randomLetters)
+    randomizedLetters = randomize_letters(randomWord, randomLetters)
     
     # Map each letter to a button
     button_letters = {}
