@@ -3,8 +3,16 @@ from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
 import time
+# Doesn't like this line
+# from GameManager import create_countdown
 # import vlc
 
+# Dictionary of all the words included in the spelling game
+word_lists = {
+    "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+    "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+    "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+    }
 
 class GUI:
     # class GUI(tk.Tk):
@@ -24,7 +32,7 @@ class GUI:
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Central Picture ******************* TODO rename the file locations of the pictures ***************************
-        image_path = "./Images/ANIMALS.png" # ./Images/name.type
+        image_path = "./Media/Images/ANIMALS.png" # ./Images/name.type
         image = self.load_image(image_path)
         picture_label = tk.Label(start_page, image=image, borderwidth=0)
         picture_label.image = image
@@ -48,8 +56,6 @@ class GUI:
 
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
-
-        spelledWord = ''
 
         self.current_page = "list_selection"
         list_selection_page = tk.Frame(self, bg="black")
@@ -89,9 +95,13 @@ class GUI:
         word_display_page = tk.Frame(self, bg="black")
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
+        random_word = random.choice(word_list_name)
+
         word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 48),
                             bg="black", fg="white")
         word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        
+        duration = 30
 
         # Create countdown
         self.create_countdown(word_display_page, duration)
@@ -161,7 +171,7 @@ class GUI:
             selected_song_index = listbox.curselection()
             if selected_song_index:
                 selected_song = songs[selected_song_index[0]]  # Get the selected song
-                play_selected_song(selected_song)
+                # play_selected_song(selected_song)
 
         # Button to play the selected song
         play_button = tk.Button(dance_display_page, text="Play", bg="green", font=("Helvetica", 16), command=play_song)
