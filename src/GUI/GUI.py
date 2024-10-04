@@ -14,7 +14,11 @@ word_lists = {
     "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
     }
 
-class GUI:
+class GUI(tk.TK):
+    
+    # def __call__(self, ...):
+    # return GUI(...)
+    
     # class GUI(tk.Tk):
     def __init__(self):
         super().__init__()
