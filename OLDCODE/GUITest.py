@@ -2,8 +2,10 @@ import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage, messagebox, ttk
 # from PIL import Image, ImageTk
+# import Image, ImageTK
 from tkinter.messagebox import showinfo
 import random
+import time
 # from sound_w_game import * 
 
 class GUI(tk.Tk):
@@ -148,82 +150,154 @@ class GUI(tk.Tk):
         countdown_label = tk.Label(frame, font=("Helvetica", 16))
         countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
 
-        def update_countdown(seconds_left):
-            countdown_label.config(text=f"Time Left: {seconds_left} seconds", bg = "black", fg = "white")
-            if seconds_left > 0:
-                frame.after(1000, update_countdown, seconds_left - 1)
+        def update_countdown(duration):    
+        
+            min, sec = divmod(duration,60)
+            countdown_label.config(text=f"Time Left: {min}:{sec}", bg = "black", fg = "white")
+
+
+            if duration > 0:
+                frame.after(1000, update_countdown, duration - 1)
             else:
                 self.create_dance_display_page()
+                # gamesound.play_dance_break()
 
         update_countdown(duration)
 
+    # TODO FIX THIS CODE **************************
+    # def create_dance_display_page(self):
+    #     self.hide_current_page()  # Hide current page
+    #     self.current_page = "Dance_display"
+        
+    #     dance_display_page = tk.Frame(self, bg = "black")
+    #     dance_display_page.pack(fill=tk.BOTH, expand=True)
+
+    #     # Add a label for text above the GIF
+    #     text_label = tk.Label(dance_display_page, text="Dance Display Page", font=("Helvetica", 24), bg = "black", fg = "white")
+    #     text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+
+    #     root = tk.Tk()
+
+    #     root.title('Listbox')
+
+    #     # create a list box
+    #     songs = ('Song 1', 'Song 2', 'Song 3', 'Song 4')
+
+    #     var = tk.Variable(value=songs)
+
+    #     listbox = tk.Listbox(
+    #         root,
+    #         listvariable=var,
+    #         height=6,
+    #         selectmode=tk.EXTENDED)
+
+    #     listbox.pack(expand=True, fill=tk.BOTH, side=tk.LEFT)
+
+    #     # link a scrollbar to a list
+    #     scrollbar = ttk.Scrollbar(
+    #         root,
+    #         orient=tk.VERTICAL,
+    #         command=listbox.yview
+    #     )
+
+    #     listbox['yscrollcommand'] = scrollbar.set
+
+    #     scrollbar.pack(side=tk.LEFT, expand=True, fill=tk.Y)
+
+    #     def items_selected(event):
+    #         # get selected indices
+    #         selected_indices = listbox.curselection()
+    #         # get selected items
+    #         selected_songs = ",".join([listbox.get(i) for i in selected_indices])
+    #         msg = f'You selected: {selected_songs}'
+    #         # messagebox.askokcancel(f'You selected: {selected_songs},
+    #         #                     Is this your final choice')
+
+    #         showinfo(title='Information', message=msg)
+
+
+    #     # listbox.bind('<<ListboxSelect>>', items_selected)
+
+    #     # # Load and display the GIF
+    #     # gif_path = "example.gif"  # Change this to your GIF path
+    #     # gif_label = tk.Label(gif_display_page)
+    #     # gif_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+    #     # gif_image = PhotoImage(file=gif_path)
+    #     # gif_label.config(image=gif_image)
+    #     # gif_label.image = gif_image
+
+    #     # Exit button
+    #     exit_button = tk.Button(dance_display_page, text="Exit", bg="red", font=("Helvetica", 16),
+    #                             command=self.exit_program)
+    #     exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+
+    #     self.pages["dance_display"] = dance_display_page  # Store the GIF display page
+
+
+# Disable button after it has been pressed, therefore we don't get repeated button presses
+    def disable_buttons(*buttons):
+        for button in buttons:
+            button.config(state=tk.DISABLED)
+            
+            
+##############################################################################
     def create_dance_display_page(self):
+        # gamesound.play_dance_break()
         self.hide_current_page()  # Hide current page
         self.current_page = "Dance_display"
-        
-        dance_display_page = tk.Frame(self, bg = "black")
+        dance_display_page = tk.Frame(self, bg="black")
         dance_display_page.pack(fill=tk.BOTH, expand=True)
 
-        # Add a label for text above the GIF
-        text_label = tk.Label(dance_display_page, text="Dance Display Page", font=("Helvetica", 24), bg = "black", fg = "white")
-        text_label.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+        # Label for word list selection -- this does not show up, and unsure as to why
+        dance_label = tk.Label(dance_display_page, text="Select a Song:", font=("Helvetica", 20), bg="black", fg="white")
+        dance_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
 
-        root = tk.Tk()
+#         gamesound.play_dance_break()
+# ########################
 
-        root.title('Listbox')
+       # Button for songs
+        audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
+                                    bg="blue", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"),
+                                                                            disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
+        audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
-        # create a list box
-        songs = ('Song 1', 'Song 2', 'Song 3', 'Song 4')
+        audio_button_2 = tk.Button(dance_display_page, text="Twinkle, Twinkle", font=("Helvetica", 20),
+                                    bg="red", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"),
+                                                                            disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
+        audio_button_2.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
-        var = tk.Variable(value=songs)
+        audio_button_3 = tk.Button(dance_display_page, text="My Year - ZOMBIES", font=("Helvetica", 20),
+                                    bg="orange", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"),
+                                                                              disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
+        audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
 
-        listbox = tk.Listbox(
-            root,
-            listvariable=var,
-            height=6,
-            selectmode=tk.EXTENDED)
+        audio_button_4 = tk.Button(dance_display_page, text="If You're Happy and You Know It", font=("Helvetica", 20),
+                                    bg="purple", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"),
+                                                                              disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
+        audio_button_4.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
-        listbox.pack(expand=True, fill=tk.BOTH, side=tk.LEFT)
-
-        # link a scrollbar to a list
-        scrollbar = ttk.Scrollbar(
-            root,
-            orient=tk.VERTICAL,
-            command=listbox.yview
-        )
-
-        listbox['yscrollcommand'] = scrollbar.set
-
-        scrollbar.pack(side=tk.LEFT, expand=True, fill=tk.Y)
-
-        def items_selected(event):
-            # get selected indices
-            selected_indices = listbox.curselection()
-            # get selected items
-            selected_songs = ",".join([listbox.get(i) for i in selected_indices])
-            msg = f'You selected: {selected_songs}'
-            # messagebox.askokcancel(f'You selected: {selected_songs},
-            #                     Is this your final choice')
-
-            showinfo(title='Information', message=msg)
-
-
-        # listbox.bind('<<ListboxSelect>>', items_selected)
-
-        # # Load and display the GIF
-        # gif_path = "example.gif"  # Change this to your GIF path
-        # gif_label = tk.Label(gif_display_page)
-        # gif_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-        # gif_image = PhotoImage(file=gif_path)
-        # gif_label.config(image=gif_image)
-        # gif_label.image = gif_image
+        audio_button_5 = tk.Button(dance_display_page, text="Body Bop Bop", font=("Helvetica", 20),
+                                    bg="green", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"),
+                                                                             disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
+        audio_button_5.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
 
         # Exit button
         exit_button = tk.Button(dance_display_page, text="Exit", bg="red", font=("Helvetica", 16),
                                 command=self.exit_program)
-        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+        exit_button.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
-        self.pages["dance_display"] = dance_display_page  # Store the GIF display page
+        self.pages["dance_display"] = dance_display_page  # Store the data
+
+
+    # Function to switch back to word display after the song finishes
+    def back_to_word_display(word_list_name):
+        # Destroy the dance display page
+        app.pages["dance_display"].destroy()
+        # Re-create the word display page
+        app.create_word_display_page(word_list_name)
+        pass
+
+
 
     def hide_current_page(self):
         if self.current_page in self.pages:

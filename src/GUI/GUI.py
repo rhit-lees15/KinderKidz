@@ -7,12 +7,12 @@ import time
 # from GameManager import create_countdown
 # import vlc
 
-# Dictionary of all the words included in the spelling game
-word_lists = {
-    "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
-    "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
-    "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-    }
+# # Dictionary of all the words included in the spelling game
+# word_lists = {
+#     "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
+#     "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
+#     "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
+#     }
 
 class GUI(tk.TK):
     
@@ -58,6 +58,7 @@ class GUI(tk.TK):
         image = tk.PhotoImage(file=path)
         return image
 
+    # TODO Do we add this or just merge all the sections
     def create_list_selection_page(self):
         self.hide_current_page()  # Hide current page
 
