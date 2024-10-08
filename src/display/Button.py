@@ -3,7 +3,9 @@
 import letters from config
 
 # Raspberry Pi pin inputs that are used for each individual tile. 
-BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
+BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
+# BUTTON_PINS = [17, 27, 22, 23, 24, 25, 16, 26]
+# Current ground pin for the buttons is at pin 20
 
 class Button:
     

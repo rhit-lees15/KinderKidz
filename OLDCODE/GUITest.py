@@ -25,22 +25,28 @@ class GUI(tk.Tk):
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Picture Left
-        image_path = "./OLDCODE/Images/Carmine.PNG" # ./Images/name.type
+        # image_path = "./OLDCODE/Images/Carmine.PNG" # ./Images/name.type
+        # image = self.load_image(image_path)
+        # # resize_image = image.resize((50, 50))
+        # picture_label = tk.Label(start_page, image=image, borderwidth=0)
+        # picture_label.image = image
+        # picture_label.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
+
+        image_path = "./OLDCODE/Images/RABBIT.PNG"
         image = self.load_image(image_path)
-        # resize_image = image.resize((50, 50))
-        picture_label = tk.Label(start_page, image=image, borderwidth=0)
+        picture_label = tk.Label(start_page, image = image, borderwidth = 0)
         picture_label.image = image
-        picture_label.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
+        picture_label.place(relx=0.2, rely=0.5, anchor = tk.CENTER)
 
         # # Picture Right
         image_path2 = "./OLDCODE/Images/COW.PNG"
         image2 = self.load_image(image_path2)
         picture_label2 = tk.Label(start_page, image=image2, borderwidth=0)
         picture_label2.image = image2
-        picture_label2.place(relx=0.6, rely=0.5, anchor=tk.CENTER)
+        picture_label2.place(relx=0.8, rely=0.5, anchor=tk.CENTER)
 
         # Start button
-        start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 25),
+        start_button = tk.Button(start_page, text="Start", bg="green", font=("Helvetica", 40),
                                  command=self.create_time_selection_page)
         start_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
@@ -62,55 +68,56 @@ class GUI(tk.Tk):
         time_selection_page.pack(fill=tk.BOTH, expand=True)
 
         # Time selection buttons
-        first_time_button = tk.Button(time_selection_page, text="5 Seconds", font=("Helvetica", 20),
+        first_time_button = tk.Button(time_selection_page, text="2 Minutes", font=("Helvetica", 30),
                                     bg = "black", fg = "white",
-                                    command=lambda: self.create_word_display_page(5))
-        first_time_button.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
+                                    command=lambda: self.create_word_display_page(120))
+        first_time_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
 
-        second_time_button = tk.Button(time_selection_page, text="5 Minutes", font=("Helvetica", 20),
+        second_time_button = tk.Button(time_selection_page, text="3.5 Minutes", font=("Helvetica", 30),
                                       bg = "black", fg = "white",
-                                      command=lambda: self.create_word_display_page(300))
+                                      command=lambda: self.create_word_display_page(210))
         second_time_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        third_time_button = tk.Button(time_selection_page, text="10 Minutes", font=("Helvetica", 20),
+        third_time_button = tk.Button(time_selection_page, text="5 Minutes", font=("Helvetica", 30),
                                    bg = "black", fg = "white",
-                                   command=lambda: self.create_word_display_page(600))
-        third_time_button.place(relx=0.7, rely=0.5, anchor=tk.CENTER)
+                                   command=lambda: self.create_word_display_page(300))
+        third_time_button.place(relx=0.8, rely=0.5, anchor=tk.CENTER)
 
         # Exit button
-        exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 16),
+        exit_button = tk.Button(time_selection_page, text="Exit", bg="red", font=("Helvetica", 20),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
         self.pages["time_selection"] = time_selection_page  # Store the time selection page
 
-    def create_word_display_page(self, duration):
-        self.hide_current_page()  # Hide current page
-        self.current_page = "word_display"
+    # def create_word_display_page(self, duration):
+    #     self.hide_current_page()  # Hide current page
+    #     self.current_page = "word_display"
 
-        # Generate a new random word
-        newWord()
+    #     # Generate a new random word
+    #     newWord()
 
-        # Get the random word
-        random_word = spelledWord
+    #     # Get the random word
+    #     random_word = spelledWord
 
-        # Display word
-        word_display_page = tk.Frame(self, bg="black")
-        word_display_page.pack(fill=tk.BOTH, expand=True)
+    #     # Display word
+    #     word_display_page = tk.Frame(self, bg="black")
+    #     word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 48),
-                             bg="black", fg="white", )
-        word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+    #     # # Seems like there is a cap to the size of the text displayed --> doesn't get any bigger...
+    #     # word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 1000),
+    #     #                      bg="black", fg="white", )
+    #     # word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        # Create countdown
-        self.create_countdown(word_display_page, duration)
+    #     # Create countdown
+    #     self.create_countdown(word_display_page, duration)
 
-        # Exit button
-        exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
-                                command=self.exit_program)
-        exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+    #     # Exit button
+    #     exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 20),
+    #                             command=self.exit_program)
+    #     exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
-        self.pages["word_display"] = word_display_page  # Store the word display page
+    #     self.pages["word_display"] = word_display_page  # Store the word display page
     
     def create_word_display_page(self, duration):
         self.hide_current_page()  # Hide current page
@@ -124,7 +131,7 @@ class GUI(tk.Tk):
         word_display_page = tk.Frame(self, bg = "black")
         word_display_page.pack(fill=tk.BOTH, expand=True)
 
-        word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 48),
+        word_text = tk.Label(word_display_page, text=random_word, font=("Helvetica", 100),
                              bg = "black", fg = "white")
         word_text.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
@@ -140,7 +147,7 @@ class GUI(tk.Tk):
         self.create_countdown(word_display_page, duration)
 
         # Exit button
-        exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 16),
+        exit_button = tk.Button(word_display_page, text="Exit", bg="red", font=("Helvetica", 20),
                                 command=self.exit_program)
         exit_button.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
 
