@@ -1,6 +1,6 @@
 
 # Display LEDS, and respond when pushed
-import letters from config
+from config import letters
 
 # Raspberry Pi pin inputs that are used for each individual tile. 
 BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
