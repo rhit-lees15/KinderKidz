@@ -241,11 +241,26 @@ class GUI(tk.Tk):
     #     self.pages["dance_display"] = dance_display_page  # Store the GIF display page
 
 
-# Disable button after it has been pressed, therefore we don't get repeated button presses
+    # Disable button after it has been pressed, therefore we don't get repeated button presses
     def disable_buttons(*buttons):
         for button in buttons:
             button.config(state=tk.DISABLED)
             
+    # Once song finishes, go back to the OG word display page
+    def once_song_finished(event):
+        self.create_word_display_page(5)
+    
+    # We might have this code elsewhere, so idrk if we need it here
+    # Initialize VLC player and play audio
+    def play_audio(file_path):
+        player = vlc.MediaPlayer(file_path)
+        player.play()
+
+        # Get VLC instance and listen for the end of the audio event
+        event_manager = player.event_manager()
+        event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, once_song_finished)
+
+        return player
             
 ##############################################################################
     def create_dance_display_page(self):
@@ -265,6 +280,7 @@ class GUI(tk.Tk):
        # Button for songs
         audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
                                     bg="blue", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"),
+                                                                            # play_audio function???
                                                                             disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
         audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
