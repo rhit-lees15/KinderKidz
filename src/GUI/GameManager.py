@@ -2,13 +2,13 @@ import random
 import time
 import RPi.GPIO as GPIO
 import string
-from display.Button import Button
+# from display.Button import Button
 
 # from display.Button import Button
 # from display.config import 
 from display.DisplayManager import DisplayManager
 from GUI.MyGUI import GUI
-from Media.GameSound import Audio
+# from Media.GameSound import Audio
 
 class Game:
     
