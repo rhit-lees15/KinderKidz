@@ -1,5 +1,7 @@
 from pygame import Color
 import random
+import string
+from display.GameSound import Audio
 # from config import letters
 # from display.Button import Button
 
@@ -102,7 +104,8 @@ class DisplayManager:
         return ''.join(allLetters)
     
     def newWord():
-        global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
+        global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters, generateRandomLetters, randomizeLetters
+        global word_list, BUTTON_PINS
         
     ## NOOR NEW ADDITION 05.09.24
         word_list.remove(randomWord)
@@ -148,7 +151,7 @@ class DisplayManager:
     
         # Function to handle button press event
     def buttonPress(pin):
-        global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
+        global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters, newWord
         
         letter = button_letters[pin]
         # time.sleep(0.25)
@@ -196,13 +199,13 @@ class DisplayManager:
     
     
     
-    def display_output(letter, is_correct):
-    # might have to map in number to tiles_num by finding which index the pin is located at
-        current_letter = [x + offset for x in letters[letter]]
-        if (is_correct):
-            display_letter(current_letter, Color(0, 250,0))
-        else:
-            display_letter(current_letter, Color(250, 0,0))
+    # def display_output(letter, is_correct):
+    # # might have to map in number to tiles_num by finding which index the pin is located at
+    #     current_letter = [x + offset for x in letters[letter]]
+    #     if (is_correct):
+    #         display_letter(current_letter, Color(0, 250,0))
+    #     else:
+    #         display_letter(current_letter, Color(250, 0,0))
 
     # **************MAYBE ATTEMPT TO SIMPLIFY THIS (would this go in config.py??)*******************
     def initialize_letter(randomizedLetters):

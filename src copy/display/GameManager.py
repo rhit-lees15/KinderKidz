@@ -9,7 +9,7 @@ import string
 from display.DisplayManager import DisplayManager
 # from Button import Button
 from display.MyGUI import GUI
-# from Media.GameSound import Audio
+from display.GameSound import Audio
 
 class Game:
     # Dictionary of all the words included in the spelling game
@@ -19,28 +19,11 @@ class Game:
     GPIO.setmode(GPIO.BCM)
     for pin in BUTTON_PINS:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: buttonPress(pin), bouncetime=1000)
+        GPIO.add_event_detect(pin, GPIO.FALLING, callback=lambda pin: DisplayManager.buttonPress(pin), bouncetime=1000)
     
     words_remaining = True
     random.shuffle(word_list)
-    
-    n = 0
-    while n <= len(word_list) - 1:
-        randomWord = word_list[n]
-        n += 1
-    # Get remaining letters
-    availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
-    # Generate additional random letters
-    randomLetters = DisplayManager.generateRandomLetters(availableLetters, 8 - len(randomWord))
-    # Combine the random word and random letters into a single string and shuffle them
-    randomizedLetters = DisplayManager.randomizeLetters(randomWord, randomLetters)
-    # Map each letter to a button
-    button_letters = {}
-    for idx, pin in enumerate(BUTTON_PINS):
-        button_letters[pin] = randomizedLetters[idx]
-    # Set button sequence for the initial word
-    button_sequence = [BUTTON_PINS[DisplayManager.randomizedLetters.index(letter)] for letter in randomWord]
-        
+    DisplayManager.newWord()
     GUI.__init__()
     Audio.play_intro()
     GUI.create_start_page()
