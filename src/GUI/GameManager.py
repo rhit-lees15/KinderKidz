@@ -1,36 +1,27 @@
-# game_sound needs to be removed and replaced with new location, or create a new function in 
-# specified file to play when necessary
-
-
 import random
 import time
 
+from display.Button import Button
+# from display.config import 
+from display.DisplayManager import DisplayManager
+from GUI.MyGUI import GUI
+from Media.GameSound import Audio
+
+# Dictionary of all the words included in the spelling game
+word_list = ['MY', 'THIS', 'A', 'IS', 'HOME','THE', 'IN', 'CITY', 'BY', 'OCEAN','ON', 'NOT', 'FARM', 'LIKE', 'I']
+BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
+
 class Game:
-    # Dictionary of all the words included in the spelling game
-    word_list = ['MY', 'THIS', 'A', 'IS', 'HOME','THE', 'IN', 'CITY', 'BY', 'OCEAN','ON', 'NOT', 'FARM', 'LIKE', 'I']
     
-    # # Time of duration
-    # duration = 30
-
-    # # Countdown timer that is displayed at the top right of the GUI to indicate the amount of time Carmine has to complete the lesson
-    # def create_countdown(self, frame, duration):
-    #     countdown_label = tk.Label(frame, font=("Helvetica", 16))
-    #     countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
-
-    # def update_countdown(duration):    
-            
-    #     min, sec = divmod(duration,60)
-    #     countdown_label.config(text=f"Time Left: {min}:{sec}", bg = "black", fg = "white")
-
-
-    #     if duration > 0:
-    #         frame.after(1000, update_countdown, duration - 1)
-    #     else:
-    #         self.create_dance_display_page()
-
-    # update_countdown(duration)
+    GUI.__init__()
+    Audio.play_intro()
+    GUI.create_start_page()
     
-    # Function to create a list of additional letters to include, dependent on the length of the word
+    GUI.create_time_selection_page()
+    GUI.create_word_display_page()
+    GUI.create_countdown()
+    
+        # Function to create a list of additional letters to include, dependent on the length of the word
     def gen_random_letters(remainingLetters, numLetters):
         return random.sample(remainingLetters, numLetters)
     
@@ -39,7 +30,6 @@ class Game:
         allLetters = list(word + ''.join(letters))
         random.shuffle(allLetters)
         return ''.join(allLetters)
-    
 
     # Generate a new random word from the selected word list
     random_word = random.choice(word_list)
@@ -55,18 +45,22 @@ class Game:
             if len(spelledWord) != len(randomWord):
                 ## The letter is in correct position - correct
                 #correct_light(pin)
-                correct_light(letter, pin)
-                gamesound.play_happy()
-                gamesound.play_correct_letter()
+                DisplayManager.correct_light(letter, pin)
+                # gamesound.play_happy()
+                # gamesound.play_correct_letter()
+                Audio.play_happy()
+                Audio.play_correct_letter()
             # If the full word is spelled correctly
             elif len(spelledWord) == len(randomWord):
                 print("Correct! You spelled the word correctly.")
-                correct_light(letter, pin)
-                gamesound.play_happy()
-                turn_off()
-                gamesound.play_next_word()
+                DisplayManager.correct_light(letter, pin)
+                # gamesound.play_happy()
+                Audio.play_happy()
+                DisplayManager.turn_off()
+                # gamesound.play_next_word()
+                Audio.play_next_word()
                 newWord()
-                initialize_letter(randomizedLetters)
+                DisplayManager.initialize_letter(randomizedLetters)
 
         else:
             # Find the first incorrect letter position
@@ -76,16 +70,22 @@ class Game:
             if len(spelledWord) == 0:
                 # print("Incorrect order!")
                 #spelledWord = ''
-                gamesound.play_wrong_order()
+                # gamesound.play_wrong_order()
+                Audio.play_wrong_order()
                 # print("Current spelling:", spelledWord)
             else:
                 #spelledWord = randomWord[incorrect_position]
                 # print("Incorrect order! Restarting from:", spelledWord)
-                gamesound.play_wrong_order()
+                # gamesound.play_wrong_order()
+                Audio.play_wrong_order()
     else:
         # print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
-        wrong_light(letter, pin)
-        gamesound.play_wrong_letter()
+        DisplayManager.wrong_light(letter, pin)
+        # gamesound.play_wrong_letter()
+        Audio.play_wrong_letter()
+    
+    GUI.create_dance_display_page()
+    GUI.back_to_word_display()
         
     def newWord():
         global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters

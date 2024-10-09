@@ -1,10 +1,15 @@
 from GUI.MyGUI import GUI
+from GUI.GameManager import Game
 
 if __name__ == "__main__":
     
     # Code necessary to run the GUI class
-    app = GUI()   
+    # app = GUI()   
+    # app.mainloop()
+ 
+    app = Game()
     app.mainloop()
+    
  
     
     # #####* Start the game

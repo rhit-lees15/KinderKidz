@@ -11,34 +11,35 @@ happy_sounds = ['./Media/Audio/90s-game-ui.mp3','./Media/Audio/copper-bell-ding-
 dance_break_sounds = ['./Media/Audio/hicarmineletstakeabreakchoosethesongyouwannadanceto.mp3','./Media/Audio/goodjobatspellingcarmineletstakeabreakanddance.mp3','./Media/Audio/okaycarminetimeforabreakletsdance.mp3'] 
 choose_list_sounds = ['./Media/Audio/choosethelistofwordsthatyouwouldliketospell.mp3','./Media/Audio/itstimetochoosealistofwordstospell.mp3']
 
-def init_vlc(sound_file:str):
-    p = vlc.MediaPlayer(sound_file)
-    p.play()
-    time.sleep(1) #this is necessary because is_playing() returns false if called right away
-    while p.is_playing():
-        time.sleep(1)
-    p.release()
+class Audio:
+    def init_vlc(sound_file:str):
+        p = vlc.MediaPlayer(sound_file)
+        p.play()
+        time.sleep(1) #this is necessary because is_playing() returns false if called right away
+        while p.is_playing():
+            time.sleep(1)
+        p.release()
 
-def play_happy():
-    init_vlc(random.choice(happy_sounds))
+    def play_happy():
+        init_vlc(random.choice(happy_sounds))
 
-def play_intro():
-    init_vlc(random.choice(intro_sounds))
+    def play_intro():
+        init_vlc(random.choice(intro_sounds))
 
-def play_correct_letter():
-    init_vlc(random.choice(correct_letter_sounds))
+    def play_correct_letter():
+        init_vlc(random.choice(correct_letter_sounds))
 
-def play_next_word():
-    init_vlc(random.choice(next_word_sounds))    
+    def play_next_word():
+        init_vlc(random.choice(next_word_sounds))    
 
-def play_wrong_order():
-    init_vlc(random.choice(wrong_order_sounds))
+    def play_wrong_order():
+        init_vlc(random.choice(wrong_order_sounds))
 
-def play_wrong_letter():
-    init_vlc(random.choice(wrong_letter_sounds))
+    def play_wrong_letter():
+        init_vlc(random.choice(wrong_letter_sounds))
 
-def play_dance_break():
-    init_vlc(random.choice(dance_break_sounds))
+    def play_dance_break():
+        init_vlc(random.choice(dance_break_sounds))
 
-def play_choose_list():
-    init_vlc(random.choice(choose_list_sounds))
+    def play_choose_list():
+        init_vlc(random.choice(choose_list_sounds))

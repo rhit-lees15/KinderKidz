@@ -8,8 +8,7 @@ import random
 import time
 # from sound_w_game import * 
 import os
-# from Media.game_sound import init_vlc as init_vlc, play_happy as play_happy, play_intro as play_intro, play_correct_letter as play_correct_letter, play_next_word as play_next_word, play_wrong_order as play_wrong_order, play_wrong_letter as play_wrong_letter, play_dance_break as play_dance_break, play_choose_list as play_choose_list
-import game_sound as gamesound
+from Media.GameSound import Audio
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -66,7 +65,7 @@ class GUI(tk.Tk):
         # Time selection buttons
         first_time_button = tk.Button(time_selection_page, text="2 Minutes", font=("Helvetica", 30),
                                     bg = "black", fg = "white",
-                                    command=lambda: self.create_word_display_page(2)) 
+                                    command=lambda: self.create_word_display_page(120)) 
         # 120
         first_time_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
 
@@ -126,7 +125,8 @@ class GUI(tk.Tk):
                 frame.after(1000, update_countdown, duration - 1)
             else:
                 self.create_dance_display_page()
-                gamesound.play_dance_break()
+                # gamesound.play_dance_break()
+                Audio.play_dance_break()
 
         update_countdown(duration)
 
@@ -137,10 +137,11 @@ class GUI(tk.Tk):
             
     # Once song finishes, go back to the OG word display page
     def once_song_finished(event):
-        self.create_word_display_page(5)
+        self.create_word_display_page()
             
     def create_dance_display_page(self):
-        gamesound.play_dance_break()
+        # gamesound.play_dance_break()
+        Audio.play_dance_break()
         self.hide_current_page()  # Hide current page
         self.current_page = "Dance_display"
         dance_display_page = tk.Frame(self, bg="black")
@@ -152,27 +153,32 @@ class GUI(tk.Tk):
 
        # Button for songs
         audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
-                                    bg="blue", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"),
+                                    # bg="blue", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"),
+                                    bg="blue", fg="white", command=lambda: [Audio.init_vlc("./Media/Audio/puff-the-magic-dragon.mp3"),
                                                                             disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
         audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
         audio_button_2 = tk.Button(dance_display_page, text="Twinkle, Twinkle", font=("Helvetica", 20),
-                                    bg="red", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"),
+                                    # bg="red", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/twinkle-twinkle.mp3"),
+                                    bg="red", fg="white", command=lambda: [Audio.init_vlc("./Media/Audio/twinkle-twinkle.mp3"),
                                                                             disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
         audio_button_2.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
 
         audio_button_3 = tk.Button(dance_display_page, text="My Year - ZOMBIES", font=("Helvetica", 20),
-                                    bg="orange", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"),
+                                    # bg="orange", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/my-year-zombies.mp3"),
+                                    bg="orange", fg="white", command=lambda: [Audio.init_vlc("./Media/Audio/my-year-zombies.mp3"),
                                                                               disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
         audio_button_3.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
 
         audio_button_4 = tk.Button(dance_display_page, text="If You're Happy and You Know It", font=("Helvetica", 20),
-                                    bg="purple", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"),
+                                    # bg="purple", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/happy-and-you-know-it.mp3"),
+                                    bg="purple", fg="white", command=lambda: [Audio.init_vlc("./Media/Audio/happy-and-you-know-it.mp3"),
                                                                               disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
         audio_button_4.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         audio_button_5 = tk.Button(dance_display_page, text="Body Bop Bop", font=("Helvetica", 20),
-                                    bg="green", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"),
+                                    # bg="green", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/body-bop-bop.mp3"),
+                                    bg="green", fg="white", command=lambda: [Audio.init_vlc("./Media/Audio/body-bop-bop.mp3"),
                                                                              disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
         audio_button_5.place(relx=0.7, rely=0.6, anchor=tk.CENTER)
 
@@ -199,6 +205,6 @@ class GUI(tk.Tk):
     def exit_program(self):
         self.destroy()
 
-if __name__ == "__main__":
-    app = GUI()   
-    app.mainloop()
+# if __name__ == "__main__":
+#     app = GUI()   
+#     app.mainloop()
