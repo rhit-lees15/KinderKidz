@@ -1,6 +1,6 @@
 from pygame import Color
 # from config import letters
-from Button import Button
+from display.Button import Button
 
 # import letters from config
 # import Button from Button
@@ -71,6 +71,83 @@ class DisplayManager:
             strip.setPixelColor(i, Color(0, 0, 0))
         strip.show()
 
+    # Try
+    # def __init__(offset, strip, pin):
+    #     offset = offset * 100
+    #     strip = strip
+    #     pin = pin
+
+    # def turn_on(current_pixel, color):
+    #     strip.setPixelColor(current_pixel + offset, color)
+    #     strip.show() 
+
+    # def turn_off(current_pixel, color):
+    #     strip.setPixelColor(current_pixel + offset, Color(0, 0, 0))
+
+    # def display_letter(letter, color):
+    #     # letter = 'A'
+    #     lights = letters[letter]
+    #     for light in lights:
+    #         turn_on(light, color)
+    
+    
+        # Function to handle button press event
+    def buttonPress(pin):
+        global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
+        
+        letter = button_letters[pin]
+        # time.sleep(0.25)
+        if letter in randomWord:
+            # Check if the letter is in the correct position
+            if letter == randomWord[len(spelledWord)]:
+                ## The letter is in the word
+                spelledWord += letter
+                # print("Current spelling:", spelledWord)
+                if len(spelledWord) != len(randomWord):
+                    ## The letter is in correct position - correct
+                    #correct_light(pin)
+                    DisplayManager.correct_light(letter, pin)
+                    Audio.play_happy()
+                    Audio.play_correct_letter()
+                # If the full word is spelled correctly
+                elif len(spelledWord) == len(randomWord):
+                    print("Correct! You spelled the word correctly.")
+                    DisplayManager.correct_light(letter, pin)
+                    Audio.play_happy()
+                    DisplayManager.turn_off()
+                    Audio.play_next_word()
+                    newWord()
+                    DisplayManager.initialize_letter(randomizedLetters)
+
+            else:
+                # Find the first incorrect letter position
+
+                #incorrect_position = spelledWord[]
+                # restart_from = randomWord.index(spelledWord[incorrect_position])
+                if len(spelledWord) == 0:
+                    # print("Incorrect order!")
+                    #spelledWord = ''
+                    Audio.play_wrong_order()
+                    # print("Current spelling:", spelledWord)
+                else:
+                    #spelledWord = randomWord[incorrect_position]
+                    # print("Incorrect order! Restarting from:", spelledWord)
+                    Audio.play_wrong_order()
+        else:
+            # print(f"Incorrect! Button {pin} ({letter}) is not part of the word. Try again.")
+            DisplayManager.wrong_light(letter, pin)
+            Audio.play_wrong_letter()
+    
+    
+    
+    
+    def display_output(letter, is_correct):
+    # might have to map in number to tiles_num by finding which index the pin is located at
+        current_letter = [x + offset for x in letters[letter]]
+        if (is_correct):
+            display_letter(current_letter, Color(0, 250,0))
+        else:
+            display_letter(current_letter, Color(250, 0,0))
 
     # **************MAYBE ATTEMPT TO SIMPLIFY THIS (would this go in config.py??)*******************
     def initialize_letter(randomizedLetters):
