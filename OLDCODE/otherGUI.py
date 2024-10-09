@@ -7,6 +7,7 @@ from tkinter.messagebox import showinfo
 import random
 import time
 # from sound_w_game import * 
+import gamesound as gamesound
 
 class GUI(tk.Tk):
     def __init__(self):
