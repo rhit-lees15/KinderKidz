@@ -7,7 +7,7 @@ import string
 # from display.Button import Button
 # from display.config import 
 from DisplayManager import DisplayManager
-from Button import Button
+# from Button import Button
 from MyGUI import GUI
 # from Media.GameSound import Audio
 
@@ -32,15 +32,15 @@ class Game:
     # Get remaining letters
     availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
     # Generate additional random letters
-    randomLetters = Button.generateRandomLetters(availableLetters, 8 - len(randomWord))
+    randomLetters = DisplayManager.generateRandomLetters(availableLetters, 8 - len(randomWord))
     # Combine the random word and random letters into a single string and shuffle them
-    randomizedLetters = Button.randomizeLetters(randomWord, randomLetters)
+    randomizedLetters = DisplayManager.randomizeLetters(randomWord, randomLetters)
     # Map each letter to a button
     button_letters = {}
     for idx, pin in enumerate(BUTTON_PINS):
         button_letters[pin] = randomizedLetters[idx]
     # Set button sequence for the initial word
-    button_sequence = [BUTTON_PINS[Button.randomizedLetters.index(letter)] for letter in randomWord]
+    button_sequence = [BUTTON_PINS[DisplayManager.randomizedLetters.index(letter)] for letter in randomWord]
         
     GUI.__init__()
     Audio.play_intro()

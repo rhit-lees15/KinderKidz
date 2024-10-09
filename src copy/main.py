@@ -1,5 +1,5 @@
 # from GUI.MyGUI import GUI
-from GUI.GameManager import Game
+from display.GameManager import Game
 
 if __name__ == "__main__":
     
