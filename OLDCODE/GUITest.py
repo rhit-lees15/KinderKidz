@@ -6,7 +6,7 @@ from tkinter import PhotoImage, messagebox, ttk
 from tkinter.messagebox import showinfo
 import random
 import time
-import gamesound as gamesound
+# import gamesound as gamesound
 
 class GUI(tk.Tk):
     def __init__(self):
