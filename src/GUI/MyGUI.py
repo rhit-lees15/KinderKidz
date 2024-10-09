@@ -8,6 +8,8 @@ import random
 import time
 # from sound_w_game import * 
 import os
+# from Media.game_sound import init_vlc as init_vlc, play_happy as play_happy, play_intro as play_intro, play_correct_letter as play_correct_letter, play_next_word as play_next_word, play_wrong_order as play_wrong_order, play_wrong_letter as play_wrong_letter, play_dance_break as play_dance_break, play_choose_list as play_choose_list
+import game_sound as gamesound
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -119,38 +121,25 @@ class GUI(tk.Tk):
             min, sec = divmod(duration,60)
             countdown_label.config(text=f"Time Left: {min}:{sec}", bg = "black", fg = "white")
 
-
             if duration > 0:
                 frame.after(1000, update_countdown, duration - 1)
             else:
                 self.create_dance_display_page()
-                # gamesound.play_dance_break()
+                gamesound.play_dance_break()
 
         update_countdown(duration)
 
     # Disable button after it has been pressed, therefore we don't get repeated button presses
-    def disable_buttons(*buttons):
+    def disable_buttons(buttons):
         for button in buttons:
             button.config(state=tk.DISABLED)
             
     # Once song finishes, go back to the OG word display page
     def once_song_finished(event):
         self.create_word_display_page(5)
-    
-    # We might have this code elsewhere, so idrk if we need it here
-    # Initialize VLC player and play audio
-    def play_audio(file_path):
-        player = vlc.MediaPlayer(file_path)
-        player.play()
-
-        # Get VLC instance and listen for the end of the audio event
-        event_manager = player.event_manager()
-        event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, once_song_finished)
-
-        return player
             
     def create_dance_display_page(self):
-        # gamesound.play_dance_break()
+        gamesound.play_dance_break()
         self.hide_current_page()  # Hide current page
         self.current_page = "Dance_display"
         dance_display_page = tk.Frame(self, bg="black")
@@ -163,7 +152,6 @@ class GUI(tk.Tk):
        # Button for songs
         audio_button_1 = tk.Button(dance_display_page, text="Puff the Magic Dragon", font=("Helvetica", 20),
                                     bg="blue", fg="white", command=lambda: [gamesound.init_vlc("./AudioStuff/puff-the-magic-dragon.mp3"),
-                                                                            # play_audio function???
                                                                             disable_buttons(audio_button_1, audio_button_2, audio_button_3, audio_button_4, audio_button_5)])
         audio_button_1.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
