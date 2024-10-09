@@ -1,4 +1,4 @@
-import GUI
+from GUI.MyGUI import GUI
 
 if __name__ == "__main__":
     

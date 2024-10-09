@@ -1,19 +1,20 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import PhotoImage, messagebox, ttk
+# from tkinter import PhotoImage, messagebox, ttk
 # from PIL import Image, ImageTk
 # import Image, ImageTK
 from tkinter.messagebox import showinfo
 import random
 import time
 # from sound_w_game import * 
+import os
 
 class GUI(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Interactive GUI")
         self.attributes('-fullscreen', True)  # Make the GUI full screen
-
+        self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.current_page = None
         self.pages = {}  # Dictionary to store pages
 
@@ -25,14 +26,14 @@ class GUI(tk.Tk):
         start_page.pack(fill=tk.BOTH, expand=True)
 
         # Picture Left
-        image_path = "./Media/Images/RABBIT.PNG"
+        image_path = os.path.join(self.base_dir, "Media", "Images", "RABBIT.PNG")
         image = self.load_image(image_path)
         picture_label = tk.Label(start_page, image = image, borderwidth = 0)
         picture_label.image = image
         picture_label.place(relx=0.2, rely=0.5, anchor = tk.CENTER)
 
         # # Picture Right
-        image_path2 = "./Media/Images/COW.PNG"
+        image_path2 = os.path.join(self.base_dir, "Media", "Images", "COW.PNG")
         image2 = self.load_image(image_path2)
         picture_label2 = tk.Label(start_page, image=image2, borderwidth=0)
         picture_label2.image = image2
@@ -207,8 +208,7 @@ class GUI(tk.Tk):
             self.pages[self.current_page].pack_forget()  # Withdraw the current page
 
     def exit_program(self):
-        if messagebox.askokcancel("Quit", "Do you want to quit?"):
-            self.destroy()
+        self.destroy()
 
 if __name__ == "__main__":
     app = GUI()   
