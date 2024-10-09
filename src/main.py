@@ -1,4 +1,4 @@
-from GUI.MyGUI import GUI
+# from GUI.MyGUI import GUI
 from GUI.GameManager import Game
 
 if __name__ == "__main__":
