@@ -6,9 +6,9 @@ import string
 
 # from display.Button import Button
 # from display.config import 
-from DisplayManager import DisplayManager
+from display.DisplayManager import DisplayManager
 # from Button import Button
-from MyGUI import GUI
+from display.MyGUI import GUI
 # from Media.GameSound import Audio
 
 class Game:

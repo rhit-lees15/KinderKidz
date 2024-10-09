@@ -8,7 +8,7 @@ import random
 import time
 # from sound_w_game import * 
 import os
-from GameSound import Audio
+from display.GameSound import Audio
 
 class GUI(tk.Tk):
     def __init__(self):

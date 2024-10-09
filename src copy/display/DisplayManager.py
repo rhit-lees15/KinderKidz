@@ -1,6 +1,6 @@
 from pygame import Color
 # from config import letters
-from Button import Button
+from display.Button import Button
 
 # import letters from config
 # import Button from Button
