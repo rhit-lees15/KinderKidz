@@ -66,7 +66,8 @@ class GUI(tk.Tk):
         # Time selection buttons
         first_time_button = tk.Button(time_selection_page, text="2 Minutes", font=("Helvetica", 30),
                                     bg = "black", fg = "white",
-                                    command=lambda: self.create_word_display_page(120))
+                                    command=lambda: self.create_word_display_page(2)) 
+        # 120
         first_time_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
 
         second_time_button = tk.Button(time_selection_page, text="3.5 Minutes", font=("Helvetica", 30),

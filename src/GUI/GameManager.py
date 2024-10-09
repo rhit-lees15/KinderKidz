@@ -7,32 +7,28 @@ import time
 
 class Game:
     # Dictionary of all the words included in the spelling game
-    self.word_lists = {
-        "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
-        "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
-        "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-        }
+    word_list = ['MY', 'THIS', 'A', 'IS', 'HOME','THE', 'IN', 'CITY', 'BY', 'OCEAN','ON', 'NOT', 'FARM', 'LIKE', 'I']
     
-    # Time of duration
-    duration = 30
+    # # Time of duration
+    # duration = 30
 
-    # Countdown timer that is displayed at the top right of the GUI to indicate the amount of time Carmine has to complete the lesson
-    def create_countdown(self, frame, duration):
-        countdown_label = tk.Label(frame, font=("Helvetica", 16))
-        countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
+    # # Countdown timer that is displayed at the top right of the GUI to indicate the amount of time Carmine has to complete the lesson
+    # def create_countdown(self, frame, duration):
+    #     countdown_label = tk.Label(frame, font=("Helvetica", 16))
+    #     countdown_label.place(relx=0.8, rely=0.1, anchor=tk.CENTER)
 
-    def update_countdown(duration):    
+    # def update_countdown(duration):    
             
-        min, sec = divmod(duration,60)
-        countdown_label.config(text=f"Time Left: {min}:{sec}", bg = "black", fg = "white")
+    #     min, sec = divmod(duration,60)
+    #     countdown_label.config(text=f"Time Left: {min}:{sec}", bg = "black", fg = "white")
 
 
-        if duration > 0:
-            frame.after(1000, update_countdown, duration - 1)
-        else:
-            self.create_dance_display_page()
+    #     if duration > 0:
+    #         frame.after(1000, update_countdown, duration - 1)
+    #     else:
+    #         self.create_dance_display_page()
 
-    update_countdown(duration)
+    # update_countdown(duration)
     
     # Function to create a list of additional letters to include, dependent on the length of the word
     def gen_random_letters(remainingLetters, numLetters):
@@ -46,7 +42,7 @@ class Game:
     
 
     # Generate a new random word from the selected word list
-    random_word = random.choice(self.word_lists[word_list_name])
+    random_word = random.choice(word_list)
 
     letter = button_letters[pin]
     # time.sleep(0.25)
@@ -92,44 +88,44 @@ class Game:
         gamesound.play_wrong_letter()
         
     def newWord():
-    global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
+        global spelledWord, randomWord, randomizedLetters, button_sequence, button_letters
     
-## NOOR NEW ADDITION 05.09.24
-    wordList.remove(randomWord)
-    
-    if not wordList:
-        print("Congratulations! You've spelled all the words in the list!")
-        return
-    
-    # Generate a new word
-    n = 0
-    while n <= len(wordList) - 1:
-        randomWord = wordList[n]
-        n += 1
-    
-    # Get remaining letters
-    availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
-    # availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
-    # Generate additional random letters
-    randomLetters = gen_random_letters(availableLetters, 8 - len(randomWord))
-    
-    # Combine the random word and random letters into a single string and shuffle them
-    randomizedLetters = randomize_letters(randomWord, randomLetters)
-    
-    # Map each letter to a button
-    button_letters = {}
-    for idx, pin in enumerate(BUTTON_PINS):
-        button_letters[pin] = randomizedLetters[idx]
-    
-    # Set button sequence for the new word
-    button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
-    
-    # Print new word and letters
-    # init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
-    print("Let's spell another word.")
-    print(f"Spell the word: {randomWord}")
-    # print("Reallocated letters: " + ' '.join(randomizedLetters))
-    # print("Available letters: " + ' '.join(availableLetters))
-    
-    # Reset spelledWord
-    spelledWord = ''
+    ## NOOR NEW ADDITION 05.09.24
+        word_list.remove(randomWord)
+        
+        if not word_list:
+            print("Congratulations! You've spelled all the words in the list!")
+            return
+        
+        # Generate a new word
+        n = 0
+        while n <= len(word_list) - 1:
+            randomWord = word_list[n]
+            n += 1
+        
+        # Get remaining letters
+        availableLetters = list(set(string.ascii_uppercase) - set(spelledWord) - set(randomWord))
+        # availableLetters = list(set(string.ascii_uppercase) - set(randomWord))
+        # Generate additional random letters
+        randomLetters = gen_random_letters(availableLetters, 8 - len(randomWord))
+        
+        # Combine the random word and random letters into a single string and shuffle them
+        randomizedLetters = randomize_letters(randomWord, randomLetters)
+        
+        # Map each letter to a button
+        button_letters = {}
+        for idx, pin in enumerate(BUTTON_PINS):
+            button_letters[pin] = randomizedLetters[idx]
+        
+        # Set button sequence for the new word
+        button_sequence = [BUTTON_PINS[randomizedLetters.index(letter)] for letter in randomWord]
+        
+        # Print new word and letters
+        # init_vlc('./AudioStuff/timetomoveontothenextword.mp3')
+        print("Let's spell another word.")
+        print(f"Spell the word: {randomWord}")
+        # print("Reallocated letters: " + ' '.join(randomizedLetters))
+        # print("Available letters: " + ' '.join(availableLetters))
+        
+        # Reset spelledWord
+        spelledWord = ''

@@ -13,23 +13,17 @@ LED_BRIGHTNESS = 5     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
-WordDictionary = {
-            "List 1": ['MY', 'THIS', 'A', 'IS', 'HOME'],
-            "List 2": ['THE', 'IN', 'CITY', 'BY', 'OCEAN'],
-            "List 3": ['ON', 'NOT', 'FARM', 'LIKE', 'I']
-        }
-
 class DisplayManager:
 
     def __init__():
         strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
         strip.begin()
 
-        ## for pin in buttonpins:
-        ## create a button with proper offset
-        # *************************NEED TO COMPLETE THIS*************************
-        button0 = new Button(0)
-        button1 = new Button(1)
+        # ## for pin in buttonpins:
+        # ## create a button with proper offset
+        # # *************************NEED TO COMPLETE THIS*************************
+        # button0 = new Button(0)
+        # button1 = new Button(1)
 
     def display_letter(letter, color):
         for i in range(len(letter)):
@@ -103,13 +97,13 @@ class DisplayManager:
         current_letter = [x + addition for x in current_letter]
         display_letter(current_letter, Color(250, 0,0))
 
-    # Replaces the functions above - Levi's quick attempt
-    def display_output(letter, pin, is_correct):
-        tiles_num = BUTTON_PINS.index(pin)
-        addition = tiles_num * 100
-        current_letter = light.letter_arrays[letter]
-        current_letter = [x + addition for x in current_letter]
-        if (is_correct):
-            display_letter(current_letter, Color(0, 250,0))
-        else:
-            display_letter(current_letter, Color(250, 0,0))
+    # # Replaces the functions above - Levi's quick attempt
+    # def display_output(letter, pin, is_correct):
+    #     tiles_num = BUTTON_PINS.index(pin)
+    #     addition = tiles_num * 100
+    #     current_letter = light.letter_arrays[letter]
+    #     current_letter = [x + addition for x in current_letter]
+    #     if (is_correct):
+    #         display_letter(current_letter, Color(0, 250,0))
+    #     else:
+    #         display_letter(current_letter, Color(250, 0,0))
