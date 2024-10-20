@@ -3,17 +3,19 @@ import pygame
 import sys
 from pygame import mixer 
 import led
+import sound
 
 def init():
 # Initialize the game
     pygame.init()
     mixer.init()
+    sound.play_intro()
 
     led.setup_and_run_leds()
 
-    mixer.music.load("Audio/whatsupcarmineletsdosomespelling.mp3")
-    mixer.music.set_volume(0.7)
-    mixer.music.play()
+    # mixer.music.load("Audio/whatsupcarmineletsdosomespelling.mp3")
+    # mixer.music.set_volume(0.7)
+    # mixer.music.play()
     
     # Set up the window size (width x height)
     screen_width, screen_height = 800, 300
