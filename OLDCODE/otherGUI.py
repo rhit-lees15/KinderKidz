@@ -8,7 +8,7 @@ import random
 import time
 import os
 # from sound_w_game import * 
-# import gamesound as gamesound
+import gamesound as gamesound
 
 class GUI(tk.Tk):
     def __init__(self):
@@ -66,7 +66,7 @@ class GUI(tk.Tk):
         # Time selection buttons
         first_time_button = tk.Button(time_selection_page, text="2 Minutes", font=("Helvetica", 30),
                                     bg = "black", fg = "white",
-                                    command=lambda: self.create_word_display_page(120))
+                                    command=lambda: self.create_word_display_page(2))
         first_time_button.place(relx=0.2, rely=0.5, anchor=tk.CENTER)
 
         second_time_button = tk.Button(time_selection_page, text="3.5 Minutes", font=("Helvetica", 30),
@@ -126,7 +126,7 @@ class GUI(tk.Tk):
                 frame.after(1000, update_countdown, duration - 1)
             else:
                 self.create_dance_display_page()
-                # gamesound.play_dance_break()
+                gamesound.play_dance_break()
 
         update_countdown(duration)
 
@@ -152,7 +152,7 @@ class GUI(tk.Tk):
         return player
             
     def create_dance_display_page(self):
-        # gamesound.play_dance_break()
+        gamesound.play_dance_break()
         self.hide_current_page()  # Hide current page
         self.current_page = "Dance_display"
         dance_display_page = tk.Frame(self, bg="black")
