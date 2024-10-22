@@ -1,45 +1,59 @@
-import vlc
-import time
 import random
-
-intro_sounds = ['./Media/Audio/hicarmineletsspellsomewordstoday.mp3','./Media/Audio/hicarmineareyoureadytospellsomewords.mp3','./Media/Audio/whatsupcarmineletsdosomespelling.mp3','./Media/Audio/letsspellsomewordstodaycarmine.mp3','./Media/Audio/hicarmineletsplaythespellinggame.mp3'] 
-correct_letter_sounds = ['./Media/Audio/correctnowletsfindthenextletter.mp3','./Media/Audio/goodjobcarmineletsfindthenextletter.mp3','./Media/Audio/nicecarmineletsfindthenextletter.mp3','./Media/Audio/goodjobcarmine.mp3','./Media/Audio/greatjobcarmine.mp3'] 
-next_word_sounds = ['./Media/Audio/greatjobnowletsspellthenextword.mp3','./Media/Audio/yayyouspelledthewordnowletsdothenextone.mp3','./Media/Audio/goodjobatspellingcarmineletsdothenextword.mp3','./Media/Audio/goodjobcarmine.mp3','./Media/Audio/greatjobcarmine.mp3'] 
-wrong_order_sounds = ['./Media/Audio/soclosetrytofindadifferentletter.mp3','./Media/Audio/almostletstryadifferentorder.mp3','./Media/Audio/thatletterispartofthewordbutitsnottherightorder.mp3','./Media/Audio/soclosetryadifferentletter.mp3','./Media/Audio/oopsthatsnottherightlettertryadifferentone.mp3'] 
-wrong_letter_sounds = ['./Media/Audio/almostthatletterisntpartoftheword.mp3','./Media/Audio/oopsthatletterisntpartofthewordtryadifferentone.mp3','./Media/Audio/soclosetryadifferentletter.mp3','./Media/Audio/oopsthatsnottherightlettertryadifferentone.mp3'] 
-happy_sounds = ['./Media/Audio/90s-game-ui.mp3','./Media/Audio/copper-bell-ding-4.mp3','./Media/Audio/correct-choice.mp3','./Media/Audio/cute-level-up-1.mp3','./Media/Audio/cute-level-up-2.mp3','./Media/Audio/cute-level-up-3.mp3','./Media/Audio/game-bonus.mp3','./Media/Audio/level-up.mp3','./Media/Audio/level-up-2.mp3','./Media/Audio/YayKidsCrowd.mp3','./Media/Audio/bonus-points.mp3']
-dance_break_sounds = ['./Media/Audio/hicarmineletstakeabreakchoosethesongyouwannadanceto.mp3','./Media/Audio/goodjobatspellingcarmineletstakeabreakanddance.mp3','./Media/Audio/okaycarminetimeforabreakletsdance.mp3'] 
-choose_list_sounds = ['./Media/Audio/choosethelistofwordsthatyouwouldliketospell.mp3','./Media/Audio/itstimetochoosealistofwordstospell.mp3']
+import string
+import pygame
+import os
 
 
-def init_vlc(sound_file:str):
-        p = vlc.MediaPlayer(sound_file)
-        p.play()
-        time.sleep(1) #this is necessary because is_playing() returns false if called right away
-        while p.is_playing():
-            time.sleep(1)
-        p.release()
+# Paths for audio files
+audio_folder = 'Audio/'
+intro_sounds = [os.path.join(audio_folder, file) for file in ['hicarmineletsspellsomewordstoday.mp3','hicarmineareyoureadytospellsomewords.mp3','whatsupcarmineletsdosomespelling.mp3','letsspellsomewordstodaycarmine.mp3','hicarmineletsplaythespellinggame.mp3']]
+correct_letter_sounds = [os.path.join(audio_folder, file) for file in ['correctnowletsfindthenextletter.mp3','goodjobcarmineletsfindthenextletter.mp3','nicecarmineletsfindthenextletter.mp3','goodjobcarmine.mp3','greatjobcarmine.mp3']]
+next_word_sounds = [os.path.join(audio_folder, file) for file in ['greatjobnowletsspellthenextword.mp3','yayyouspelledthewordnowletsdothenextone.mp3','goodjobatspellingcarmineletsdothenextword.mp3','goodjobcarmine.mp3','greatjobcarmine.mp3']]
+wrong_order_sounds = [os.path.join(audio_folder, file) for file in ['soclosetrytofindadifferentletter.mp3','almostletstryadifferentorder.mp3','thatletterispartofthewordbutitsnottherightorder.mp3','soclosetryadifferentletter.mp3','oopsthatsnottherightlettertryadifferentone.mp3']]
+wrong_letter_sounds = [os.path.join(audio_folder, file) for file in ['almostthatletterisntpartoftheword.mp3','oopsthatletterisntpartofthewordtryadifferentone.mp3','soclosetryadifferentletter.mp3','oopsthatsnottherightlettertryadifferentone.mp3']]
+happy_sounds = [os.path.join(audio_folder, file) for file in ['90s-game-ui.mp3','copper-bell-ding-4.mp3','correct-choice.mp3','cute-level-up-1.mp3','cute-level-up-2.mp3','cute-level-up-3.mp3','game-bonus.mp3','level-up.mp3','level-up-2.mp3','YayKidsCrowd.mp3','bonus-points.mp3']]
+dance_break_sounds = [os.path.join(audio_folder, file) for file in ['hicarmineletstakeabreakchoosethesongyouwannadanceto.mp3','goodjobatspellingcarmineletstakeabreakanddance.mp3','okaycarminetimeforabreakletsdance.mp3']]
+choose_list_sounds = [os.path.join(audio_folder, file) for file in ['choosethelistofwordsthatyouwouldliketospell.mp3','itstimetochoosealistofwordstospell.mp3']]
 
-def play_happy():
-        init_vlc(random.choice(happy_sounds))
+class Audio:
+    @staticmethod
+    def play_sound(sound_file: str):
+        """Play a sound file."""
+        pygame.mixer.music.load(sound_file)
+        pygame.mixer.music.play()
 
-def play_intro():
-        init_vlc(random.choice(intro_sounds))
+        # Wait for the sound to finish playing
+        while pygame.mixer.music.get_busy():
+            pygame.time.Clock().tick(10)  # Check every 100 ms
 
-def play_correct_letter():
-        init_vlc(random.choice(correct_letter_sounds))
+    @staticmethod
+    def play_happy():
+        Audio.play_sound(random.choice(happy_sounds))
 
-def play_next_word():
-        init_vlc(random.choice(next_word_sounds))    
+    @staticmethod
+    def play_intro():
+        Audio.play_sound(random.choice(intro_sounds))
 
-def play_wrong_order():
-        init_vlc(random.choice(wrong_order_sounds))
+    @staticmethod
+    def play_correct_letter():
+        Audio.play_sound(random.choice(correct_letter_sounds))
 
-def play_wrong_letter():
-        init_vlc(random.choice(wrong_letter_sounds))
+    @staticmethod
+    def play_next_word():
+        Audio.play_sound(random.choice(next_word_sounds))
 
-def play_dance_break():
-        init_vlc(random.choice(dance_break_sounds))
+    @staticmethod
+    def play_wrong_order():
+        Audio.play_sound(random.choice(wrong_order_sounds))
 
-def play_choose_list():
-        init_vlc(random.choice(choose_list_sounds))
+    @staticmethod
+    def play_wrong_letter():
+        Audio.play_sound(random.choice(wrong_letter_sounds))
+
+    @staticmethod
+    def play_dance_break():
+        Audio.play_sound(random.choice(dance_break_sounds))
+
+    @staticmethod
+    def play_choose_list():
+        Audio.play_sound(random.choice(choose_list_sounds))

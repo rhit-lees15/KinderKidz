@@ -1,5 +1,6 @@
 import random
 import string
+from sound import Audio
 
 # List of words used in the game
 word_list = ["I", "Home", "Ocean", "They", "Me", "Cat", "Dog", "Lion", "Pig", "Cow"]
@@ -54,8 +55,24 @@ class GameLogic:
         
         if chosen_letter == expected_letter:
             self.chosen_letters.append(chosen_letter)
+            Audio.play_correct_letter()
             if len(self.chosen_letters) == len(self.current_word):
                 return True, "Next word"
             return True, "Correct"
         else:
+            if chosen_letter in self.current_word:
+                Audio.play_wrong_order()  # Play wrong order sound
+            else:
+                Audio.play_wrong_letter()  # Play wrong letter sound
             return False, "Try again"
+        
+    def get_word_list():
+        return word_list
+        
+    @staticmethod
+    def add_word(new_word):
+        """Adds a new word to the word list."""
+        new_word = new_word.strip()
+        if new_word and new_word not in word_list:
+            word_list.append(new_word.upper())
+            print(f"Added new word: {new_word.upper()}")

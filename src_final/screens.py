@@ -45,10 +45,14 @@ class TimerScreen:
         self.three_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2, 200, 60)
         self.five_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 100, 200, 60)
 
+        self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = event.pos
-            if self.one_min_button.collidepoint(mouse_pos):
+            if self.add_word_button.collidepoint(mouse_pos):
+                self.game.switch_screen(AddWordScreen) 
+            elif self.one_min_button.collidepoint(mouse_pos):
                 print("1-minute timer selected!")
                 self.game.switch_screen(lambda game: GameScreen(game, 10))
             elif self.three_min_button.collidepoint(mouse_pos):
@@ -76,6 +80,12 @@ class TimerScreen:
         pygame.draw.rect(screen, (0, 255, 0), self.five_min_button)
         five_min_text = self.font.render("5 Minutes", True, (255, 255, 255))
         screen.blit(five_min_text, (self.five_min_button.x + 25, self.five_min_button.y + 15))
+
+        # Draw the Add Word button
+        pygame.draw.rect(screen, (0, 255, 0), self.add_word_button)
+        add_word_text = self.font.render("Add New Words!", True, (255, 255, 255))
+        screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
+
 
 from play import GameLogic
 class GameScreen:
@@ -150,11 +160,11 @@ class GameScreen:
         word_text = self.font.render(self.current_word, True, (255, 255, 255))
         screen.blit(word_text, (self.game.screen_width // 2 - 50, self.game.screen_height // 2 - 25))
 
-        # Display the letter-to-button mapping for the user's reference
-        for i in range(8):
-            letter = self.letter_map[i + 1]
-            button_text = self.font.render(f"{i + 1}: {letter}", True, (255, 255, 255))
-            screen.blit(button_text, (self.game.screen_width // 2 - 200 + (i % 4) * 150, 300 + (i // 4) * 50))
+        # # Display the letter-to-button mapping for the user's reference
+        # for i in range(8):
+        #     letter = self.letter_map[i + 1]
+        #     button_text = self.font.render(f"{i + 1}: {letter}", True, (255, 255, 255))
+        #     screen.blit(button_text, (self.game.screen_width // 2 - 200 + (i % 4) * 150, 300 + (i // 4) * 50))
 
         # Draw the quit button
         pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
@@ -241,3 +251,71 @@ class MusicScreen:
         pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
         quit_text = self.font.render("Quit", True, (255, 255, 255))
         screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
+
+from play import GameLogic
+
+class AddWordScreen:
+    def __init__(self, game):
+        self.game = game
+        self.font = pygame.font.Font(None, 50)
+
+        self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+
+        self.input_box = pygame.Rect(100, 100, 600, 50)
+        self.input_text = ''
+
+        self.word_list = GameLogic.get_word_list()
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos
+            if self.add_word_button.collidepoint(mouse_pos):
+                self.game.switch_screen(lambda game: AddWordScreen(game))
+
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                if self.input_text:
+                    GameLogic.add_word(self.input_text)  # Add the word to the list
+                    print("Word Added!")
+                    self.word_list = GameLogic.get_word_list()
+                    self.input_text = ''
+            elif event.key == pygame.K_BACKSPACE:
+                self.input_text = self.input_text[:-1]
+            else:
+                self.input_text += event.unicode
+
+    def update(self):
+        pass
+
+    def draw(self, screen):
+        # Draw the Add Word button
+        pygame.draw.rect(screen, (0, 255, 0), self.add_word_button)
+        add_word_text = self.font.render("Add", True, (255, 255, 255))
+        screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
+
+        # Draw the input box
+        pygame.draw.rect(screen, (255, 255, 255), self.input_box, 2)
+        text_surface = self.font.render(self.input_text, True, (255, 255, 255))
+        screen.blit(text_surface, (self.input_box.x + 5, self.input_box.y + 5))
+
+        # Draw the current word list
+        max_height = screen.get_height() - 250  # Leave space for buttons and input box
+        max_words_per_column = max_height // 40  # Assuming each word takes 40 pixels in height
+        x_position = 100  # Starting X position
+        y_position = 200  # Starting Y position
+
+        for idx, word in enumerate(self.word_list):
+            word_surface = self.font.render(word, True, (255, 255, 255))
+            
+            # Check if the current position exceeds the screen height
+            if idx >= max_words_per_column:
+                # Move to the next column
+                x_position += 200  # Adjust this value to space out columns
+                y_position = 200  # Reset Y position to the start
+
+            screen.blit(word_surface, (x_position, y_position + idx * 40))
+
+            # Adjust y_position for the next word
+            if idx < max_words_per_column:
+                y_position += 40  # Increment Y position for each word

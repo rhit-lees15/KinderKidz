@@ -16,7 +16,7 @@ class Game:
         mixer.music.play()
 
         # Set up the window
-        self.screen_width, self.screen_height = 800, 300
+        self.screen_width, self.screen_height = 800, 400
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("My Game")
 
