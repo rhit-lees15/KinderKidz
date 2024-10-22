@@ -1,5 +1,6 @@
 import pygame
 import sys
+import led
 from pygame import mixer
 from screens import MainScreen
 from screens import TimerScreen
@@ -14,6 +15,8 @@ class Game:
         mixer.music.load("Audio/whatsupcarmineletsdosomespelling.mp3")
         mixer.music.set_volume(0.7)
         mixer.music.play()
+
+        led.setup_and_run_leds()
 
         # Set up the window
         self.screen_width, self.screen_height = 800, 400
