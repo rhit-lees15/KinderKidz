@@ -1,14 +1,13 @@
-import game
+from game import Game
 
 def main():
     print("Starting the Game")
-    game.init()
+    game = Game()
+    game.run()
+    # game.init()
     # begin start screen
         # initialize sound
         # initialize lights
-
-
-
 
 
 if __name__ == "__main__":
