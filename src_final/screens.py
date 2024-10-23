@@ -125,6 +125,11 @@ class TimerScreen:
 
 
 from play import GameLogic
+import RPi.GPIO
+from buttons import Buttons
+# Define GPIO pins for buttons
+BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
+
 class GameScreen:
     def __init__(self, game, game_duration):
         self.game = game
@@ -137,11 +142,15 @@ class GameScreen:
         self.letter_map = self.logic.generate_buttons()
 
 
+
         # Timer setup
         self.start_time = pygame.time.get_ticks()
 
         # Quit button setup
         self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
+
+        # Initialize GPIO buttons with a callback to handle button presses
+        self.buttons = Buttons(BUTTON_PINS, self.process_input)
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -288,8 +297,6 @@ class MusicScreen:
         pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
         quit_text = self.font.render("Quit", True, (255, 255, 255))
         screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
-
-from play import GameLogic
 
 class AddWordScreen:
     def __init__(self, game):
