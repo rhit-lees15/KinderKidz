@@ -1,9 +1,8 @@
 import random
 import string
-
-from pygame import Color
 from sound import Audio
 from led import LED
+from pygame import Color
 
 # List of words used in the game
 word_list = ["I", "Home", "Ocean", "They", "Me", "Cat", "Dog", "Lion", "Pig", "Cow"]

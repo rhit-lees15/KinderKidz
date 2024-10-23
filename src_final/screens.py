@@ -150,29 +150,28 @@ class GameScreen:
         # Initialize GPIO buttons with a callback to handle button presses
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(BUTTON_PINS, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
         for pin in BUTTON_PINS:
-            GPIO.add_event_detect(pin, GPIO.RISTING, callback = self.handle_gpio_press, bouncetime=300)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback = self.handle_gpio_press, bouncetime=300)
         
     def handle_event(self, event):
-        # if event.type == pygame.KEYDOWN:
-        #     # Check if number keys 1 to 8 are pressed
-        #     if event.key == pygame.K_1:
-        #         self.process_input(1)
-        #     elif event.key == pygame.K_2:
-        #         self.process_input(2)
-        #     elif event.key == pygame.K_3:
-        #         self.process_input(3)
-        #     elif event.key == pygame.K_4:
-        #         self.process_input(4)
-        #     elif event.key == pygame.K_5:
-        #         self.process_input(5)
-        #     elif event.key == pygame.K_6:
-        #         self.process_input(6)
-        #     elif event.key == pygame.K_7:
-        #         self.process_input(7)
-        #     elif event.key == pygame.K_8:
-        #         self.process_input(8)
+        if event.type == pygame.KEYDOWN:
+            # Check if number keys 1 to 8 are pressed
+            if event.key == pygame.K_1:
+                self.process_input(1)
+            elif event.key == pygame.K_2:
+                self.process_input(2)
+            elif event.key == pygame.K_3:
+                self.process_input(3)
+            elif event.key == pygame.K_4:
+                self.process_input(4)
+            elif event.key == pygame.K_5:
+                self.process_input(5)
+            elif event.key == pygame.K_6:
+                self.process_input(6)
+            elif event.key == pygame.K_7:
+                self.process_input(7)
+            elif event.key == pygame.K_8:
+                self.process_input(8)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = event.pos
