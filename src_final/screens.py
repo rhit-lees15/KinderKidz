@@ -128,7 +128,8 @@ from play import GameLogic
 from buttons import Buttons
 import RPi.GPIO as GPIO
 # Define GPIO pins for buttons
-BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
+# BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
+BUTTON_PINS = {24:0, 25:1, 23:2, 22:3, 5:4, 6:5, 13:6, 12:7}
 
 class GameScreen:
     def __init__(self, game, game_duration):
@@ -149,10 +150,14 @@ class GameScreen:
 
         # Initialize GPIO buttons with a callback to handle button presses
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(BUTTON_PINS, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        for pin in BUTTON_PINS:
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback = self.handle_gpio_press, bouncetime=300)
-        
+        for pin in BUTTON_PINS.keys():
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            GPIO.add_event_detect(pin, GPIO.RISING, callback = self.handle_gpio_press, bouncetime=300)
+    
+    def handle_gpio_press(self, pin):
+        button_number = BUTTON_PINS[pin]
+        self.process_input(button_number)
+
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
             # Check if number keys 1 to 8 are pressed
@@ -180,9 +185,6 @@ class GameScreen:
                 GPIO.cleanup()
                 sys.exit()
     
-    def handle_gpio_press(self, pin):
-        button_number = BUTTON_PINS.index(pin) + 1 # Get button number (1-8)
-        self.process_input(button_number)
     
     def process_input(self, button_number):
         """Handles the logic for when a number key (1-8) is pressed."""
@@ -222,6 +224,9 @@ class GameScreen:
         pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
         quit_text = self.font.render("Quit", True, (255, 255, 255))
         screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
+
+    def __del__(self):
+        GPIO.cleanup()
 
 import webbrowser
 from pygame import mixer
