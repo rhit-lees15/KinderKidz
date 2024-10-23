@@ -1,19 +1,15 @@
 import random
 import string
-
-from pygame import Color
 from sound import Audio
-from led import LED
 
 # List of words used in the game
-word_list = ['MY', 'THIS', 'A', 'IS', 'HOME','THE', 'IN', 'CITY', 'BY', 'OCEAN','ON', 'NOT', 'FARM', 'LIKE', 'I']
+word_list = ["I", "Home", "Ocean", "They", "Me", "Cat", "Dog", "Lion", "Pig", "Cow"]
 
 class GameLogic:
     def __init__(self):
         self.current_word = ""
         self.letter_map = {}  # Maps button numbers to letters
         self.chosen_letters = []  # Letters selected by the user so far
-        self.led = LED()
 
     def get_new_word(self):
         """Selects a new random word from the word list."""
@@ -42,11 +38,11 @@ class GameLogic:
         # Map button numbers (1-8) to letters
         self.letter_map = {i: letter for i, letter in enumerate(all_letters)}
         
-        # Print keypad number-letter combinations & # Display LED on each tile
+        # Print keypad number-letter combinations
         for button_number, letter in self.letter_map.items():
             self.led.display_letter(letter, button_number, Color(100, 100, 100))
             print(f"Button {button_number}: {letter}")
-
+        
         # Return the mapping of button numbers to letters for display
         return self.letter_map
 

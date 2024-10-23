@@ -1,6 +1,6 @@
 import pygame
 import sys
-from led import LED
+import led
 from pygame import mixer
 from screens import MainScreen
 from screens import TimerScreen
@@ -16,17 +16,15 @@ class Game:
         mixer.music.set_volume(0.7)
         mixer.music.play()
 
-        # led.setup_and_run_leds()
+        led.setup_and_run_leds()
 
         # Set up the window
-        self.screen_width, self.screen_height = 800, 600
+        self.screen_width, self.screen_height = 800, 400
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("My Game")
 
         # Initialize screen state
         self.current_screen = MainScreen(self)
-        led = LED()
-
 
     def switch_screen(self, new_screen):
         """Switch to a new screen."""

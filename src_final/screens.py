@@ -3,13 +3,33 @@ import pygame
 import random
 
 class MainScreen:
+    # def __init__(self, game):
+    #     self.game = game
+
+    #     # Button setup
+    #     self.font = pygame.font.Font(None, 50)
+    #     self.start_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 50, 200, 100)
+    #     self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
+
+ ################### THIS IS A TEST TO SEE IF NEW CHANGES ARE SAVED #####################
     def __init__(self, game):
         self.game = game
-
+       
+        # Full screen the GUI to fill the screen
+        self.display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+ 
+        # Screen dimensions
+        self.screen_width, self.screen_height = self.display.get_size()
+ 
         # Button setup
         self.font = pygame.font.Font(None, 50)
-        self.start_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 50, 200, 100)
-        self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
+       
+        # Centered Start/Quit buttons
+        self.start_button = pygame.Rect(0, 0, 200, 100)
+        self.start_button.center = (self.screen_width // 2, self.screen_height // 2 - 75)
+       
+        self.quit_button = pygame.Rect(0, 0, 200, 80)
+        self.quit_button.center = (self.screen_width // 2, self.screen_height // 2 + 75)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -24,16 +44,33 @@ class MainScreen:
     def update(self):
         pass
 
+    # def draw(self, screen):
+    #     # Draw Start button
+    #     pygame.draw.rect(screen, (0, 255, 0), self.start_button)
+    #     start_text = self.font.render("Start", True, (255, 255, 255))
+    #     screen.blit(start_text, (self.start_button.x + 50, self.start_button.y + 25))
+
+    #     # Draw Quit button
+    #     pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
+    #     quit_text = self.font.render("Quit", True, (255, 255, 255))
+    #     screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
+
     def draw(self, screen):
         # Draw Start button
         pygame.draw.rect(screen, (0, 255, 0), self.start_button)
         start_text = self.font.render("Start", True, (255, 255, 255))
-        screen.blit(start_text, (self.start_button.x + 50, self.start_button.y + 25))
-
+       
+        # Center text within button
+        start_text_rect = start_text.get_rect(center = self.start_button.center)
+        screen.blit(start_text, start_text_rect)
+ 
         # Draw Quit button
         pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
         quit_text = self.font.render("Quit", True, (255, 255, 255))
-        screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
+       
+        # Center text within button
+        quit_text_rect = quit_text.get_rect(center = self.quit_button.center)
+        screen.blit(quit_text, quit_text_rect)
 
 class TimerScreen:
     def __init__(self, game):
