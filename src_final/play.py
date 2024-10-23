@@ -1,6 +1,7 @@
 import random
 import string
 from sound import Audio
+from led import LED
 
 # List of words used in the game
 word_list = ["I", "Home", "Ocean", "They", "Me", "Cat", "Dog", "Lion", "Pig", "Cow"]

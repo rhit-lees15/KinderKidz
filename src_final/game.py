@@ -16,8 +16,6 @@ class Game:
         mixer.music.set_volume(0.7)
         mixer.music.play()
 
-        led.setup_and_run_leds()
-
         # Set up the window
         self.screen_width, self.screen_height = 800, 400
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
