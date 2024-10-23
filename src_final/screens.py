@@ -11,6 +11,7 @@ class MainScreen:
     #     self.start_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 50, 200, 100)
     #     self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
 
+ ################### THIS IS A TEST TO SEE IF NEW CHANGES ARE SAVED #####################
     def __init__(self, game):
         self.game = game
        
