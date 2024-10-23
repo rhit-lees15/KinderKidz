@@ -38,6 +38,8 @@ class GameLogic:
         
         # Print keypad number-letter combinations
         for button_number, letter in self.letter_map.items():
+            self.led.clear_all()
+            # self.led.display_letter(letter, button_number, Color(100, 100, 100))
             print(f"Button {button_number}: {letter}")
         
         # Return the mapping of button numbers to letters for display
@@ -55,14 +57,17 @@ class GameLogic:
         
         if chosen_letter == expected_letter:
             self.chosen_letters.append(chosen_letter)
+            # self.led.display_letter(expected_letter, button_number, Color(0, 255, 0))
             Audio.play_correct_letter()
             if len(self.chosen_letters) == len(self.current_word):
                 return True, "Next word"
             return True, "Correct"
         else:
             if chosen_letter in self.current_word:
+                # self.led.display_letter(expected_letter, button_number, Color(0, 0, 255))
                 Audio.play_wrong_order()  # Play wrong order sound
             else:
+                # self.led.display_letter(expected_letter, button_number, Color(255, 0, 0))
                 Audio.play_wrong_letter()  # Play wrong letter sound
             return False, "Try again"
         
