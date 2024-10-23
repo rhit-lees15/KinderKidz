@@ -1,5 +1,7 @@
 import random
 import string
+
+from pygame import Color
 from sound import Audio
 from led import LED
 
@@ -11,6 +13,7 @@ class GameLogic:
         self.current_word = ""
         self.letter_map = {}  # Maps button numbers to letters
         self.chosen_letters = []  # Letters selected by the user so far
+        self.led = LED()
 
     def get_new_word(self):
         """Selects a new random word from the word list."""
