@@ -148,15 +148,27 @@ class GameScreen:
         # Quit button setup
         self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
 
-        # Initialize GPIO buttons with a callback to handle button presses
+       # Initialize GPIO for buttons
         GPIO.setmode(GPIO.BCM)
         for pin in BUTTON_PINS.keys():
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            GPIO.add_event_detect(pin, GPIO.RISING, callback = self.handle_gpio_press, bouncetime=300)
-    
-    def handle_gpio_press(self, pin):
+            GPIO.add_event_detect(pin, GPIO.RISING, callback=self.gpio_button_pressed, bouncetime=300)
+   
+    def gpio_button_pressed(self, pin):
+        """Handles the event when a GPIO button is pressed."""
         button_number = BUTTON_PINS[pin]
         self.process_input(button_number)
+    
+    def process_input(self, button_number):
+        """Handles the logic for when a GPIO button (0-7) is pressed."""
+        correct, message = self.logic.check_input(button_number)
+        print(message)  # Print the result ("Correct", "Try again", "Next word")
+
+        if message == "Next word":
+            # Get new word and refresh buttons
+            self.current_word = self.logic.get_new_word()
+            self.letter_map = self.logic.generate_buttons()
+
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -186,15 +198,15 @@ class GameScreen:
                 sys.exit()
     
     
-    def process_input(self, button_number):
-        """Handles the logic for when a number key (1-8) is pressed."""
-        correct, message = self.logic.check_input(button_number)
-        print(message)  # Print the result ("Correct", "Try again", "Next word")
+    # def process_input(self, button_number):
+    #     """Handles the logic for when a number key (1-8) is pressed."""
+    #     correct, message = self.logic.check_input(button_number)
+    #     print(message)  # Print the result ("Correct", "Try again", "Next word")
 
-        if message == "Next word":
-            # Get new word and refresh buttons
-            self.current_word = self.logic.get_new_word()
-            self.letter_map = self.logic.generate_buttons()
+    #     if message == "Next word":
+    #         # Get new word and refresh buttons
+    #         self.current_word = self.logic.get_new_word()
+    #         self.letter_map = self.logic.generate_buttons()
 
     def update(self):
         # Calculate remaining time
