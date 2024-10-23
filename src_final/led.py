@@ -68,55 +68,8 @@ class LED:
             self.strip.setPixelColor(pixel_offset + i, Color(0, 0, 0))
         self.strip.show()
 
-    # def color_correct(self, tile):
-    #     """Set tile to green when the answer is correct."""
-    #     self.display_tile_color(tile, Color(0, 255, 0))  # Green for correct.
-
-    # def color_incorrect(self, tile):
-    #     """Set tile to red when the answer is incorrect."""
-    #     self.display_tile_color(tile, Color(255, 0, 0))  # Red for incorrect.
-
-    # def display_tile_color(self, tile, color):
-    #     """Set all pixels in a tile to a specific color."""
-    #     pixel_offset = tile * 100
-    #     for i in range(100):
-    #         self.strip.setPixelColor(pixel_offset + i, color)
-    #     self.strip.show()
-
     def clear_all(self):
         """Turn off all LEDs."""
         for i in range(self.strip.numPixels()):
             self.strip.setPixelColor(i, Color(0, 0, 0))
         self.strip.show()
-
-
-    
-# # Define functions which animate LEDs in various ways.
-# def colorWipe(strip, color, wait_ms=50):
-#     """Wipe color across display a pixel at a time."""
-#     for i in range(strip.numPixels()):
-#         strip.setPixelColor(i, color)
-#         strip.show()
-#         time.sleep(wait_ms/1000.0)
-
-# def setup_and_run_leds():
-#     """Function to initialize and run LED animations."""
-#     # Create NeoPixel object with appropriate configuration.
-#     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-#     # Intialize the library (must be called once before other functions).
-#     strip.begin()
-
-#     try:
-#         # Run the LED animations
-#         print ('Running LED animations...')
-#         colorWipe(strip, Color(255, 0, 0))  # Red wipe
-#         colorWipe(strip, Color(0, 255, 0))  # Green wipe
-#         colorWipe(strip, Color(0, 0, 255))  # Blue wipe
-
-#     except KeyboardInterrupt:
-#         # Clear LEDs on exit
-#         colorWipe(strip, Color(0, 0, 0), 10)
-
-# # If running as standalone script, call the function
-# if __name__ == '__main__':
-#     setup_and_run_leds()

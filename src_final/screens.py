@@ -88,8 +88,8 @@ class TimerScreen:
 
 
 from play import GameLogic
-import RPi.GPIO
 from buttons import Buttons
+import RPi.GPIO as GPIO
 # Define GPIO pins for buttons
 BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
 
@@ -104,8 +104,6 @@ class GameScreen:
         self.current_word = self.logic.get_new_word()
         self.letter_map = self.logic.generate_buttons()
 
-
-
         # Timer setup
         self.start_time = pygame.time.get_ticks()
 
@@ -113,33 +111,42 @@ class GameScreen:
         self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
 
         # Initialize GPIO buttons with a callback to handle button presses
-        self.buttons = Buttons(BUTTON_PINS, self.process_input)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(BUTTON_PINS, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
+        for pin in BUTTON_PINS:
+            GPIO.add_event_detect(pin, GPIO.RISTING, callback = self.handle_gpio_press, bouncetime=300)
+        
     def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            # Check if number keys 1 to 8 are pressed
-            if event.key == pygame.K_1:
-                self.process_input(1)
-            elif event.key == pygame.K_2:
-                self.process_input(2)
-            elif event.key == pygame.K_3:
-                self.process_input(3)
-            elif event.key == pygame.K_4:
-                self.process_input(4)
-            elif event.key == pygame.K_5:
-                self.process_input(5)
-            elif event.key == pygame.K_6:
-                self.process_input(6)
-            elif event.key == pygame.K_7:
-                self.process_input(7)
-            elif event.key == pygame.K_8:
-                self.process_input(8)
+        # if event.type == pygame.KEYDOWN:
+        #     # Check if number keys 1 to 8 are pressed
+        #     if event.key == pygame.K_1:
+        #         self.process_input(1)
+        #     elif event.key == pygame.K_2:
+        #         self.process_input(2)
+        #     elif event.key == pygame.K_3:
+        #         self.process_input(3)
+        #     elif event.key == pygame.K_4:
+        #         self.process_input(4)
+        #     elif event.key == pygame.K_5:
+        #         self.process_input(5)
+        #     elif event.key == pygame.K_6:
+        #         self.process_input(6)
+        #     elif event.key == pygame.K_7:
+        #         self.process_input(7)
+        #     elif event.key == pygame.K_8:
+        #         self.process_input(8)
 
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = event.pos
             if self.quit_button.collidepoint(mouse_pos):
                 pygame.quit()
+                GPIO.cleanup()
                 sys.exit()
+    
+    def handle_gpio_press(self, pin):
+        button_number = BUTTON_PINS.index(pin) + 1 # Get button number (1-8)
+        self.process_input(button_number)
     
     def process_input(self, button_number):
         """Handles the logic for when a number key (1-8) is pressed."""
