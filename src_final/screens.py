@@ -2,6 +2,12 @@ import sys
 import pygame
 import random
 
+# Full screen the GUI to fill the screen
+display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+# Screen dimensions
+screen_width, screen_height = display.get_size()
+
 class MainScreen:
     # def __init__(self, game):
     #     self.game = game
@@ -14,22 +20,16 @@ class MainScreen:
  ################### THIS IS A TEST TO SEE IF NEW CHANGES ARE SAVED #####################
     def __init__(self, game):
         self.game = game
-       
-        # Full screen the GUI to fill the screen
-        self.display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
- 
-        # Screen dimensions
-        self.screen_width, self.screen_height = self.display.get_size()
  
         # Button setup
         self.font = pygame.font.Font(None, 50)
        
         # Centered Start/Quit buttons
         self.start_button = pygame.Rect(0, 0, 200, 100)
-        self.start_button.center = (self.screen_width // 2, self.screen_height // 2 - 75)
+        self.start_button.center = (screen_width // 2, screen_height // 2 - 75)
        
         self.quit_button = pygame.Rect(0, 0, 200, 80)
-        self.quit_button.center = (self.screen_width // 2, self.screen_height // 2 + 75)
+        self.quit_button.center = (screen_width // 2, screen_height // 2 + 75)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -77,13 +77,25 @@ class TimerScreen:
         self.game = game
         self.font = pygame.font.Font(None, 50)
 
-        # Button setup for 1 minute, 3 minutes, 5 minutes
-        self.one_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 100, 200, 60)
-        self.three_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2, 200, 60)
-        self.five_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 100, 200, 60)
+        # # Button setup for 1 minute, 3 minutes, 5 minutes
+        # self.one_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 100, 200, 60)
+        # self.three_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2, 200, 60)
+        # self.five_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 100, 200, 60)
 
-        self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+        # self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
 
+        # **** Modification
+        self.one_min_button = pygame.Rect(0, 0, 200, 60)
+        self.one_min_button.center = (screen_width // 3, screen_height // 2)
+        
+        self.three_min_button = pygame.Rect(0, 0, 200, 60)
+        self.three_min_button.center = (screen_width // 2, screen_height // 2)
+
+        self.five_min_button = pygame.Rect(0, 0, 200, 60)
+        self.five_min_button.center = (screen_width * (2 // 3), screen_height // 2)
+        
+        self.add_word_button = pygame.Rect(0, 0, 200, 60)
+        
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = event.pos
@@ -91,6 +103,7 @@ class TimerScreen:
                 self.game.switch_screen(AddWordScreen) 
             elif self.one_min_button.collidepoint(mouse_pos):
                 print("1-minute timer selected!")
+                # CHANGE TIMER HERE
                 self.game.switch_screen(lambda game: GameScreen(game, 10))
             elif self.three_min_button.collidepoint(mouse_pos):
                 print("3-minute timer selected!")
@@ -145,8 +158,10 @@ class GameScreen:
         # Timer setup
         self.start_time = pygame.time.get_ticks()
 
-        # Quit button setup
-        self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
+        # # Quit button setup
+        # self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
+        self.quit_button = pygame.Rect(0, 0, 200, 80)
+        self.quit_button.center = (screen_width // 2, screen_height // 2 + 75)
 
        # Initialize GPIO for buttons
         GPIO.setmode(GPIO.BCM)
@@ -207,13 +222,22 @@ class GameScreen:
             self.game.switch_screen(lambda game: MusicScreen(game))
 
     def draw(self, screen):
+        # # Draw the remaining time (top-right corner)
+        # time_text = self.font.render(f"Time: {self.remaining_time}", True, (255, 255, 255))
+        # screen.blit(time_text, (self.game.screen_width - 150, 20))
+
+        # # Draw the random word (center of the screen)
+        # word_text = self.font.render(self.current_word, True, (255, 255, 255))
+        # screen.blit(word_text, (self.game.screen_width // 2 - 50, self.game.screen_height // 2 - 25))
+
         # Draw the remaining time (top-right corner)
         time_text = self.font.render(f"Time: {self.remaining_time}", True, (255, 255, 255))
-        screen.blit(time_text, (self.game.screen_width - 150, 20))
+        screen.blit(time_text, (screen_width - 150, 20))
 
         # Draw the random word (center of the screen)
         word_text = self.font.render(self.current_word, True, (255, 255, 255))
-        screen.blit(word_text, (self.game.screen_width // 2 - 50, self.game.screen_height // 2 - 25))
+        screen.blit(word_text, (screen_width // 2 - 50, screen_height // 2 - 25))
+
 
         # # Display the letter-to-button mapping for the user's reference
         # for i in range(8):
@@ -240,26 +264,37 @@ class MusicScreen:
 
         # Buttons setup for songs
         self.song_buttons = [
-            pygame.Rect(game.screen_width // 2 - 100, 50 + i * 60, 200, 50) for i in range(6)
+            # pygame.Rect(game.screen_width // 2 - 100, 50 + i * 60, 200, 50) for i in range(6)
+            pygame.Rect(screen_width // 2 - 100, 50 + i * 60, 200, 50) for i in range(5)
         ]
         self.songs = [
             "Audio/Songs/twinkle-twinkle.mp3",
             "Audio/Songs/happy-and-you-know-it.mp3",
-            "Audio/Songs/idk.mp3",
+            # "Audio/Songs/idk.mp3",
             "Audio/Songs/my-year-zombies.mp3",
             "Audio/Songs/puff-the-magic-dragon.mp3",
             "Audio/Songs/body-bop-bop.mp3"
         ]
-        self.song_labels = [f"Song {i+1}" for i in range(6)]
+        # self.song_labels = [f"Song {i+1}" for i in range(6)]
+        self.song_labels = [f"Song {i+1}" for i in range(5)]
+
+    #     # "Choose Your Own!" button
+    #     self.choose_button = pygame.Rect(game.screen_width - 250, game.screen_height - 80, 200, 50)
+
+    #     # "Back to the game!" button
+    #     self.back_button = pygame.Rect(50, game.screen_height - 80, 200, 50)
+
+    #    # Quit button setup
+    #     self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
 
         # "Choose Your Own!" button
-        self.choose_button = pygame.Rect(game.screen_width - 250, game.screen_height - 80, 200, 50)
+        self.choose_button = pygame.Rect(screen_width - 250, screen_height - 80, 200, 50)
 
         # "Back to the game!" button
-        self.back_button = pygame.Rect(50, game.screen_height - 80, 200, 50)
+        self.back_button = pygame.Rect(50, screen_height - 80, 200, 50)
 
        # Quit button setup
-        self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
+        self.quit_button = pygame.Rect(screen_width // 2 - 100, screen_height - 120, 200, 80)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -315,7 +350,9 @@ class AddWordScreen:
         self.game = game
         self.font = pygame.font.Font(None, 50)
 
-        self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+        # self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+        
+        self.add_word_button = pygame.Rect(screen_width // 2 - 100, screen_height // 2 + 180, 200, 60)
 
         self.input_box = pygame.Rect(100, 100, 600, 50)
         self.input_text = ''
