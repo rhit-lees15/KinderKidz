@@ -152,7 +152,7 @@ class GameScreen:
         GPIO.setmode(GPIO.BCM)
         for pin in BUTTON_PINS.keys():
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=self.gpio_button_pressed(pin), bouncetime=300)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=self.gpio_button_pressed, bouncetime=300)
    
     def gpio_button_pressed(self, pin):
         """Handles the event when a GPIO button is pressed."""
