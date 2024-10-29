@@ -111,8 +111,8 @@ class TimerScreen:
                                            self.one_min_button.y + button_height + button_spacing, 
                                            button_width, button_height)
         
-        self.quit_button = pygame.Rect(0, 0, 200, 80)
-        self.quit_button.center = (screen_width // 2, screen_height // 2 + 75)
+        self.add_word_button = pygame.Rect(0, 0, 200, 80)
+        self.add_word_button.center = (screen_width // 2, screen_height // 2 + 75)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
