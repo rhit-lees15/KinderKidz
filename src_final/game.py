@@ -1,6 +1,7 @@
 import pygame
 import sys
 import led
+from pathlib import Path
 from pygame import mixer
 from screens import MainScreen
 from screens import TimerScreen
@@ -12,7 +13,8 @@ class Game:
         mixer.init()
 
         # Load background music
-        mixer.music.load("Audio/whatsupcarmineletsdosomespelling.mp3")
+        mixer.music.load(open(Path(__file__).parent.parent / "Audio" / "whatsupcarmineletsdosomespelling.mp3", 'r'))
+        
         mixer.music.set_volume(0.7)
         mixer.music.play()
 
