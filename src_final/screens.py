@@ -2,6 +2,15 @@ import sys
 import pygame
 import random
 
+import tkinter as tk
+
+# Full screen the GUI to fill the screen
+display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+# Screen dimensions
+screen_width, screen_height = display.get_size()
+screen = pygame.display.set_mode((screen_width, screen_height))
+
 class MainScreen:
     # def __init__(self, game):
     #     self.game = game
@@ -14,22 +23,23 @@ class MainScreen:
  ################### THIS IS A TEST TO SEE IF NEW CHANGES ARE SAVED #####################
     def __init__(self, game):
         self.game = game
-       
-        # Full screen the GUI to fill the screen
-        self.display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
- 
-        # Screen dimensions
-        self.screen_width, self.screen_height = self.display.get_size()
- 
+    
         # Button setup
         self.font = pygame.font.Font(None, 50)
        
         # Centered Start/Quit buttons
         self.start_button = pygame.Rect(0, 0, 200, 100)
-        self.start_button.center = (self.screen_width // 2, self.screen_height // 2 - 75)
+        self.start_button.center = (screen_width // 2, screen_height // 2 - 75)
        
         self.quit_button = pygame.Rect(0, 0, 200, 80)
-        self.quit_button.center = (self.screen_width // 2, self.screen_height // 2 + 75)
+        self.quit_button.center = (screen_width // 2, screen_height // 2 + 75)
+        
+        # # Centered Start/Quit buttons
+        # self.start_button = pygame.Rect(0, 0, 200, 100)
+        # self.start_button.center = (self.screen_width // 2, self.screen_height // 2 - 75)
+       
+        # self.quit_button = pygame.Rect(0, 0, 200, 80)
+        # self.quit_button.center = (self.screen_width // 2, self.screen_height // 2 + 75)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -74,15 +84,35 @@ class MainScreen:
 
 class TimerScreen:
     def __init__(self, game):
+        # self.game = game
+        # self.font = pygame.font.Font(None, 50)
+
+        # # Button setup for 1 minute, 3 minutes, 5 minutes
+        # self.one_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 100, 200, 60)
+        # self.three_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2, 200, 60)
+        # self.five_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 100, 200, 60)
+
+        # self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+
         self.game = game
         self.font = pygame.font.Font(None, 50)
 
+        # Space between each button, width, and height
+        button_spacing, button_width, button_height = 20, 100, 40
+        
         # Button setup for 1 minute, 3 minutes, 5 minutes
-        self.one_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 100, 200, 60)
-        self.three_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2, 200, 60)
-        self.five_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 100, 200, 60)
-
-        self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+        self.one_min_button = pygame.Rect((screen_width - button_width) // 2, 
+                                          (screen_height - (3 * button_height + 2 * button_spacing)) // 2,
+                                          button_width, button_height)
+        self.three_min_button = pygame.Rect(self.one_min_button.x,
+                                            self.one_min_button.y + button_height + button_spacing,
+                                            button_width, button_height)
+        self.five_min_button = pygame.Rect(self.one_min_button.x,
+                                           self.one_min_button.y + button_height + button_spacing, 
+                                           button_width, button_height)
+        
+        self.quit_button = pygame.Rect(0, 0, 200, 80)
+        self.quit_button.center = (screen_width // 2, screen_height // 2 + 75)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -319,8 +349,10 @@ class AddWordScreen:
 
         self.input_box = pygame.Rect(100, 100, 600, 50)
         self.input_text = ''
-
         self.word_list = GameLogic.get_word_list()
+        
+        # Scroll position for the word list
+        self.scroll_y = 0
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -328,8 +360,7 @@ class AddWordScreen:
             if self.add_word_button.collidepoint(mouse_pos):
                 self.game.switch_screen(lambda game: AddWordScreen(game))
 
-
-        if event.type == pygame.KEYDOWN:
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 if self.input_text:
                     GameLogic.add_word(self.input_text)  # Add the word to the list
@@ -340,6 +371,11 @@ class AddWordScreen:
                 self.input_text = self.input_text[:-1]
             else:
                 self.input_text += event.unicode
+
+        elif event.type == pygame.MOUSEWHEEL:
+            # Adjust scroll position based on mouse wheel input
+            self.scroll_y += event.y * 40  # Adjust scroll speed as needed
+            self.scroll_y = max(min(self.scroll_y, 0), -(len(self.word_list) * 40 - (screen.get_height() - 250)))
 
     def update(self):
         pass
@@ -355,23 +391,75 @@ class AddWordScreen:
         text_surface = self.font.render(self.input_text, True, (255, 255, 255))
         screen.blit(text_surface, (self.input_box.x + 5, self.input_box.y + 5))
 
-        # Draw the current word list
+        # Draw the current word list with scrolling
         max_height = screen.get_height() - 250  # Leave space for buttons and input box
-        max_words_per_column = max_height // 40  # Assuming each word takes 40 pixels in height
-        x_position = 100  # Starting X position
-        y_position = 200  # Starting Y position
+        y_position = 200 + self.scroll_y  # Apply scroll offset here
 
-        for idx, word in enumerate(self.word_list):
+        for word in self.word_list:
             word_surface = self.font.render(word, True, (255, 255, 255))
+            screen.blit(word_surface, (100, y_position))
+            y_position += 40  # Adjust y_position for each word
+    # def __init__(self, game):
+    #     self.game = game
+    #     self.font = pygame.font.Font(None, 50)
+
+    #     self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+
+    #     self.input_box = pygame.Rect(100, 100, 600, 50)
+    #     self.input_text = ''
+
+    #     self.word_list = GameLogic.get_word_list()
+
+    # def handle_event(self, event):
+    #     if event.type == pygame.MOUSEBUTTONDOWN:
+    #         mouse_pos = event.pos
+    #         if self.add_word_button.collidepoint(mouse_pos):
+    #             self.game.switch_screen(lambda game: AddWordScreen(game))
+
+
+    #     if event.type == pygame.KEYDOWN:
+    #         if event.key == pygame.K_RETURN:
+    #             if self.input_text:
+    #                 GameLogic.add_word(self.input_text)  # Add the word to the list
+    #                 print("Word Added!")
+    #                 self.word_list = GameLogic.get_word_list()
+    #                 self.input_text = ''
+    #         elif event.key == pygame.K_BACKSPACE:
+    #             self.input_text = self.input_text[:-1]
+    #         else:
+    #             self.input_text += event.unicode
+
+    # def update(self):
+    #     pass
+
+    # def draw(self, screen):
+    #     # Draw the Add Word button
+    #     pygame.draw.rect(screen, (0, 255, 0), self.add_word_button)
+    #     add_word_text = self.font.render("Add", True, (255, 255, 255))
+    #     screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
+
+    #     # Draw the input box
+    #     pygame.draw.rect(screen, (255, 255, 255), self.input_box, 2)
+    #     text_surface = self.font.render(self.input_text, True, (255, 255, 255))
+    #     screen.blit(text_surface, (self.input_box.x + 5, self.input_box.y + 5))
+
+    #     # Draw the current word list
+    #     max_height = screen.get_height() - 250  # Leave space for buttons and input box
+    #     max_words_per_column = max_height // 40  # Assuming each word takes 40 pixels in height
+    #     x_position = 100  # Starting X position
+    #     y_position = 200  # Starting Y position
+
+    #     for idx, word in enumerate(self.word_list):
+    #         word_surface = self.font.render(word, True, (255, 255, 255))
             
-            # Check if the current position exceeds the screen height
-            if idx >= max_words_per_column:
-                # Move to the next column
-                x_position += 200  # Adjust this value to space out columns
-                y_position = 200  # Reset Y position to the start
+    #         # Check if the current position exceeds the screen height
+    #         if idx >= max_words_per_column:
+    #             # Move to the next column
+    #             x_position += 200  # Adjust this value to space out columns
+    #             y_position = 200  # Reset Y position to the start
 
-            screen.blit(word_surface, (x_position, y_position + idx * 40))
+    #         screen.blit(word_surface, (x_position, y_position + idx * 40))
 
-            # Adjust y_position for the next word
-            if idx < max_words_per_column:
-                y_position += 40  # Increment Y position for each word
+    #         # Adjust y_position for the next word
+    #         if idx < max_words_per_column:
+    #             y_position += 40  # Increment Y position for each word
