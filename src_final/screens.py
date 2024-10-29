@@ -98,17 +98,18 @@ class TimerScreen:
         self.font = pygame.font.Font(None, 50)
 
         # Space between each button, width, and height
-        button_spacing, button_width, button_height = 20, 100, 40
+        button_spacing, button_width, button_height = 20, 250, 50
         
+        # pygame.Rect(x, y, width, height)
         # Button setup for 1 minute, 3 minutes, 5 minutes
         self.one_min_button = pygame.Rect((screen_width - button_width) // 2, 
-                                          (screen_height - (3 * button_height + 2 * button_spacing)) // 2,
+                                          ((1/4) * screen_height) // 2,
                                           button_width, button_height)
         self.three_min_button = pygame.Rect(self.one_min_button.x,
                                             self.one_min_button.y + button_height + button_spacing,
                                             button_width, button_height)
-        self.five_min_button = pygame.Rect(self.one_min_button.x,
-                                           self.one_min_button.y + button_height + button_spacing, 
+        self.five_min_button = pygame.Rect(self.three_min_button.x,
+                                           self.three_min_button.y + button_height + button_spacing, 
                                            button_width, button_height)
         
         self.add_word_button = pygame.Rect(0, 0, 200, 80)
@@ -150,7 +151,7 @@ class TimerScreen:
 
         # Draw the Add Word button
         pygame.draw.rect(screen, (0, 255, 0), self.add_word_button)
-        add_word_text = self.font.render("Add New Words!", True, (255, 255, 255))
+        add_word_text = self.font.render("Add Words!", True, (255, 255, 255))
         screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
 
 
@@ -166,7 +167,6 @@ class GameScreen:
         self.game = game
         self.game_duration = game_duration  # Time in seconds
         self.font = pygame.font.Font(None, 50)
-
  
         self.logic = GameLogic()
         self.current_word = self.logic.get_new_word()
