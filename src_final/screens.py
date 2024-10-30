@@ -464,7 +464,7 @@ class AddWordScreen:
                 self.game.switch_screen(lambda game: AddWordScreen(game))
             elif self.home_button.collidepoint(mouse_pos):
                 # Return to Home
-                self.game.switch_screen(lambda game: HomeScreen(game))
+                self.game.switch_screen(lambda game: TimerScreen(game))
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
