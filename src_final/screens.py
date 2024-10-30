@@ -262,9 +262,9 @@ class GameScreen:
     #         self.game.switch_screen(lambda game: MusicScreen(game))
 
     def draw(self, screen):
-        # Draw the remaining time (top-right corner)
-        time_text = self.font.render(f"Time: {self.remaining_time}", True, (255, 255, 255))
-        screen.blit(time_text, (self.game.screen_width - 150, 20))
+        # # Draw the remaining time (top-right corner)
+        # time_text = self.font.render(f"Time: {self.remaining_time}", True, (255, 255, 255))
+        # screen.blit(time_text, (self.game.screen_width - 150, 20))
 
         # Draw the random word (center of the screen)
         word_text = self.font.render(self.current_word, True, (255, 255, 255))
