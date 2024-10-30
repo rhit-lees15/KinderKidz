@@ -377,7 +377,7 @@ class MusicScreen:
     def update(self):
         pass
 
-    def draw_buttons(self):
+    def draw(self, screen):
         for i, button in enumerate(self.song_buttons):
             # Draw the button rectangle
             pygame.draw.rect(self.game.screen, (255, 165, 0), button)  # Orange color
