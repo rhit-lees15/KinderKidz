@@ -305,7 +305,7 @@ class MusicScreen:
         for i in range(len(self.songs)):
             column = i % 2  # Determines left or right column
             row = i // 2    # Row index, increments every 2 songs
-            x_position = game.screen_width // 4 + column * (game.screen_width // 2 - 100)  # Left or right column position
+            x_position = game.screen_width // 3 + column * (game.screen_width // 2 - 100)  # Left or right column position
             y_position = 50 + row * 60  # Increment row position
 
             # Create button at calculated position and add to list
