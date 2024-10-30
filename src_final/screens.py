@@ -112,7 +112,7 @@ class TimerScreen:
                                            self.three_min_button.y + button_height + button_spacing, 
                                            button_width, button_height)
         
-        self.add_word_button = pygame.Rect(0, 0, 200, 80)
+        self.add_word_button = pygame.Rect(0, 0, 250, 80)
         self.add_word_button.center = (screen_width // 2, screen_height // 2 + 75)
 
     def handle_event(self, event):
@@ -291,17 +291,19 @@ class MusicScreen:
 
         # Buttons setup for songs
         self.song_buttons = [
-            pygame.Rect(game.screen_width // 2 - 100, 50 + i * 60, 200, 50) for i in range(6)
+            pygame.Rect(game.screen_width // 2 - 100, 50 + i * 60, 200, 50) for i in range(5)
         ]
+
         self.songs = [
             "Audio/Songs/twinkle-twinkle.mp3",
             "Audio/Songs/happy-and-you-know-it.mp3",
-            "Audio/Songs/idk.mp3",
+            # "Audio/Songs/idk.mp3",
             "Audio/Songs/my-year-zombies.mp3",
             "Audio/Songs/puff-the-magic-dragon.mp3",
             "Audio/Songs/body-bop-bop.mp3"
         ]
-        self.song_labels = [f"Song {i+1}" for i in range(6)]
+        # self.song_labels = [f"Song {i+1}" for i in range(6)]
+        self.song_labels = [f"Song {i+1}" for i in range(5)]
 
         # "Choose Your Own!" button
         self.choose_button = pygame.Rect(game.screen_width - 250, game.screen_height - 80, 200, 50)
@@ -348,12 +350,12 @@ class MusicScreen:
 
         # Draw the "Choose Your Own!" button
         pygame.draw.rect(screen, (0, 255, 255), self.choose_button)
-        choose_text = self.font.render("Choose Your Own!", True, (255, 255, 255))
+        choose_text = self.font.render("Choose Song!", True, (255, 255, 255))
         screen.blit(choose_text, (self.choose_button.x + 20, self.choose_button.y + 10))
         
         # Draw the "Back to the game!" button
-        pygame.draw.rect(screen, (255, 255, 0), self.back_button)
-        back_text = self.font.render("Back to the game!", True, (255, 255, 255))
+        pygame.draw.rect(screen, (255, 165, 0), self.back_button)
+        back_text = self.font.render("Home", True, (255, 255, 255))
         screen.blit(back_text, (self.back_button.x + 20, self.back_button.y + 10))
 
         # Draw the quit button
