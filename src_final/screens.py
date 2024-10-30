@@ -228,13 +228,34 @@ class GameScreen:
                 sys.exit()
 
     def update(self):
-        # Calculate remaining time
+        # Calculate remaining time in seconds
         elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000
         self.remaining_time = self.game_duration - elapsed_time
 
         # End the game when the timer reaches zero
         if self.remaining_time <= 0:
             self.game.switch_screen(lambda game: MusicScreen(game))
+            return
+
+        # Calculate minutes and seconds from remaining time
+        minutes = self.remaining_time // 60
+        seconds = self.remaining_time % 60
+        time_display = f"{minutes:02}:{seconds:02}"  # Format as mm:ss
+
+        # Display the timer on the screen
+        font = pygame.font.Font(None, 36)  # Choose font and size
+        timer_text = font.render(time_display, True, (255, 255, 255))  # White color
+        screen = pygame.display.get_surface()  # Get the screen surface
+        screen.blit(timer_text, (screen.get_width() // 2 - timer_text.get_width() // 2, 20))  # Centered at the top
+
+    # def update(self):
+    #     # Calculate remaining time
+    #     elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000
+    #     self.remaining_time = self.game_duration - elapsed_time
+
+    #     # End the game when the timer reaches zero
+    #     if self.remaining_time <= 0:
+    #         self.game.switch_screen(lambda game: MusicScreen(game))
 
     def draw(self, screen):
         # Draw the remaining time (top-right corner)
