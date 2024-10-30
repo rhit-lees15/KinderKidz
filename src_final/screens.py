@@ -279,7 +279,8 @@ class GameScreen:
         # Draw the quit button
         pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
         quit_text = self.font.render("Quit", True, (255, 255, 255))
-        screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
+        quit_rect = quit_text.get_rect(center=self.quit_button.center)  # Centered in the quit button
+        screen.blit(quit_text, quit_rect)
 
     def __del__(self):
         GPIO.cleanup()
