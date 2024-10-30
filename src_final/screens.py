@@ -380,10 +380,10 @@ class MusicScreen:
     def draw(self, screen):
         for i, button in enumerate(self.song_buttons):
             # Draw the button rectangle
-            pygame.draw.rect(self.game.screen, (255, 165, 0), button)  # Orange color
+            pygame.draw.rect(self.game.screen, (0, 255, 0), button)  # Green color for song buttons
 
-            # Render the text for the button label
-            label_surface = self.font.render(self.song_labels[i], True, (0, 0, 0))  # Black text
+            # Render the text for the song label
+            label_surface = self.font.render(self.song_labels[i], True, (255, 255, 255))  # White text
             label_rect = label_surface.get_rect(center=button.center)  # Center the text in the button
 
             # Draw the text on the screen
@@ -392,19 +392,19 @@ class MusicScreen:
         # Draw the "Choose Your Own!" button
         pygame.draw.rect(screen, (0, 255, 255), self.choose_button)
         choose_text = self.font.render("Choose Song!", True, (255, 255, 255))
-        choose_rect = choose_text.get_rect(center=button.center)
+        choose_rect = choose_text.get_rect(center=self.choose_button.center)  # Centered in the "Choose Your Own!" button
         screen.blit(choose_text, choose_rect)
         
         # Draw the "Back to the game!" button
         pygame.draw.rect(screen, (255, 165, 0), self.back_button)
         back_text = self.font.render("Home", True, (255, 255, 255))
-        back_rect = back_text.get_rect(center=button.center)
+        back_rect = back_text.get_rect(center=self.back_button.center)  # Centered in the "Back to the game!" button
         screen.blit(back_text, back_rect)
 
         # Draw the quit button
         pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
         quit_text = self.font.render("Quit", True, (255, 255, 255))
-        quit_rect = quit_text.get_rect(center=button.center)
+        quit_rect = quit_text.get_rect(center=self.quit_button.center)  # Centered in the quit button
         screen.blit(quit_text, quit_rect)
 
     # def draw(self, screen):
