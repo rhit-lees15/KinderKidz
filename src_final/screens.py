@@ -137,22 +137,26 @@ class TimerScreen:
         # Draw the 1 minute button
         pygame.draw.rect(screen, (0, 255, 0), self.one_min_button)
         one_min_text = self.font.render("10 Seconds", True, (255, 255, 255))
-        screen.blit(one_min_text, (self.one_min_button.x + 25, self.one_min_button.y + 15))
+        one_min_text_rect = one_min_text.get_rect(center=self.one_min_button.center)
+        screen.blit(one_min_text, one_min_text_rect)
 
         # Draw the 3 minute button
         pygame.draw.rect(screen, (0, 255, 0), self.three_min_button)
         three_min_text = self.font.render("3 Minutes", True, (255, 255, 255))
-        screen.blit(three_min_text, (self.three_min_button.x + 25, self.three_min_button.y + 15))
+        three_min_text_rect = three_min_text.get_rect(center=self.three_min_button.center)
+        screen.blit(three_min_text, three_min_text_rect)
 
         # Draw the 5 minute button
         pygame.draw.rect(screen, (0, 255, 0), self.five_min_button)
         five_min_text = self.font.render("5 Minutes", True, (255, 255, 255))
-        screen.blit(five_min_text, (self.five_min_button.x + 25, self.five_min_button.y + 15))
+        five_min_text_rect = five_min_text.get_rect(center=self.five_min_button.center)
+        screen.blit(five_min_text, five_min_text_rect)
 
         # Draw the Add Word button
         pygame.draw.rect(screen, (0, 255, 0), self.add_word_button)
         add_word_text = self.font.render("Add Words!", True, (255, 255, 255))
-        screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
+        add_word_text_rect = add_word_text.get_rect(center=self.add_word_button.center)
+        screen.blit(add_word_text, add_word_text_rect)
 
 
 from play import GameLogic
