@@ -446,25 +446,22 @@ class AddWordScreen:
         self.font = pygame.font.Font(None, 50)
 
         self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
-        self.home_button = pygame.Rect((game.screen_width - 150) // 2, 10, 150, 50)  # Centered at the top
 
         self.input_box = pygame.Rect(100, 100, 600, 50)
         self.input_text = ''
         self.word_list = GameLogic.get_word_list()
-
-        # Scroll position and scroll bar setup
+        
+        # Scroll position for the word list
         self.scroll_y = 0
-        self.scroll_bar = pygame.Rect(game.screen_width - 20, 200, 10, 100)  # Scroll bar dimensions
+        self.scroll_speed = 40  # How much to scroll with each mouse wheel movement
+        self.word_height = 40  # Height of each word in the list
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = event.pos
             if self.add_word_button.collidepoint(mouse_pos):
-                # Add word screen logic (refresh or reset screen)
-                self.game.switch_screen(lambda game: AddWordScreen(game))
-            elif self.home_button.collidepoint(mouse_pos):
-                # Return to Home
-                self.game.switch_screen(lambda game: TimerScreen(game))
+                # Add word logic could be here if needed
+                pass
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
@@ -480,19 +477,14 @@ class AddWordScreen:
 
         elif event.type == pygame.MOUSEWHEEL:
             # Adjust scroll position based on mouse wheel input
-            self.scroll_y += event.y * 40  # Adjust scroll speed as needed
-            # Clamp scroll position to prevent scrolling beyond content
-            max_scroll = max(0, len(self.word_list) * 40 - (self.game.screen_height - 250))
-            self.scroll_y = min(max(self.scroll_y, -max_scroll), 0)
+            self.scroll_y += event.y * self.scroll_speed  # Adjust scroll speed as needed
+
+            # Prevent scrolling beyond the bounds of the word list
+            max_scroll = max(0, -(len(self.word_list) * self.word_height - (self.game.screen_height - 250)))
+            self.scroll_y = max(min(self.scroll_y, 0), max_scroll)
 
     def update(self):
-        # Update scroll bar position based on scroll_y
-        visible_height = self.game.screen_height - 250  # Height for the word list display
-        content_height = len(self.word_list) * 40
-        if content_height > visible_height:
-            self.scroll_bar.height = max(50, visible_height * visible_height // content_height)
-            scroll_ratio = -self.scroll_y / max(1, content_height - visible_height)
-            self.scroll_bar.y = 200 + int(scroll_ratio * (visible_height - self.scroll_bar.height))
+        pass
 
     def draw(self, screen):
         # Draw the Add Word button
@@ -505,24 +497,19 @@ class AddWordScreen:
         text_surface = self.font.render(self.input_text, True, (255, 255, 255))
         screen.blit(text_surface, (self.input_box.x + 5, self.input_box.y + 5))
 
-        # Draw the word list with scrolling
-        y_position = 200 + self.scroll_y  # Apply scroll offset
-        max_height = screen.get_height() - 250  # Leave space for buttons and input box
+        # Draw the current word list with scrolling
+        y_position = 200 + self.scroll_y  # Apply scroll offset here
 
         for word in self.word_list:
             word_surface = self.font.render(word, True, (255, 255, 255))
             screen.blit(word_surface, (100, y_position))
-            y_position += 40
-
-        # Draw the scroll bar
-        pygame.draw.rect(screen, (180, 180, 180), self.scroll_bar)  # Gray color for scroll bar
+            y_position += self.word_height  # Adjust y_position for each word
 
         # Draw the "Return to Home" button
         pygame.draw.rect(screen, (255, 0, 0), self.home_button)
         home_text = self.font.render("Home", True, (255, 255, 255))
         home_text_rect = home_text.get_rect(center=self.home_button.center)
         screen.blit(home_text, home_text_rect)
-
 
 # class AddWordScreen:
 #     def __init__(self, game):
