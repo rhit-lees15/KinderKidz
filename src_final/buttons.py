@@ -66,10 +66,10 @@ if __name__ == "__main__":
 
     try:
         # Game loop - just to keep the program running
-        while True:
+        while(True):
             try:
             # time.sleep(0.1)
-                time.sleep(1)
+                sleep(1)
             finally: 
                 GPIO.cleanup()
     except KeyboardInterrupt:
