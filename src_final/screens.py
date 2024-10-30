@@ -446,7 +446,7 @@ class AddWordScreen:
         self.font = pygame.font.Font(None, 50)
 
         self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
-        self.home_button = pygame.Rect(10, 10, 150, 50)  # "Return to Home" button at the top
+        self.home_button = pygame.Rect((game.screen_width - 150) // 2, 10, 150, 50)  # Centered at the top
 
         self.input_box = pygame.Rect(100, 100, 600, 50)
         self.input_text = ''
