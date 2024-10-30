@@ -290,10 +290,7 @@ class MusicScreen:
         mixer.init()  # Initialize the mixer for playing audio
 
         # Buttons setup for songs
-        self.song_buttons = [
-            pygame.Rect(game.screen_width // 2 - 100, 50 + i * 60, 200, 50) for i in range(5)
-        ]
-
+        self.song_buttons = []
         self.songs = [
             "Audio/Songs/twinkle-twinkle.mp3",
             "Audio/Songs/happy-and-you-know-it.mp3",
@@ -302,8 +299,18 @@ class MusicScreen:
             "Audio/Songs/puff-the-magic-dragon.mp3",
             "Audio/Songs/body-bop-bop.mp3"
         ]
-        # self.song_labels = [f"Song {i+1}" for i in range(6)]
         self.song_labels = [f"Song {i+1}" for i in range(5)]
+
+        # Calculate column and row placement
+        for i in range(len(self.songs)):
+            column = i % 2  # Determines left or right column
+            row = i // 2    # Row index, increments every 2 songs
+            x_position = game.screen_width // 4 + column * (game.screen_width // 2 - 100)  # Left or right column position
+            y_position = 50 + row * 60  # Increment row position
+
+            # Create button at calculated position and add to list
+            button = pygame.Rect(x_position - 100, y_position, 200, 50)
+            self.song_buttons.append(button)
 
         # "Choose Your Own!" button
         self.choose_button = pygame.Rect(game.screen_width - 250, game.screen_height - 80, 200, 50)
@@ -311,8 +318,37 @@ class MusicScreen:
         # "Back to the game!" button
         self.back_button = pygame.Rect(50, game.screen_height - 80, 200, 50)
 
-       # Quit button setup
+        # Quit button setup
         self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
+    
+    #     self.game = game
+    #     self.font = pygame.font.Font(None, 50)
+    #     mixer.init()  # Initialize the mixer for playing audio
+
+    #     # Buttons setup for songs
+    #     self.song_buttons = [
+    #         pygame.Rect(game.screen_width // 2 - 100, 50 + i * 60, 200, 50) for i in range(5)
+    #     ]
+
+    #     self.songs = [
+    #         "Audio/Songs/twinkle-twinkle.mp3",
+    #         "Audio/Songs/happy-and-you-know-it.mp3",
+    #         # "Audio/Songs/idk.mp3",
+    #         "Audio/Songs/my-year-zombies.mp3",
+    #         "Audio/Songs/puff-the-magic-dragon.mp3",
+    #         "Audio/Songs/body-bop-bop.mp3"
+    #     ]
+    #     # self.song_labels = [f"Song {i+1}" for i in range(6)]
+    #     self.song_labels = [f"Song {i+1}" for i in range(5)]
+
+    #     # "Choose Your Own!" button
+    #     self.choose_button = pygame.Rect(game.screen_width - 250, game.screen_height - 80, 200, 50)
+
+    #     # "Back to the game!" button
+    #     self.back_button = pygame.Rect(50, game.screen_height - 80, 200, 50)
+
+    #    # Quit button setup
+    #     self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
