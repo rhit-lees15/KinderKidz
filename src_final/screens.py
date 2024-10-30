@@ -377,27 +377,57 @@ class MusicScreen:
     def update(self):
         pass
 
-    def draw(self, screen):
-        # Draw the song buttons
+    def draw_buttons(self):
         for i, button in enumerate(self.song_buttons):
-            pygame.draw.rect(screen, (0, 255, 0), button)
-            song_text = self.font.render(self.song_labels[i], True, (255, 255, 255))
-            screen.blit(song_text, (button.x + 50, button.y + 10))
+            # Draw the button rectangle
+            pygame.draw.rect(self.game.screen, (255, 165, 0), button)  # Orange color
 
+            # Render the text for the button label
+            label_surface = self.font.render(self.song_labels[i], True, (0, 0, 0))  # Black text
+            label_rect = label_surface.get_rect(center=button.center)  # Center the text in the button
+
+            # Draw the text on the screen
+            self.game.screen.blit(label_surface, label_rect)
+            
         # Draw the "Choose Your Own!" button
         pygame.draw.rect(screen, (0, 255, 255), self.choose_button)
         choose_text = self.font.render("Choose Song!", True, (255, 255, 255))
-        screen.blit(choose_text, (self.choose_button.x + 20, self.choose_button.y + 10))
+        choose_rect = choose_text.get_rect(center=button.center)
+        screen.blit(choose_text, choose_rect)
         
         # Draw the "Back to the game!" button
         pygame.draw.rect(screen, (255, 165, 0), self.back_button)
         back_text = self.font.render("Home", True, (255, 255, 255))
-        screen.blit(back_text, (self.back_button.x + 20, self.back_button.y + 10))
+        back_rect = back_text.get_rect(center=button.center)
+        screen.blit(back_text, back_rect)
 
         # Draw the quit button
         pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
         quit_text = self.font.render("Quit", True, (255, 255, 255))
-        screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
+        quit_rect = quit_text.get_rect(center=button.center)
+        screen.blit(quit_text, quit_rect)
+
+    # def draw(self, screen):
+    #     # Draw the song buttons
+    #     for i, button in enumerate(self.song_buttons):
+    #         pygame.draw.rect(screen, (0, 255, 0), button)
+    #         song_text = self.font.render(self.song_labels[i], True, (255, 255, 255))
+    #         screen.blit(song_text, (button.x + 50, button.y + 10))
+
+    #     # Draw the "Choose Your Own!" button
+    #     pygame.draw.rect(screen, (0, 255, 255), self.choose_button)
+    #     choose_text = self.font.render("Choose Song!", True, (255, 255, 255))
+    #     screen.blit(choose_text, (self.choose_button.x + 20, self.choose_button.y + 10))
+        
+    #     # Draw the "Back to the game!" button
+    #     pygame.draw.rect(screen, (255, 165, 0), self.back_button)
+    #     back_text = self.font.render("Home", True, (255, 255, 255))
+    #     screen.blit(back_text, (self.back_button.x + 20, self.back_button.y + 10))
+
+    #     # Draw the quit button
+    #     pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
+    #     quit_text = self.font.render("Quit", True, (255, 255, 255))
+    #     screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
 
 class AddWordScreen:
     def __init__(self, game):
