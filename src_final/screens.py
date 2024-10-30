@@ -266,12 +266,13 @@ class GameScreen:
         # time_text = self.font.render(f"Time: {self.remaining_time}", True, (255, 255, 255))
         # screen.blit(time_text, (self.game.screen_width - 150, 20))
 
-        # Draw the random word (center of the screen)
-        word_text = self.font.render(self.current_word, True, (255, 255, 255))
-        screen.blit(word_text, (self.game.screen_width // 2, self.game.screen_height // 2))
+        # # Draw the random word (center of the screen)
+        # word_text = self.font.render(self.current_word, True, (255, 255, 255))
+        # screen.blit(word_text, (self.game.screen_width // 2, self.game.screen_height // 2))
     
-        # word_rect = word_text.get_rect(center=self.screen.center)  # Centered in the center of the screen (?)
-        # screen.blit(word_text, word_rect)
+        word_text = self.font.render(self.current_word, True, (255, 255, 255))
+        word_rect = word_text.get_rect(center=(screen_width // 2, screen_height // 2))
+        screen.blit(word_text, word_rect)
 
         # # Display the letter-to-button mapping for the user's reference
         # for i in range(8):
