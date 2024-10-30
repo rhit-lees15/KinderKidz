@@ -271,7 +271,7 @@ class GameScreen:
         # screen.blit(word_text, (self.game.screen_width // 2, self.game.screen_height // 2))
     
         word_text = self.font.render(self.current_word, True, (255, 255, 255))
-        word_rect = word_text.get_rect(center=(screen_width // 2, screen_height // 2))
+        word_rect = word_text.get_rect(center=(screen_width // 2, screen_height // 3))
         screen.blit(word_text, word_rect)
 
         # # Display the letter-to-button mapping for the user's reference
@@ -400,7 +400,7 @@ class MusicScreen:
             
         # Draw the "Choose Your Own!" button
         pygame.draw.rect(screen, (0, 255, 255), self.choose_button)
-        choose_text = self.font.render("Choose Song!", True, (255, 255, 255))
+        choose_text = self.font.render("Other Songs", True, (255, 255, 255))
         choose_rect = choose_text.get_rect(center=self.choose_button.center)  # Centered in the "Choose Your Own!" button
         screen.blit(choose_text, choose_rect)
         
