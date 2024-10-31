@@ -330,21 +330,6 @@ class MusicScreen:
 
         # Quit button setup
         self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
-    
-    # def open_youtube(self):
-    #     """Open YouTube in Chromium on Raspberry Pi or in the default browser on other systems."""
-    #     youtube_url = "https://www.youtube.com"   
-
-    #             # Check if the platform is Raspberry Pi (Linux-based)
-    #     if platform.system() == "Linux":
-    #         try:
-    #             # Try opening with Chromium
-    #             webbrowser.get('chromium-browser').open(youtube_url)
-    #         except webbrowser.Error:
-    #             print("Chromium not found. Please install Chromium or configure the browser correctly.")
-    #     else:
-    #         # For other platforms, use the default web browser
-    #         webbrowser.open(youtube_url)
 
 
     def handle_event(self, event):
@@ -358,6 +343,11 @@ class MusicScreen:
 
             # Check if "Choose Your Own!" is clicked
             if self.choose_button.collidepoint(mouse_pos):
+                # Try - from: https://stackoverflow.com/questions/68000216/python-webbrowser-module-not-giving-the-desired-output
+                # urL='https://www.google.com'
+                # chrome_path="C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+                # webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path), 1)
+                # webbrowser.get('chrome').open(urL)
                 print("Button pressed!!!!!")
                 webbrowser.open("https://www.youtube.com/")
                 # self.open_youtube()
