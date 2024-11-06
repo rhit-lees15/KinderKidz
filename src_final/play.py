@@ -5,7 +5,7 @@ from led import LED
 from pygame import Color
 
 # List of words used in the game
-word_list = ["I", "Home", "Ocean", "They", "Me", "Cat", "Dog", "Lion", "Pig", "Cow"]
+word_list = ["Home", "Ocean", "They", "Me", "Cat", "Dog", "Lion", "Pig", "Cow"]
 
 class GameLogic:
     def __init__(self):
@@ -69,6 +69,7 @@ class GameLogic:
             Audio.play_happy()
             Audio.play_correct_letter()
             if len(self.chosen_letters) == len(self.current_word):
+                Audio.play_next_word()
                 return True, "Next word"
             return True, "Correct"
         else:
