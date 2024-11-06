@@ -306,6 +306,8 @@ class GameScreen:
 import webbrowser
 from pygame import mixer
 import platform
+from pygame import Color
+
 
 from led import LED
 
@@ -366,12 +368,12 @@ class MusicScreen:
 
                     mixer.music.set_volume(0.7)
                     mixer.music.play()
-        #             theaterChase(strip, Color(127, 127, 127))  # White theater chase
-        #             theaterChase(strip, Color(127,   0,   0))  # Red theater chase
+                    self.led.theaterChase(Color(127, 127, 127))  # White theater chase
+                    self.led.theaterChase(Color(127,   0,   0))  # Red theater chase
         #             theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
         #             print ('Rainbow animations.')
         #             rainbow(strip)
-                    self.led.rainbowCycle()
+                    # self.led.rainbowCycle()
         #             theaterChaseRainbow(strip)
 
             # Check if "Choose Your Own!" is clicked
