@@ -5,7 +5,7 @@ from led import LED
 from pygame import Color
 
 # List of words used in the game
-word_list = ["I", "Home", "Ocean", "They", "Me", "Cat", "Dog", "Lion", "Pig", "Cow"]
+word_list = ["Home", "Ocean", "They", "Me", "Cat", "Dog", "Lion", "Pig", "Cow"]
 
 class GameLogic:
     def __init__(self):
