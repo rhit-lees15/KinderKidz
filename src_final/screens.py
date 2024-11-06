@@ -12,6 +12,12 @@ display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen_width, screen_height = display.get_size()
 screen = pygame.display.set_mode((screen_width, screen_height))
 
+# image_bg = pygame.image.load("ANIMALS.png")
+# image_bg_top = screen_height - image_bg.get_height()
+# image_bg_left = screen_width/2 - image_bg.get_width()/2
+
+# screen.blit(image_bg, (image_bg_left,image_bg_top))
+
 class MainScreen:
     # def __init__(self, game):
     #     self.game = game
