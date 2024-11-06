@@ -307,14 +307,19 @@ import webbrowser
 from pygame import mixer
 import platform
 
+from led import LED
+
 class MusicScreen:
     def __init__(self, game):
         self.game = game
         self.font = pygame.font.Font(None, 50)
+        self.led = LED()
+
         mixer.init()  # Initialize the mixer for playing audio
         mixer.music.set_volume(0.2)
 
         Audio.play_dance_break()
+        self.led.clear_all()
 
         # Buttons setup for songs
         self.song_buttons = []
@@ -363,11 +368,6 @@ class MusicScreen:
 
             # Check if "Choose Your Own!" is clicked
             if self.choose_button.collidepoint(mouse_pos):
-                # Try - from: https://stackoverflow.com/questions/68000216/python-webbrowser-module-not-giving-the-desired-output
-                # urL='https://www.google.com'
-                # chrome_path="C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-                # webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path), 1)
-                # webbrowser.get('chrome').open(urL)
                 print("Button pressed!!!!!")
                 webbrowser.open("https://www.youtube.com/")
                 # self.open_youtube()

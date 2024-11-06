@@ -1,6 +1,5 @@
 import pygame
 import sys
-import led
 from pathlib import Path
 from pygame import mixer
 from screens import MainScreen
