@@ -12,6 +12,12 @@ display = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen_width, screen_height = display.get_size()
 screen = pygame.display.set_mode((screen_width, screen_height))
 
+# image_bg = pygame.image.load("ANIMALS.png")
+# image_bg_top = screen_height - image_bg.get_height()
+# image_bg_left = screen_width/2 - image_bg.get_width()/2
+
+# screen.blit(image_bg, (image_bg_left,image_bg_top))
+
 class MainScreen:
     # def __init__(self, game):
     #     self.game = game
@@ -27,6 +33,10 @@ class MainScreen:
     
         # Button setup
         self.font = pygame.font.Font(None, 50)
+        
+        # Load background image and scale it to fit the screen size
+        self.background_image = pygame.image.load("ANIMALS.PNG")
+        self.background_image = pygame.transform.scale(self.background_image, (screen_width, screen_height))
        
         # Centered Start/Quit buttons
         self.start_button = pygame.Rect(0, 0, 200, 100)
@@ -67,6 +77,9 @@ class MainScreen:
     #     screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
 
     def draw(self, screen):
+        # Draw the background image
+        screen.blit(self.background_image, (0, 0))
+        
         # Draw Start button
         pygame.draw.rect(screen, (0, 255, 0), self.start_button)
         start_text = self.font.render("Start", True, (255, 255, 255))
