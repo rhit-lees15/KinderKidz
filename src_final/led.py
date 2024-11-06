@@ -74,22 +74,22 @@ class LED:
             self.strip.setPixelColor(i, Color(0, 0, 0))
 
 # Define functions which animate LEDs in various ways.
-    def colorWipe(strip, color, wait_ms=50):
+    def colorWipe(self, color, wait_ms=50):
         """Wipe color across display a pixel at a time."""
-        for i in range(strip.numPixels()):
-            strip.setPixelColor(i, color)
-            strip.show()
+        for i in range(self.strip.numPixels()):
+            self.strip.setPixelColor(i, color)
+            self.strip.show()
 
-    def theaterChase(strip, color, wait_ms=50, iterations=10):
+    def theaterChase(self, color, wait_ms=50, iterations=10):
         """Movie theater light style chaser animation."""
         for j in range(iterations):
             for q in range(3):
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, color)
-                strip.show()
+                for i in range(0, self.strip.numPixels(), 3):
+                    self.strip.setPixelColor(i+q, color)
+                self.strip.show()
                 time.sleep(wait_ms/1000.0)
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, 0)
+                for i in range(0, self.strip.numPixels(), 3):
+                    self.strip.setPixelColor(i+q, 0)
 
     def wheel(pos):
         """Generate rainbow colors across 0-255 positions."""
@@ -102,12 +102,12 @@ class LED:
             pos -= 170
             return Color(0, pos * 3, 255 - pos * 3)
 
-    def rainbow(strip, wait_ms=20, iterations=1):
+    def rainbow(self, wait_ms=20, iterations=1):
         """Draw rainbow that fades across all pixels at once."""
         for j in range(256*iterations):
-            for i in range(strip.numPixels()):
-                strip.setPixelColor(i, wheel((i+j) & 255))
-            strip.show()
+            for i in range(self.strip.numPixels()):
+                self.strip.setPixelColor(i, self.wheel((i+j) & 255))
+            self.strip.show()
             time.sleep(wait_ms/1000.0)
 
     def rainbowCycle(self, wait_ms=20, iterations=5):
@@ -118,13 +118,13 @@ class LED:
             self.strip.show()
             time.sleep(wait_ms/1000.0)
 
-    def theaterChaseRainbow(strip, wait_ms=50):
+    def theaterChaseRainbow(self, wait_ms=50):
         """Rainbow movie theater light style chaser animation."""
         for j in range(256):
             for q in range(3):
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, wheel((i+j) % 255))
-                strip.show()
+                for i in range(0, self.strip.numPixels(), 3):
+                    self.strip.setPixelColor(i+q, self.wheel((i+j) % 255))
+                self.strip.show()
                 time.sleep(wait_ms/1000.0)
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i+q, 0)            
+                for i in range(0, self.strip.numPixels(), 3):
+                    self.strip.setPixelColor(i+q, 0)            

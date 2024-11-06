@@ -319,6 +319,7 @@ class MusicScreen:
         mixer.music.set_volume(0.2)
 
         Audio.play_dance_break()
+        print("Song is about to play - clear led")
         self.led.clear_all()
 
         # Buttons setup for songs
