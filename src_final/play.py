@@ -69,11 +69,12 @@ class GameLogic:
             Audio.play_happy()
             Audio.play_correct_letter()
             if len(self.chosen_letters) == len(self.current_word):
+                Audio.play_next_word()
                 return True, "Next word"
             return True, "Correct"
         else:
             if chosen_letter in self.current_word:
-                self.led.display_letter(chosen_letter, button_number, Color(0, 0, 255))
+                self.led.display_letter(chosen_letter, button_number, Color(255, 155, 0))
                 Audio.play_wrong_order()  # Play wrong order sound
             else:
                 self.led.display_letter(chosen_letter, button_number, Color(255, 0, 0))

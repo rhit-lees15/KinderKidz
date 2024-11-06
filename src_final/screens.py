@@ -365,6 +365,13 @@ class MusicScreen:
 
                     mixer.music.set_volume(0.7)
                     mixer.music.play()
+        #             theaterChase(strip, Color(127, 127, 127))  # White theater chase
+        #             theaterChase(strip, Color(127,   0,   0))  # Red theater chase
+        #             theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
+        #             print ('Rainbow animations.')
+        #             rainbow(strip)
+                    self.led.rainbowCycle()
+        #             theaterChaseRainbow(strip)
 
             # Check if "Choose Your Own!" is clicked
             if self.choose_button.collidepoint(mouse_pos):
