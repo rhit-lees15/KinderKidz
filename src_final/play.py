@@ -66,6 +66,7 @@ class GameLogic:
         if chosen_letter == expected_letter:
             self.chosen_letters.append(chosen_letter)
             self.led.display_letter(expected_letter, button_number, Color(0, 255, 0))
+            Audio.play_happy()
             Audio.play_correct_letter()
             if len(self.chosen_letters) == len(self.current_word):
                 return True, "Next word"
