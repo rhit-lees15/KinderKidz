@@ -35,7 +35,7 @@ class MainScreen:
         self.font = pygame.font.Font(None, 50)
         
         # Load background image and scale it to fit the screen size
-        self.background_image = pygame.image.load("ANIMALS.PNG")
+        self.background_image = pygame.image.load("src_final/ANIMALS.png")
         self.background_image = pygame.transform.scale(self.background_image, (screen_width, screen_height))
        
         # Centered Start/Quit buttons

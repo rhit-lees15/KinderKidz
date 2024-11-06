@@ -20,7 +20,7 @@ class Audio:
     def play_sound(sound_file: str):
         """Play a sound file."""
         pygame.mixer.music.load(sound_file)
-        pygame.mixer.music.set_volume(0.7)
+        pygame.mixer.music.set_volume(0.4)
         pygame.mixer.music.play()
 
         # Wait for the sound to finish playing

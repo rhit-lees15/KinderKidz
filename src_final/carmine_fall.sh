@@ -1,3 +1,3 @@
 #!/bin/sh
-cd ~/home/Capstone
+cd ~/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz
 sudo python src_final/main.py
