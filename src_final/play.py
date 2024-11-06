@@ -43,7 +43,11 @@ class GameLogic:
         
         # Print keypad number-letter combinations
         for button_number, letter in self.letter_map.items():
-            self.led.display_letter(letter, button_number, Color(100, 100, 100))
+            # self.led.display_letter(letter, button_number, Color(255, 235, 128)) # warm light
+            # self.led.display_letter(letter, button_number, Color(100, 100, 100)) # standard white light
+            self.led.display_letter(letter, button_number, Color(128, 180, 160)) # cool light
+
+
             print(f"Button {button_number}: {letter}")
         
         # Return the mapping of button numbers to letters for display
