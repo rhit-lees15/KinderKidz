@@ -1,6 +1,7 @@
 import sys
 import pygame
 import random
+from sound import *
 
 import tkinter as tk
 
@@ -298,6 +299,7 @@ class MusicScreen:
         self.game = game
         self.font = pygame.font.Font(None, 50)
         mixer.init()  # Initialize the mixer for playing audio
+        Audio.play_dance_break()
 
         # Buttons setup for songs
         self.song_buttons = []
@@ -339,6 +341,7 @@ class MusicScreen:
             for i, button in enumerate(self.song_buttons):
                 if button.collidepoint(mouse_pos):
                     mixer.music.load(self.songs[i])
+                    mixer.music.set_volume(0.7)
                     mixer.music.play()
 
             # Check if "Choose Your Own!" is clicked
