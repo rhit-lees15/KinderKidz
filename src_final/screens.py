@@ -33,6 +33,10 @@ class MainScreen:
     
         # Button setup
         self.font = pygame.font.Font(None, 50)
+        
+        # Load background image and scale it to fit the screen size
+        self.background_image = pygame.image.load("ANIMALS.PNG")
+        self.background_image = pygame.transform.scale(self.background_image, (screen_width, screen_height))
        
         # Centered Start/Quit buttons
         self.start_button = pygame.Rect(0, 0, 200, 100)
@@ -73,6 +77,9 @@ class MainScreen:
     #     screen.blit(quit_text, (self.quit_button.x + 50, self.quit_button.y + 25))
 
     def draw(self, screen):
+        # Draw the background image
+        screen.blit(self.background_image, (0, 0))
+        
         # Draw Start button
         pygame.draw.rect(screen, (0, 255, 0), self.start_button)
         start_text = self.font.render("Start", True, (255, 255, 255))
@@ -305,12 +312,9 @@ class MusicScreen:
         self.game = game
         self.font = pygame.font.Font(None, 50)
         mixer.init()  # Initialize the mixer for playing audio
-<<<<<<< HEAD
         mixer.music.set_volume(0.2)
 
-=======
         Audio.play_dance_break()
->>>>>>> 2482b2337d3328197621547eeebf85e50f842b74
 
         # Buttons setup for songs
         self.song_buttons = []
@@ -352,12 +356,9 @@ class MusicScreen:
             for i, button in enumerate(self.song_buttons):
                 if button.collidepoint(mouse_pos):
                     mixer.music.load(self.songs[i])
-<<<<<<< HEAD
                     # mixer.music.set_volume(0.3)
 
-=======
                     mixer.music.set_volume(0.7)
->>>>>>> 2482b2337d3328197621547eeebf85e50f842b74
                     mixer.music.play()
 
             # Check if "Choose Your Own!" is clicked
