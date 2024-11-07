@@ -175,11 +175,15 @@ class TimerScreen:
 from play import GameLogic
 from buttons import Buttons
 import RPi.GPIO as GPIO
+import time
 # Define GPIO pins for buttons
 # BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
 BUTTON_PINS = {24:0, 25:1, 23:2, 22:3, 5:4, 6:5, 13:6, 12:7}
+DEBOUNCE_TIME = 0.5
 
 class GameScreen:
+    last_press_time = {}
+
     def __init__(self, game, game_duration):
         self.game = game
         self.game_duration = game_duration  # Time in seconds
@@ -200,11 +204,22 @@ class GameScreen:
         for pin in BUTTON_PINS.keys():
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
             GPIO.add_event_detect(pin, GPIO.FALLING, callback=self.gpio_button_pressed, bouncetime=300)
-   
+            GameScreen.last_press_times[pin] = 0 
+
     def gpio_button_pressed(self, pin):
-        """Handles the event when a GPIO button is pressed."""
-        button_number = BUTTON_PINS[pin]
-        self.process_input(button_number)
+        """Handles the event when a GPIO button is pressed with debounce protection."""
+        current_time = time.time()  # Get the current time
+        last_press_time = GameScreen.last_press_times.get(pin, 0)  # Get the last press time for this pin
+
+        # Check if enough time has passed since the last press
+        if current_time - last_press_time >= DEBOUNCE_TIME:
+            GameScreen.last_press_times[pin] = current_time  # Update last press time
+            button_number = BUTTON_PINS[pin]
+            self.process_input(button_number)
+
+        # """Handles the event when a GPIO button is pressed."""
+        # button_number = BUTTON_PINS[pin]
+        # self.process_input(button_number)
     
     def process_input(self, button_number):
         """Handles the logic for when a GPIO button (0-7) is pressed."""
