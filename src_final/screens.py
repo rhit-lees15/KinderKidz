@@ -182,7 +182,7 @@ BUTTON_PINS = {24:0, 25:1, 23:2, 22:3, 5:4, 6:5, 13:6, 12:7}
 DEBOUNCE_TIME = 0.5
 
 class GameScreen:
-    last_press_time = {}
+    last_press_times = {}
 
     def __init__(self, game, game_duration):
         self.game = game
