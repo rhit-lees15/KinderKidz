@@ -87,7 +87,7 @@ class LED:
                 for i in range(0, self.strip.numPixels(), 3):
                     self.strip.setPixelColor(i+q, Color(color.r, color.g, color.b))
                 self.strip.show()
-                time.sleep(wait_ms/1000.0)
+                time.sleep(wait_ms/500.0)
                 for i in range(0, self.strip.numPixels(), 3):
                     self.strip.setPixelColor(i+q, 0)
 

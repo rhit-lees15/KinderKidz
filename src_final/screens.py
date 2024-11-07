@@ -368,11 +368,11 @@ class MusicScreen:
 
                     mixer.music.set_volume(0.7)
                     mixer.music.play()
-                    # self.led.theaterChase(Color(127, 127, 127))  # White theater chase
-                    # self.led.theaterChase(Color(127,   0,   0))  # Red theater chase
-        #             theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
-        #             print ('Rainbow animations.')
-                    self.led.rainbow()
+                    self.led.theaterChase(Color(127, 127, 127))  # White theater chase
+                    self.led.theaterChase(Color(127,   0,   0))  # Red theater chase
+                    self.led.theaterChase(Color(  0,   0, 127))  # Blue theater chase
+                    # print ('Rainbow animations.')
+                    # self.led.rainbow()
                     # self.led.rainbowCycle()
         #             theaterChaseRainbow(strip)
 
