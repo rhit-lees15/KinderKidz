@@ -269,6 +269,9 @@ class GameScreen:
         if self.remaining_time <= 0:
             GPIO.cleanup()
             self.game.switch_screen(lambda game: MusicScreen(game))
+            # # Load background image and scale it to fit the screen size
+            # self.background_image = pygame.image.load("src_final/ANIMALS.png")
+            # self.background_image = pygame.transform.scale(self.background_image, (screen_width, screen_height))
             return
 
         # Calculate minutes and seconds from remaining time
