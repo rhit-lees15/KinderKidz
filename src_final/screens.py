@@ -179,7 +179,7 @@ import time
 # Define GPIO pins for buttons
 # BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
 BUTTON_PINS = {24:0, 25:1, 23:2, 22:3, 5:4, 6:5, 13:6, 12:7}
-DEBOUNCE_TIME = 0.5
+DEBOUNCE_TIME = 2
 
 class GameScreen:
     last_press_times = {}
