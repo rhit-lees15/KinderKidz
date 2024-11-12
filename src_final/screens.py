@@ -188,6 +188,7 @@ class GameScreen:
         self.game = game
         self.game_duration = game_duration  # Time in seconds
         self.font = pygame.font.Font(None, 50)
+        self.word_font = pygame.font.Font(None, 100)
  
         self.logic = GameLogic()
         self.current_word = self.logic.get_new_word()
@@ -299,7 +300,7 @@ class GameScreen:
         # word_text = self.font.render(self.current_word, True, (255, 255, 255))
         # screen.blit(word_text, (self.game.screen_width // 2, self.game.screen_height // 2))
     
-        word_text = self.font.render(self.current_word, True, (255, 255, 255))
+        word_text = self.word_font.render(self.current_word, True, (255, 255, 255))
         word_rect = word_text.get_rect(center=(screen_width // 2, screen_height // 3))
         screen.blit(word_text, word_rect)
 
