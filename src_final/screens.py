@@ -188,7 +188,7 @@ class GameScreen:
         self.game = game
         self.game_duration = game_duration  # Time in seconds
         self.font = pygame.font.Font(None, 50)
-        self.word_font = pygame.font.Font(None, 100)
+        self.word_font = pygame.font.Font(None, 250)
  
         self.logic = GameLogic()
         self.current_word = self.logic.get_new_word()
