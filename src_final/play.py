@@ -21,7 +21,9 @@ class GameLogic:
 
         if len(self.used_words) == len(word_list):
             print("All words used. Game Over!")
-            return None # Change this so that the game starts over
+            # return None # Change this so that the game starts over
+            self.used_words.clear()
+            
         while True:
             new_word = random.choice(word_list).upper()  # Make sure word is uppercase
             if new_word not in self.used_words:
