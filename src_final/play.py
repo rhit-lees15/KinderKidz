@@ -13,14 +13,22 @@ class GameLogic:
         self.letter_map = {}  # Maps button numbers to letters
         self.chosen_letters = []  # Letters selected by the user so far
         self.led = LED()
+        self.used_words = set()
 
     def get_new_word(self):
         """Selects a new random word from the word list."""
         self.led.clear_all() #reseting LED display
 
-        self.current_word = random.choice(word_list).upper()  # Make sure word is uppercase
-        self.chosen_letters = []  # Reset user input
-        return self.current_word
+        if len(self.used_words) == len(word_list):
+            print("All words used. Game Over!")
+            return None # Change this so that the game starts over
+        while True:
+            new_word = random.choice(word_list).upper()  # Make sure word is uppercase
+            if new_word not in self.used_words:
+                self.used_words.add(new_word)
+                self.current_word = new_word
+                self.chosen_letters = []  # Reset user input
+                return self.current_word
 
     def generate_buttons(self):
         """
