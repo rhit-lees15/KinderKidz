@@ -50,6 +50,7 @@ class Game:
 
             pygame.display.flip()  # Update the display
 
+        
         pygame.quit()
 
 if __name__ == "__main__":
