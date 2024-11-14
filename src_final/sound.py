@@ -5,7 +5,8 @@ import os
 
 
 # Paths for audio files
-audio_folder = 'Audio/'
+audio_folder = '/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/'
+# intro_sounds = 'hicarmineareyoureadytospellsomewords.mp3'
 intro_sounds = [os.path.join(audio_folder, file) for file in ['hicarmineletsspellsomewordstoday.mp3','hicarmineareyoureadytospellsomewords.mp3','whatsupcarmineletsdosomespelling.mp3','letsspellsomewordstodaycarmine.mp3','hicarmineletsplaythespellinggame.mp3']]
 correct_letter_sounds = [os.path.join(audio_folder, file) for file in ['correctnowletsfindthenextletter.mp3','goodjobcarmineletsfindthenextletter.mp3','nicecarmineletsfindthenextletter.mp3','goodjobcarmine.mp3','greatjobcarmine.mp3']]
 next_word_sounds = [os.path.join(audio_folder, file) for file in ['greatjobnowletsspellthenextword.mp3','yayyouspelledthewordnowletsdothenextone.mp3','goodjobatspellingcarmineletsdothenextword.mp3','goodjobcarmine.mp3','greatjobcarmine.mp3']]
