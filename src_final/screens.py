@@ -35,7 +35,7 @@ class MainScreen:
         self.font = pygame.font.Font(None, 50)
         
         # Load background image and scale it to fit the screen size
-        self.background_image = pygame.image.load("src_final/ANIMALS.png")
+        self.background_image = pygame.image.load("/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/ANIMALS.png")
         self.background_image = pygame.transform.scale(self.background_image, (screen_width, screen_height))
        
         # Centered Start/Quit buttons
@@ -346,12 +346,12 @@ class MusicScreen:
         # Buttons setup for songs
         self.song_buttons = []
         self.songs = [
-            "Audio/Songs/twinkle-twinkle.mp3",
-            "Audio/Songs/happy-and-you-know-it.mp3",
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/twinkle-twinkle.mp3",
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/happy-and-you-know-it.mp3",
             # "Audio/Songs/idk.mp3",
-            "Audio/Songs/my-year-zombies.mp3",
-            "Audio/Songs/puff-the-magic-dragon.mp3",
-            "Audio/Songs/body-bop-bop.mp3"
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/my-year-zombies.mp3",
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/puff-the-magic-dragon.mp3",
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/body-bop-bop.mp3"
         ]
         self.song_labels = [f"Song {i+1}" for i in range(5)]
 
