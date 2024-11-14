@@ -321,6 +321,8 @@ class GameScreen:
 
     def __del__(self):
         GPIO.cleanup()
+        pygame.mixer.quit()
+        pygame.quit()
 
 import webbrowser
 from pygame import mixer
