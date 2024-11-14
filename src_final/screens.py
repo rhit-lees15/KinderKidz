@@ -179,7 +179,7 @@ import time
 # Define GPIO pins for buttons
 # BUTTON_PINS = [24, 25, 23, 22, 5, 6, 13, 12]
 BUTTON_PINS = {24:0, 25:1, 23:2, 22:3, 5:4, 6:5, 13:6, 12:7}
-DEBOUNCE_TIME = 0.5
+DEBOUNCE_TIME = 2
 
 class GameScreen:
     last_press_times = {}
@@ -188,6 +188,7 @@ class GameScreen:
         self.game = game
         self.game_duration = game_duration  # Time in seconds
         self.font = pygame.font.Font(None, 50)
+        self.word_font = pygame.font.Font(None, 250)
  
         self.logic = GameLogic()
         self.current_word = self.logic.get_new_word()
@@ -268,6 +269,9 @@ class GameScreen:
         if self.remaining_time <= 0:
             GPIO.cleanup()
             self.game.switch_screen(lambda game: MusicScreen(game))
+            # # Load background image and scale it to fit the screen size
+            # self.background_image = pygame.image.load("src_final/ANIMALS.png")
+            # self.background_image = pygame.transform.scale(self.background_image, (screen_width, screen_height))
             return
 
         # Calculate minutes and seconds from remaining time
@@ -299,7 +303,7 @@ class GameScreen:
         # word_text = self.font.render(self.current_word, True, (255, 255, 255))
         # screen.blit(word_text, (self.game.screen_width // 2, self.game.screen_height // 2))
     
-        word_text = self.font.render(self.current_word, True, (255, 255, 255))
+        word_text = self.word_font.render(self.current_word, True, (255, 255, 255))
         word_rect = word_text.get_rect(center=(screen_width // 2, screen_height // 3))
         screen.blit(word_text, word_rect)
 
@@ -317,6 +321,8 @@ class GameScreen:
 
     def __del__(self):
         GPIO.cleanup()
+        pygame.mixer.quit()
+        pygame.quit()
 
 import webbrowser
 from pygame import mixer
