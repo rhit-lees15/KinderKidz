@@ -189,13 +189,15 @@ class GameScreen:
         self.game_duration = game_duration  # Time in seconds
         self.font = pygame.font.Font(None, 50)
         self.word_font = pygame.font.Font(None, 250)
- 
-        self.logic = GameLogic()
-        self.current_word = self.logic.get_new_word()
-        self.letter_map = self.logic.generate_buttons()
 
-        # Timer setup
-        self.start_time = pygame.time.get_ticks()
+        self.reset_game()
+ 
+        # self.logic = GameLogic()
+        # self.current_word = self.logic.get_new_word()
+        # self.letter_map = self.logic.generate_buttons()
+
+        # # Timer setup
+        # self.start_time = pygame.time.get_ticks()
 
         # Quit button setup
         self.quit_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height - 120, 200, 80)
@@ -207,6 +209,14 @@ class GameScreen:
             GPIO.add_event_detect(pin, GPIO.FALLING, callback=self.gpio_button_pressed, bouncetime=300)
             GameScreen.last_press_times[pin] = 0 
 
+    def reset_game(self):
+        self.logic = GameLogic()
+        self.current_word = self.logic.get_new_word()
+        self.letter_map = self.logic.generate_buttons()
+
+        # # Timer setup
+        self.start_time = pygame.time.get_ticks()
+        
     def gpio_button_pressed(self, pin):
         """Handles the event when a GPIO button is pressed with debounce protection."""
         current_time = time.time()  # Get the current time
