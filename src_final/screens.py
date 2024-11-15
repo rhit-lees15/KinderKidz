@@ -488,11 +488,11 @@ class AddWordScreen:
         
         # Centered at the bottom
         # self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
-        self.add_word_button = pygame.Rect(0, 0, 200, 80)
-        self.add_word_button.center = (screen_width // 2, screen_height // 2 + 90) # was + 75
+        self.add_word_button = pygame.Rect(0, 0, 150, 50) # was (0, 0, 200, 80)
+        self.add_word_button.center = (screen_width // 2, screen_height // 2 + 120) # was + 75
 
         # Centered at the top
-        self.home_button = pygame.Rect((game.screen_width - 150) // 2, 10, 150, 50)
+        self.home_button = pygame.Rect((game.screen_width - 170) // 2, 10, 150, 50)
 
         self.input_box = pygame.Rect(100, 100, 600, 50)
         self.input_text = ''
