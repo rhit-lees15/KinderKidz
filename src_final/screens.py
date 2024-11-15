@@ -412,7 +412,12 @@ class MusicScreen:
             # Check if "Choose Your Own!" is clicked
             if self.choose_button.collidepoint(mouse_pos):
                 print("Button pressed!!!!!")
-                webbrowser.open("https://www.youtube.com/")
+                try:
+                    # Forcing Chromium browser on Raspberry Pi
+                    webbrowser.get("chromium-browser %s").open("https://www.youtube.com/")
+                except Exception as e:
+                    print(f"Error opening web browser: {e}")
+                # webbrowser.open("https://www.youtube.com/")
                 # self.open_youtube()
 
             # Check if "Back to the game!" is clicked
