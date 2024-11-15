@@ -268,7 +268,7 @@ class GameScreen:
         # End the game when the timer reaches zero
         if self.remaining_time <= 0:
             GPIO.cleanup()
-            pygame.mixer.quit()
+            # pygame.mixer.quit()
             # pygame.quit()
             self.game.switch_screen(lambda game: MusicScreen(game))
             # # Load background image and scale it to fit the screen size
@@ -323,7 +323,7 @@ class GameScreen:
 
     def __del__(self):
         GPIO.cleanup()
-        pygame.mixer.quit()
+        # pygame.mixer.quit()
         # pygame.quit()
 
 import webbrowser
