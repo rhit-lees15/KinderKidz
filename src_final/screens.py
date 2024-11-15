@@ -267,15 +267,19 @@ class GameScreen:
 
         # End the game when the timer reaches zero
         if self.remaining_time <= 0:
-            for pin in BUTTON_PINS.keys():
-                GPIO.remove_event_detect(pin)
-            # GPIO.cleanup()
-            # pygame.mixer.quit()
-            # pygame.quit()
-            self.game.switch_screen(lambda game: MusicScreen(game))
-            # # Load background image and scale it to fit the screen size
-            # self.background_image = pygame.image.load("src_final/ANIMALS.png")
-            # self.background_image = pygame.transform.scale(self.background_image, (screen_width, screen_height))
+            try:
+                for pin in BUTTON_PINS.keys():
+                    GPIO.remove_event_detect(pin)
+                time.sleep(0.1)
+                # GPIO.cleanup()
+                # pygame.mixer.quit()
+                # pygame.quit()
+                self.game.switch_screen(lambda game: MusicScreen(game))
+                # # Load background image and scale it to fit the screen size
+                # self.background_image = pygame.image.load("src_final/ANIMALS.png")
+                # self.background_image = pygame.transform.scale(self.background_image, (screen_width, screen_height))
+            except Exception as e:
+                print(f"Error during GPIO cleanup or transition: {e}")
             return
 
         # Calculate minutes and seconds from remaining time
