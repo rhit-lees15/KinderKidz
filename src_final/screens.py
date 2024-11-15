@@ -530,27 +530,54 @@ class AddWordScreen:
         pass
 
     def draw(self, screen):
-        # Draw the Add Word button
-        pygame.draw.rect(screen, (0, 255, 0), self.add_word_button)
+        # # Draw the Add Word button
+        # pygame.draw.rect(screen, (0, 255, 0), self.add_word_button)
+        # add_word_text = self.font.render("Add", True, (255, 255, 255))
+        # screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
+        
+        # Draw Quit button
+        pygame.draw.rect(screen, (255, 0, 0), self.add_word_button)
         add_word_text = self.font.render("Add", True, (255, 255, 255))
-        screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
+       
+        # Center text within button
+        add_word_text_rect = add_word_text.get_rect(center = self.add_word_button.center)
+        screen.blit(add_word_text, add_word_text_rect)
 
         # Draw the input box
         pygame.draw.rect(screen, (255, 255, 255), self.input_box, 2)
         text_surface = self.font.render(self.input_text, True, (255, 255, 255))
         screen.blit(text_surface, (self.input_box.x + 5, self.input_box.y + 5))
 
-        # Draw the current word list with scrolling
-        y_position = 200 + self.scroll_y  # Apply scroll offset here
-        max_height = screen.get_height() - 250  # Leave space for buttons and input box
+        # # Draw the current word list with scrolling
+        # y_position = 200 + self.scroll_y  # Apply scroll offset here
+        # max_height = screen.get_height() - 250  # Leave space for buttons and input box
 
-        for word in self.word_list:
-            word_surface = self.font.render(word, True, (255, 255, 255))
-            screen.blit(word_surface, (100, y_position))
-            y_position += self.word_height  # Adjust y_position for each word
+        # for word in self.word_list:
+        #     word_surface = self.font.render(word, True, (255, 255, 255))
+        #     screen.blit(word_surface, (100, y_position))
+        #     y_position += self.word_height  # Adjust y_position for each word
 
-        # Draw the scroll bar
-        pygame.draw.rect(screen, (180, 180, 180), self.scroll_bar)  # Gray color for scroll bar
+        # # Draw the scroll bar
+        # pygame.draw.rect(screen, (180, 180, 180), self.scroll_bar)  # Gray color for scroll bar
+
+        # Constants for column layout
+        column_width = 200  # Width allocated to each column
+        max_columns = self.game.screen_width // column_width
+        x_margin = 100  # Left margin for the first column
+        y_start = 200 + self.scroll_y  # Apply scroll offset
+        row_spacing = self.word_height  # Spacing between rows
+
+        # Draw the current word list in columns
+        for index, word in enumerate(self.word_list):
+            column = index % max_columns  # Determine the column (0, 1, 2, ...)
+            row = index // max_columns  # Determine the row (0, 1, 2, ...)
+            x_position = x_margin + column * column_width
+            y_position = y_start + row * row_spacing
+            
+            # Only render words within the visible screen area
+            if 200 <= y_position <= screen.get_height() - 50:
+                word_surface = self.font.render(word, True, (255, 255, 255))
+                screen.blit(word_surface, (x_position, y_position))
 
         # Draw the "Return to Home" button
         pygame.draw.rect(screen, (255, 0, 0), self.home_button)
