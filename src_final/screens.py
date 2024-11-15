@@ -267,7 +267,9 @@ class GameScreen:
 
         # End the game when the timer reaches zero
         if self.remaining_time <= 0:
-            GPIO.cleanup()
+            for pin in BUTTON_PINS.keys():
+                GPIO.remove_event_detect(pin)
+            # GPIO.cleanup()
             # pygame.mixer.quit()
             # pygame.quit()
             self.game.switch_screen(lambda game: MusicScreen(game))
