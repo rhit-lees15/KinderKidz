@@ -415,7 +415,7 @@ class MusicScreen:
                 print("Button pressed!!!!!")
                 try:
                     # Forcing Chromium browser on Raspberry Pi
-                    webbrowser.get("chromium-browser %s").open("https://www.youtube.com/")
+                    webbrowser.get("chromium-browser --no-sandbox %s").open("https://www.youtube.com/")
                 except Exception as e:
                     print(f"Error opening web browser: {e}")
                 # webbrowser.open("https://www.youtube.com/")
