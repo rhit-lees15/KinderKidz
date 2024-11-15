@@ -267,10 +267,8 @@ class GameScreen:
 
         # End the game when the timer reaches zero
         if self.remaining_time <= 0:
-            for pin in BUTTON_PINS.keys():
-                GPIO.remove_event_detect(pin)
-            # GPIO.cleanup()
-            # pygame.mixer.quit()
+            GPIO.cleanup()
+            pygame.mixer.quit()
             # pygame.quit()
             self.game.switch_screen(lambda game: MusicScreen(game))
             # # Load background image and scale it to fit the screen size
@@ -325,7 +323,7 @@ class GameScreen:
 
     def __del__(self):
         GPIO.cleanup()
-        # pygame.mixer.quit()
+        pygame.mixer.quit()
         # pygame.quit()
 
 import webbrowser
@@ -481,7 +479,7 @@ class AddWordScreen:
         # Centered at the bottom
         # self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
         self.add_word_button = pygame.Rect(0, 0, 200, 80)
-        self.add_word_button.center = (screen_width // 2, screen_height // 2 + 75)
+        self.add_word_button.center = (screen_width // 2, screen_height // 2 + 90) # was + 75
 
         # Centered at the top
         self.home_button = pygame.Rect((game.screen_width - 150) // 2, 10, 150, 50)
@@ -543,7 +541,7 @@ class AddWordScreen:
         # screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
         
         # Draw Add button
-        pygame.draw.rect(screen, (255, 0, 0), self.add_word_button)
+        pygame.draw.rect(screen, (0, 255, 0), self.add_word_button)
         add_word_text = self.font.render("Add", True, (255, 255, 255))
        
         # Center text within button
