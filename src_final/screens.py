@@ -204,7 +204,7 @@ class GameScreen:
         GPIO.setmode(GPIO.BCM)
         for pin in BUTTON_PINS.keys():
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(pin, GPIO.FALLING, callback=self.gpio_button_pressed, bouncetime=300)
+            GPIO.add_event_detect(pin, GPIO.FALLING, callback=self.gpio_button_pressed, bouncetime=500)
             GameScreen.last_press_times[pin] = 0 
 
     def gpio_button_pressed(self, pin):
@@ -477,7 +477,10 @@ class AddWordScreen:
         self.font = pygame.font.Font(None, 50)
         
         # Centered at the bottom
-        self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+        # self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
+        self.add_word_button = pygame.Rect(0, 0, 200, 80)
+        self.add_word_button.center = (screen_width // 2, screen_height // 2 + 75)
+
         # Centered at the top
         self.home_button = pygame.Rect((game.screen_width - 150) // 2, 10, 150, 50)
 
@@ -538,9 +541,7 @@ class AddWordScreen:
         # screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
         
         # Draw Add button
-        self.add_word_button = pygame.Rect(0, 0, 200, 80)
-        self.add_word_button.center = (screen_width // 2, screen_height // 2 + 75)
-        # pygame.draw.rect(screen, (255, 0, 0), self.add_word_button)
+        pygame.draw.rect(screen, (255, 0, 0), self.add_word_button)
         add_word_text = self.font.render("Add", True, (255, 255, 255))
        
         # Center text within button
