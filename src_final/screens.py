@@ -360,14 +360,15 @@ class MusicScreen:
         # Buttons setup for songs
         self.song_buttons = []
         self.songs = [
-            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/twinkle-twinkle.mp3",
-            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/happy-and-you-know-it.mp3",
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/twinkle-twinkle.mp3", # Twinkle
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/happy-and-you-know-it.mp3", # Happy
             # "Audio/Songs/idk.mp3",
-            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/my-year-zombies.mp3",
-            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/puff-the-magic-dragon.mp3",
-            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/body-bop-bop.mp3"
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/my-year-zombies.mp3", # My Year
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/puff-the-magic-dragon.mp3", # Puff
+            "/home/kinderkidz/Capstone/KinderKidz - Fall/KinderKidz/src_final/Audio/Songs/body-bop-bop.mp3" # Body Bop
         ]
-        self.song_labels = [f"Song {i+1}" for i in range(5)]
+        # self.song_labels = [f"Song {i+1}" for i in range(5)]
+        self.song_labels = ["Twinkle", "Happy", "My Year", "Puff", "Body Bop"]
 
         # Calculate column and row placement
         for i in range(len(self.songs)):
@@ -458,6 +459,35 @@ class MusicScreen:
         quit_text = self.font.render("Quit", True, (255, 255, 255))
         quit_rect = quit_text.get_rect(center=self.quit_button.center)  # Centered in the quit button
         screen.blit(quit_text, quit_rect)
+    # def draw(self, screen):
+    #     for i, button in enumerate(self.song_buttons):
+    #         # Draw the button rectangle
+    #         pygame.draw.rect(self.game.screen, (0, 255, 0), button)  # Green color for song buttons
+
+    #         # Render the text for the song label
+    #         label_surface = self.font.render(self.song_labels[i], True, (255, 255, 255))  # White text
+    #         label_rect = label_surface.get_rect(center=button.center)  # Center the text in the button
+
+    #         # Draw the text on the screen
+    #         self.game.screen.blit(label_surface, label_rect)
+            
+    #     # Draw the "Choose Your Own!" button
+    #     pygame.draw.rect(screen, (0, 255, 255), self.choose_button)
+    #     choose_text = self.font.render("Other Songs", True, (255, 255, 255))
+    #     choose_rect = choose_text.get_rect(center=self.choose_button.center)  # Centered in the "Choose Your Own!" button
+    #     screen.blit(choose_text, choose_rect)
+        
+    #     # Draw the "Back to the game!" button
+    #     pygame.draw.rect(screen, (255, 165, 0), self.back_button)
+    #     back_text = self.font.render("Home", True, (255, 255, 255))
+    #     back_rect = back_text.get_rect(center=self.back_button.center)  # Centered in the "Back to the game!" button
+    #     screen.blit(back_text, back_rect)
+
+    #     # Draw the quit button
+    #     pygame.draw.rect(screen, (255, 0, 0), self.quit_button)
+    #     quit_text = self.font.render("Quit", True, (255, 255, 255))
+    #     quit_rect = quit_text.get_rect(center=self.quit_button.center)  # Centered in the quit button
+    #     screen.blit(quit_text, quit_rect)
 
     # def draw(self, screen):
     #     # Draw the song buttons
@@ -492,7 +522,9 @@ class AddWordScreen:
         self.add_word_button.center = (screen_width // 2, screen_height // 2 + 120) # was + 75
 
         # Centered at the top
-        self.home_button = pygame.Rect((game.screen_width - 170) // 2, 10, 150, 50)
+        # self.home_button = pygame.Rect((game.screen_width - 150) // 2, 10, 150, 50)
+        self.home_button = pygame.Rect(0, 0, 150, 50)
+        self.home_button.center = (screen_width // 2, screen_height - 150)
 
         self.input_box = pygame.Rect(100, 100, 600, 50)
         self.input_text = ''
