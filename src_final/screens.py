@@ -348,7 +348,9 @@ class MusicScreen:
         self.font = pygame.font.Font(None, 50)
         self.led = LED()
 
-        mixer.init()  # Initialize the mixer for playing audio
+        if not pygame.mixer.get_init():
+            pygame.mixer.init()
+        # mixer.init()  # Initialize the mixer for playing audio
         mixer.music.set_volume(0.2)
 
         Audio.play_dance_break()
