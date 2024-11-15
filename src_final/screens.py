@@ -476,8 +476,10 @@ class AddWordScreen:
         self.game = game
         self.font = pygame.font.Font(None, 50)
         
+        # Centered at the bottom
         self.add_word_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 180, 200, 60)
-        self.home_button = pygame.Rect((game.screen_width - 150) // 2, 10, 150, 50)  # Centered at the top
+        # Centered at the top
+        self.home_button = pygame.Rect((game.screen_width - 150) // 2, 10, 150, 50)
 
         self.input_box = pygame.Rect(100, 100, 600, 50)
         self.input_text = ''
@@ -535,8 +537,10 @@ class AddWordScreen:
         # add_word_text = self.font.render("Add", True, (255, 255, 255))
         # screen.blit(add_word_text, (self.add_word_button.x + 25, self.add_word_button.y + 15))
         
-        # Draw Quit button
-        pygame.draw.rect(screen, (255, 0, 0), self.add_word_button)
+        # Draw Add button
+        self.add_word_button = pygame.Rect(0, 0, 200, 80)
+        self.add_word_button.center = (screen_width // 2, screen_height // 2 + 75)
+        # pygame.draw.rect(screen, (255, 0, 0), self.add_word_button)
         add_word_text = self.font.render("Add", True, (255, 255, 255))
        
         # Center text within button
