@@ -102,7 +102,7 @@ class TimerScreen:
         # self.font = pygame.font.Font(None, 50)
 
         # # Button setup for 1 minute, 3 minutes, 5 minutes
-        # self.one_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 100, 200, 60)
+        # self.two_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 - 100, 200, 60)
         # self.three_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2, 200, 60)
         # self.five_min_button = pygame.Rect(game.screen_width // 2 - 100, game.screen_height // 2 + 100, 200, 60)
 
@@ -116,11 +116,11 @@ class TimerScreen:
         
         # pygame.Rect(x, y, width, height)
         # Button setup for 1 minute, 3 minutes, 5 minutes
-        self.one_min_button = pygame.Rect((screen_width - button_width) // 2, 
+        self.two_min_button = pygame.Rect((screen_width - button_width) // 2, 
                                           ((1/4) * screen_height) // 2,
                                           button_width, button_height)
-        self.three_min_button = pygame.Rect(self.one_min_button.x,
-                                            self.one_min_button.y + button_height + button_spacing,
+        self.three_min_button = pygame.Rect(self.two_min_button.x,
+                                            self.two_min_button.y + button_height + button_spacing,
                                             button_width, button_height)
         self.five_min_button = pygame.Rect(self.three_min_button.x,
                                            self.three_min_button.y + button_height + button_spacing, 
@@ -134,12 +134,12 @@ class TimerScreen:
             mouse_pos = event.pos
             if self.add_word_button.collidepoint(mouse_pos):
                 self.game.switch_screen(AddWordScreen) 
-            elif self.one_min_button.collidepoint(mouse_pos):
-                print("1-minute timer selected!")
-                self.game.switch_screen(lambda game: GameScreen(game, 10))
+            elif self.two_min_button.collidepoint(mouse_pos):
+                print("2-minute timer selected!")
+                self.game.switch_screen(lambda game: GameScreen(game, 120))
             elif self.three_min_button.collidepoint(mouse_pos):
-                print("3-minute timer selected!")
-                self.game.switch_screen(lambda game: GameScreen(game, 180))
+                print("3.5-minute timer selected!")
+                self.game.switch_screen(lambda game: GameScreen(game, 210))
             elif self.five_min_button.collidepoint(mouse_pos):
                 print("5-minute timer selected!")
                 self.game.switch_screen(lambda game: GameScreen(game, 300))
@@ -149,14 +149,14 @@ class TimerScreen:
 
     def draw(self, screen):
         # Draw the 1 minute button
-        pygame.draw.rect(screen, (0, 255, 0), self.one_min_button)
-        one_min_text = self.font.render("10 Seconds", True, (255, 255, 255))
-        one_min_text_rect = one_min_text.get_rect(center=self.one_min_button.center)
-        screen.blit(one_min_text, one_min_text_rect)
+        pygame.draw.rect(screen, (0, 255, 0), self.two_min_button)
+        two_min_text = self.font.render("2 Minutes", True, (255, 255, 255))
+        two_min_text_rect = two_min_text.get_rect(center=self.two_min_button.center)
+        screen.blit(two_min_text, two_min_text_rect)
 
         # Draw the 3 minute button
         pygame.draw.rect(screen, (0, 255, 0), self.three_min_button)
-        three_min_text = self.font.render("3 Minutes", True, (255, 255, 255))
+        three_min_text = self.font.render("3.5 Minutes", True, (255, 255, 255))
         three_min_text_rect = three_min_text.get_rect(center=self.three_min_button.center)
         screen.blit(three_min_text, three_min_text_rect)
 
